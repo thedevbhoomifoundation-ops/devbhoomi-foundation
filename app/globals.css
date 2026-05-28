@@ -1,0 +1,359 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-primary-50: #f0f9ff;
+  --color-primary-100: #e0f2fe;
+  --color-primary-200: #bae6fd;
+  --color-primary-300: #7dd3fc;
+  --color-primary-400: #38bdf8;
+  --color-primary-500: #0ea5e9;
+  --color-primary-600: #0284c7;
+  --color-primary-700: #0369a1;
+  --color-primary-800: #075985;
+  --color-primary-900: #0B3C5D;
+  --color-primary-950: #051e30;
+
+  --color-accent-50: #fffbeb;
+  --color-accent-100: #fef3c7;
+  --color-accent-200: #fde68a;
+  --color-accent-300: #fcd34d;
+  --color-accent-400: #fbbf24;
+  --color-accent-500: #f59e0b;
+  --color-accent-600: #d97706;
+  --color-accent-700: #b45309;
+  --color-accent-800: #92400e;
+  --color-accent-900: #E58A1F;
+  --color-accent-950: #C97015;
+
+  --color-success: #10B981;
+  --color-warning: #F59E0B;
+  --color-error: #EF4444;
+  --color-info: #3B82F6;
+
+  --font-heading: "Poppins", sans-serif;
+  --font-body: "Inter", sans-serif;
+  --font-accent: "Cormorant Garamond", serif;
+
+  --animate-fade-up: fadeUp 0.6s ease-out forwards;
+  --animate-fade-in: fadeIn 0.6s ease-out forwards;
+  --animate-slide-down: slideDown 0.4s ease-out;
+  --animate-slide-up: slideUp 0.4s ease-out;
+  --animate-bounce-light: bounceLight 3s ease-in-out infinite;
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-shimmer: shimmer 2s infinite;
+  --animate-pulse-soft: pulseSoft 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+  --spacing-2xl: 2.5rem;
+  --spacing-3xl: 3rem;
+  --spacing-4xl: 4rem;
+  --spacing-5xl: 5rem;
+
+  --radius-sm: 0.375rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --radius-2xl: 1.5rem;
+
+  --shadow-sm: 0 1px 2px 0 rgba(11, 60, 93, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(11, 60, 93, 0.1), 0 2px 4px -1px rgba(11, 60, 93, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(11, 60, 93, 0.1), 0 4px 6px -2px rgba(11, 60, 93, 0.05);
+  --shadow-xl: 0 20px 25px -5px rgba(11, 60, 93, 0.1), 0 10px 10px -5px rgba(11, 60, 93, 0.04);
+  --shadow-2xl: 0 25px 50px -12px rgba(11, 60, 93, 0.25);
+  --shadow-inner: inset 0 2px 4px 0 rgba(11, 60, 93, 0.05);
+  --shadow-premium: 0 20px 40px -10px rgba(11, 60, 93, 0.15);
+
+  --background-image-gradient-primary: linear-gradient(135deg, #0B3C5D 0%, #1A5A7D 100%);
+  --background-image-gradient-accent: linear-gradient(135deg, #E58A1F 0%, #F0A33A 100%);
+  --background-image-gradient-hero: linear-gradient(135deg, #0B3C5D 0%, #1A5A7D 50%, #3F7D3A 100%);
+  --background-image-gradient-soft: linear-gradient(135deg, rgba(11, 60, 93, 0.05) 0%, rgba(229, 138, 31, 0.05) 100%);
+  --background-image-gradient-dark: linear-gradient(135deg, #071826 0%, #122B3D 100%);
+
+  @keyframes fadeUp {
+    0% {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+
+    100% {
+      opacity: 1;
+    }
+  }
+
+  @keyframes slideDown {
+    0% {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes slideUp {
+    0% {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes bounceLight {
+
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+
+  /* float and shimmer are already defined below in the file, but I'll keeping them in theme for consistency with v4 */
+  @keyframes pulseSoft {
+
+    0%,
+    100% {
+      opacity: 1;
+    }
+
+    50% {
+      opacity: 0.5;
+    }
+  }
+}
+
+/* CSS Variables */
+:root {
+  --background: #F8F5EF;
+  --foreground: #0B3C5D;
+
+  --primary: #0B3C5D;
+  --primary-foreground: #ffffff;
+
+  --accent: #E58A1F;
+  --accent-foreground: #ffffff;
+
+  --green: #3F7D3A;
+
+  --card: #ffffff;
+  --border: #e5e7eb;
+
+  --muted: #f3f4f6;
+}
+
+.dark {
+  --background: #071826;
+  --foreground: #EAF2F8;
+
+  --primary: #0B3C5D;
+  --accent: #F4A641;
+  --green: #4D9A46;
+
+  --card: #122B3D;
+  --border: #1E3A4C;
+
+  --muted: #1A2C3A;
+}
+
+/* Global Styles */
+* {
+  @apply scroll-smooth;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-white dark:bg-slate-900 text-primary-900 dark:text-white transition-colors duration-300;
+}
+
+/* Typography */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  @apply font-heading font-bold;
+}
+
+h1 {
+  @apply text-5xl md:text-6xl;
+}
+
+h2 {
+  @apply text-4xl md:text-5xl;
+}
+
+h3 {
+  @apply text-3xl md:text-4xl;
+}
+
+h4 {
+  @apply text-2xl md:text-3xl;
+}
+
+h5 {
+  @apply text-xl md:text-2xl;
+}
+
+h6 {
+  @apply text-lg md:text-xl;
+}
+
+p {
+  @apply font-body;
+}
+
+a {
+  @apply transition-colors duration-300;
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  @apply w-3;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-gray-100 dark:bg-slate-800;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-primary-900 dark:bg-slate-600 rounded-full hover:bg-primary-800 dark:hover:bg-slate-500;
+}
+
+/* Selection */
+::selection {
+  @apply bg-accent-500 text-white;
+}
+
+::-moz-selection {
+  @apply bg-accent-500 text-white;
+}
+
+/* Focus Ring */
+:focus-visible {
+  @apply outline-none ring-2 ring-accent-500 ring-offset-2 dark:ring-offset-slate-900;
+}
+
+/* Container Queries */
+@supports (container-type: inline-size) {
+  .container-fluid {
+    container-type: inline-size;
+  }
+}
+
+/* Gradient Text */
+.gradient-text {
+  @apply bg-gradient-to-r from-primary-900 to-accent-600 bg-clip-text text-transparent;
+}
+
+/* Premium Card Shadow */
+.card-shadow {
+  @apply shadow-lg dark:shadow-2xl;
+}
+
+/* Glass Morphism */
+.glass {
+  @apply bg-white/20 dark:bg-white/10 backdrop-blur-md border border-white/30;
+}
+
+/* Animations */
+@keyframes float {
+
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+@keyframes gradient-shift {
+
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.animate-shimmer {
+  animation: shimmer 2s infinite;
+  background-size: 1000px 100%;
+}
+
+.animate-gradient {
+  animation: gradient-shift 3s ease infinite;
+  background-size: 200% 200%;
+}
+
+/* Responsive Typography */
+@media (max-width: 768px) {
+  h1 {
+    @apply text-3xl;
+  }
+
+  h2 {
+    @apply text-2xl;
+  }
+
+  h3 {
+    @apply text-xl;
+  }
+}
+
+/* Print Styles */
+@media print {
+
+  nav,
+  footer,
+  .no-print {
+    @apply hidden;
+  }
+}
