@@ -2,14 +2,8 @@
 
 import Link from "next/link";
 import { foundationInfo, socialLinks } from "@/lib/constants";
-import {
-  Mail,
-  Phone,
-  MapPin,
-  Heart,
-  Clock,
-
-} from "lucide-react";
+import Image from "next/image";
+import { Mail, Phone, MapPin, Heart, Clock } from "lucide-react";
 import { motion } from "framer-motion";
 import {
   LuFacebook,
@@ -85,14 +79,16 @@ export function Footer() {
           <div className="sm:col-span-2 lg:col-span-1 space-y-5">
             {/* Logo + Title */}
             <div className="flex items-center gap-3">
-              <div className="w-11 h-11 rounded-full bg-gradient-accent flex items-center justify-center shrink-0">
-                <span className="font-bold text-base text-white">DB</span>
+              <Image
+                src="/images/devbhoomi-logo.jpeg"
+                alt="Dev Bhoomi Foundation logo"
+                width={40}
+                height={40}
+                className="rounded-full object-cover shadow-lg group-hover:shadow-xl transition-shadow"
+              />
+              <div>
+                <p>NextGen Dev Bhoomi</p>
               </div>
-              <h2 className="font-heading font-bold text-white text-lg leading-tight">
-                DEV BHOOMI
-                <br />
-                FOUNDATION
-              </h2>
             </div>
 
             <p className="text-sm text-primary-300 leading-relaxed">
@@ -209,7 +205,7 @@ export function Footer() {
       {/* Row 2 — Bottom Bar */}
       <div className="border-t border-slate-700">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-primary-400">
-          <p>© 2024 Dev Bhoomi Foundation. All Rights Reserved.</p>
+          <p>© 2026 Dev Bhoomi Foundation. All Rights Reserved.</p>
           <p className="flex items-center gap-1">
             Designed with{" "}
             <Heart className="h-4 w-4 text-accent-500 fill-accent-500" /> for a

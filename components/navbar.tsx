@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { Menu, X, ChevronDown } from "lucide-react";
+import Image from "next/image";
 import { navLinks } from "@/lib/constants";
 import { ThemeToggle } from "./theme-toggle";
 import { motion, AnimatePresence } from "framer-motion";
@@ -202,11 +203,15 @@ export function Navbar() {
           {/* -------- Left: Logo -------- */}
           <Link href="/" className="flex-shrink-0">
             <div className="flex items-center gap-3 group cursor-pointer">
-              {/* Circular badge */}
-              <div className="relative w-10 h-10 bg-gradient-primary rounded-full flex items-center justify-center shadow-lg group-hover:shadow-xl transition-shadow">
-                <span className="text-white font-bold text-sm tracking-wide">
-                  DB
-                </span>
+              {/* Logo image (place your image at /public/images/devbhoomi-logo.png) */}
+              <div className="relative w-10 h-10 flex items-center justify-center">
+                <Image
+                  src="/images/devbhoomi-logo.jpeg"
+                  alt="Dev Bhoomi Foundation logo"
+                  width={40}
+                  height={40}
+                  className="rounded-full object-cover shadow-lg group-hover:shadow-xl transition-shadow"
+                />
               </div>
 
               {/* Name + tagline */}
