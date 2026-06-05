@@ -207,7 +207,7 @@ export function Navbar() {
               <div className="relative w-10 h-10 flex items-center justify-center">
                 <Image
                   src="/images/devbhoomi-logo.jpeg"
-                  alt="Dev Bhoomi Foundation logo"
+                  alt="Nextgen Devbhoomi Foundation logo"
                   width={40}
                   height={40}
                   className="rounded-full object-cover shadow-lg group-hover:shadow-xl transition-shadow"
@@ -217,7 +217,7 @@ export function Navbar() {
               {/* Name + tagline */}
               <div className="hidden sm:block leading-tight">
                 <p className="text-sm font-bold uppercase tracking-wide text-primary-900 dark:text-white">
-                  Dev Bhoomi Foundation
+                  Nextgen Devbhoomi Foundation
                 </p>
                 <p className="text-[11px] text-primary-500 dark:text-primary-400">
                   Building a Resilient Future

@@ -54,7 +54,7 @@ const stats = [
 
 function ImpactStatsBar() {
   return (
-    <section className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mt-[-40px]">
+    <section className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mt-[-20px] md:mt-[-40px]">
       <motion.div
         className="bg-primary-900 dark:bg-primary-950 rounded-2xl py-8 px-6 md:px-10 shadow-2xl"
         initial={{ opacity: 0, y: 40 }}
@@ -400,7 +400,7 @@ function NewsletterSection() {
           </div>
 
           {/* Right — Form */}
-          <form className="flex w-full md:w-auto gap-3">
+          <form className="flex flex-col sm:flex-row w-full md:w-auto gap-3">
             <input
               type="email"
               placeholder="Enter your email"

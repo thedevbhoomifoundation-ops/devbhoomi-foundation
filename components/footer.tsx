@@ -81,7 +81,7 @@ export function Footer() {
             <div className="flex items-center gap-3">
               <Image
                 src="/images/devbhoomi-logo.jpeg"
-                alt="Dev Bhoomi Foundation logo"
+                alt="Nextgen Devbhoomi Foundation logo"
                 width={40}
                 height={40}
                 className="rounded-full object-cover shadow-lg group-hover:shadow-xl transition-shadow"
@@ -205,7 +205,7 @@ export function Footer() {
       {/* Row 2 — Bottom Bar */}
       <div className="border-t border-slate-700">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-primary-400">
-          <p>© 2026 Dev Bhoomi Foundation. All Rights Reserved.</p>
+          <p>© 2026 Nextgen Devbhoomi Foundation. All Rights Reserved.</p>
           <p className="flex items-center gap-1">
             Designed with{" "}
             <Heart className="h-4 w-4 text-accent-500 fill-accent-500" /> for a
