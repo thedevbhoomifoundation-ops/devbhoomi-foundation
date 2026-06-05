@@ -108,7 +108,7 @@ export function HeroSection() {
               className="text-lg text-primary-700 dark:text-primary-200 leading-relaxed"
               {...fadeUp(0.3)}
             >
-              Dev Bhoomi Foundation is dedicated to empowering individuals with
+              Nextgen Devbhoomi Foundation is dedicated to empowering individuals with
               technical skills, fostering sustainable communities, and building a
               stronger tomorrow.
             </motion.p>
@@ -165,10 +165,10 @@ export function HeroSection() {
             {...fadeRight(0.3)}
           >
             {/* main image */}
-            <div className="relative w-[320px] h-[400px] sm:w-[380px] sm:h-[460px] lg:w-[420px] lg:h-[500px] rounded-3xl overflow-hidden shadow-2xl">
+            <div className="relative w-full max-w-[320px] aspect-[4/5] sm:max-w-[380px] lg:max-w-[420px] rounded-3xl overflow-hidden shadow-2xl mx-auto lg:mx-0">
               <Image
                 src="/images/hero-students.png"
-                alt="Students at Dev Bhoomi Foundation"
+                alt="Students at Nextgen Devbhoomi Foundation"
                 fill
                 priority
                 className="object-cover"
@@ -177,14 +177,14 @@ export function HeroSection() {
 
             {/* mentor circle — overlapping bottom-left */}
             <motion.div
-              className="absolute -bottom-4 -left-4 sm:bottom-4 sm:-left-8 lg:-left-12 w-32 h-32 sm:w-40 sm:h-40 rounded-full overflow-hidden border-4 border-white dark:border-slate-900 shadow-xl"
+              className="absolute -bottom-4 -left-2 sm:bottom-4 sm:-left-8 lg:-left-12 w-28 h-28 sm:w-40 sm:h-40 rounded-full overflow-hidden border-4 border-white dark:border-slate-900 shadow-xl z-20"
               initial={{ opacity: 0, scale: 0.6 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.6, delay: 0.6 }}
             >
               <Image
                 src="/images/hero-mentor.png"
-                alt="Mentor at Dev Bhoomi Foundation"
+                alt="Mentor at Nextgen Devbhoomi Foundation"
                 fill
                 className="object-cover"
               />
@@ -192,13 +192,13 @@ export function HeroSection() {
 
             {/* circular badge / stamp — top-right */}
             <motion.div
-              className="absolute -top-6 -right-2 sm:-right-6 w-28 h-28 sm:w-32 sm:h-32 rounded-full bg-primary-900 dark:bg-accent-600 flex items-center justify-center shadow-xl"
+              className="absolute -top-4 -right-2 sm:-top-6 sm:-right-6 w-24 h-24 sm:w-32 sm:h-32 rounded-full bg-primary-900 dark:bg-accent-600 flex items-center justify-center shadow-xl z-20"
               initial={{ opacity: 0, rotate: -90, scale: 0.5 }}
               animate={{ opacity: 1, rotate: 0, scale: 1 }}
               transition={{ duration: 0.8, delay: 0.7, type: "spring" }}
             >
               <CircularText
-                text="THE DEV BHOOMI FOUNDATION • BUILDING A RESILIENT FUTURE • "
+                text="THE NEXTGEN DEVBHOOMI FOUNDATION • BUILDING A RESILIENT FUTURE • "
                 radius={60}
               />
               {/* centre icon */}

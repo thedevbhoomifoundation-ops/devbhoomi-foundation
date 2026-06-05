@@ -8,22 +8,28 @@ import { Footer } from "@/components/footer";
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
+  display: "swap",
+  adjustFontFallback: false,
 });
 
 const poppins = Poppins({
   subsets: ["latin"],
   variable: "--font-poppins",
   weight: ["400", "500", "600", "700"],
+  display: "swap",
+  adjustFontFallback: false,
 });
 
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
   variable: "--font-cormorant",
   weight: ["400", "500", "600", "700"],
+  display: "swap",
+  adjustFontFallback: false,
 });
 
 export const metadata: Metadata = {
-  title: "Dev Bhoomi Foundation - Technical Education & Community Empowerment",
+  title: "Nextgen Devbhoomi Foundation - Technical Education & Community Empowerment",
   description:
     "Transform lives through world-class technical education, volunteer opportunities, and community empowerment in the Himalayan region.",
   keywords: ["education", "technology", "foundation", "NGO", "volunteering", "coding"],

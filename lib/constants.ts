@@ -1,6 +1,6 @@
 /**
  * Design System Constants
- * The Dev Bhoomi Foundation - Premium NGO + EdTech Platform
+ * The Nextgen Devbhoomi Foundation - Premium NGO + EdTech Platform
  */
 
 // Color Palette
@@ -159,7 +159,7 @@ export const socialLinks = [
 
 // Foundation Info
 export const foundationInfo = {
-  name: "The Dev Bhoomi Foundation",
+  name: "The Nextgen Devbhoomi Foundation",
   tagline: "Empowering through Education, Community, and Technology",
   mission: "To provide accessible, world-class technical education and create a community of empowered developers and social innovators.",
   vision: "A world where every aspiring individual has access to quality education and opportunity to make a positive impact.",
