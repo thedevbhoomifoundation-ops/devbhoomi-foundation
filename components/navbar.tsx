@@ -17,26 +17,21 @@ import { usePathname } from "next/navigation";
 const desktopLinks = [
   { label: "Home", href: "/" },
   {
-    label: "Programs",
-    href: "/programs",
-    dropdown: [
-      { label: "All Programs", href: "/programs" },
-      { label: "Education", href: "/programs#education" },
-      { label: "Community Development", href: "/programs#community" },
-      { label: "Technology Training", href: "/programs#technology" },
-    ],
+    label: "Internship",
+    href: "/internship"
   },
-  {
-    label: "Courses",
-    href: "/courses",
-    dropdown: [
-      { label: "All Courses", href: "/courses" },
-      { label: "Digital Library", href: "/library" },
-      { label: "Interview Prep", href: "/interview-prep" },
-      { label: "DSA Problem Solver", href: "/dsa-solver" },
-    ],
-  },
-  { label: "Digital Library", href: "/library" },
+  // {
+  //   label: "Programs",
+  //   href: "/programs",
+  //   dropdown: [
+  //     { label: "All Programs", href: "/programs" },
+  //     { label: "Courses", href: "/courses" },
+  //     { label: "Digital Library", href: "/library" },
+  //     { label: "Interview Prep", href: "/interview-prep" },
+  //     { label: "DSA Problem Solver", href: "/dsa-solver" },
+  //   ],
+  // },
+  // { label: "Digital Library", href: "/library" },
   { label: "About Us", href: "/about" },
   { label: "Contact Us", href: "/contact" },
 ];
@@ -47,9 +42,6 @@ const getLinkLabel = (label: string, t: ReturnType<typeof useTranslation>["t"]) 
     "About Us": t("nav.about"),
     "Programs": t("nav.programs"),
     "All Programs": t("nav.allPrograms"),
-    "Education": t("nav.education"),
-    "Community Development": t("nav.communityDev"),
-    "Technology Training": t("nav.techTraining"),
     "Get Involved": t("nav.getInvolved"),
     "Volunteer": t("nav.volunteer"),
     "Donate": t("nav.donate"),
@@ -316,11 +308,10 @@ export function Navbar() {
   return (
     <>
       <nav
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          scrolled || pathname !== "/"
-            ? "bg-[#071826]/95 backdrop-blur-md border-b border-white/5 shadow-lg"
-            : "bg-[#071826]"
-        }`}
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled || pathname !== "/"
+          ? "bg-[#071826]/95 backdrop-blur-md border-b border-white/5 shadow-lg"
+          : "bg-[#071826]"
+          }`}
       >
         {/* ============================================================ */}
         {/* MOBILE HEADER                                                */}

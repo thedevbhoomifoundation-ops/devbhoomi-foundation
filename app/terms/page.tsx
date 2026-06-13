@@ -1,10 +1,193 @@
-import { ComingSoon } from "@/components/coming-soon";
+"use client";
+
+import { useState, useEffect } from "react";
+import { useTranslation } from "react-i18next";
+import { FileText, Sparkles } from "lucide-react";
+
+import { Section, Card } from "@/components/ui";
+import { Breadcrumbs } from "@/components/breadcrumbs";
+
+interface TermsSectionType {
+  id: string;
+  titleKey: string;
+  contentKey: string;
+}
+
+const sections: TermsSectionType[] = [
+  {
+    id: "agree",
+    titleKey: "app.terms.sections.agree.title",
+    contentKey: "app.terms.sections.agree.content",
+  },
+  {
+    id: "property",
+    titleKey: "app.terms.sections.property.title",
+    contentKey: "app.terms.sections.property.content",
+  },
+  {
+    id: "accounts",
+    titleKey: "app.terms.sections.accounts.title",
+    contentKey: "app.terms.sections.accounts.content",
+  },
+  {
+    id: "conduct",
+    titleKey: "app.terms.sections.conduct.title",
+    contentKey: "app.terms.sections.conduct.content",
+  },
+  {
+    id: "donations",
+    titleKey: "app.terms.sections.donations.title",
+    contentKey: "app.terms.sections.donations.content",
+  },
+  {
+    id: "liability",
+    titleKey: "app.terms.sections.liability.title",
+    contentKey: "app.terms.sections.liability.content",
+  },
+  {
+    id: "indemnity",
+    titleKey: "app.terms.sections.indemnity.title",
+    contentKey: "app.terms.sections.indemnity.content",
+  },
+  {
+    id: "governing",
+    titleKey: "app.terms.sections.governing.title",
+    contentKey: "app.terms.sections.governing.content",
+  },
+  {
+    id: "modifications",
+    titleKey: "app.terms.sections.modifications.title",
+    contentKey: "app.terms.sections.modifications.content",
+  },
+  {
+    id: "contact",
+    titleKey: "app.terms.sections.contact.title",
+    contentKey: "app.terms.sections.contact.content",
+  },
+];
 
 export default function TermsPage() {
+  const { t } = useTranslation();
+  const [activeSection, setActiveSection] = useState<string>("agree");
+
+  useEffect(() => {
+    const observerOptions = {
+      root: null,
+      rootMargin: "-20% 0px -65% 0px",
+      threshold: 0,
+    };
+
+    const observerCallback = (entries: IntersectionObserverEntry[]) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setActiveSection(entry.target.id);
+        }
+      });
+    };
+
+    const observer = new IntersectionObserver(observerCallback, observerOptions);
+
+    sections.forEach((sec) => {
+      const el = document.getElementById(sec.id);
+      if (el) observer.observe(el);
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
+  const handleTocClick = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
+    e.preventDefault();
+    const targetEl = document.getElementById(id);
+    if (targetEl) {
+      const headerOffset = 90;
+      const elementPosition = targetEl.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.scrollY - headerOffset;
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth",
+      });
+      setActiveSection(id);
+    }
+  };
+
   return (
-    <ComingSoon
-      title="Terms & Conditions"
-      description="Our standard user terms, volunteer agreements, and platform guidelines are currently being updated. They will be available for review shortly."
-    />
+    <main className="pt-20">
+      {/* Hero Header */}
+      <section className="relative overflow-hidden bg-primary-950 text-white py-16">
+        <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:16px_16px]" />
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <Breadcrumbs />
+          <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight mb-4 font-heading flex items-center justify-center gap-3">
+            <FileText className="h-10 w-10 text-accent-500 shrink-0" />
+            {t("app.terms.page.title")}
+          </h1>
+          <p className="max-w-2xl mx-auto text-primary-200 text-sm sm:text-base mb-4">
+            {t("app.terms.page.subtitle")}
+          </p>
+          <span className="inline-block px-3 py-1 rounded-full bg-slate-800 text-xs font-semibold text-accent-400 border border-slate-700">
+            {t("app.terms.page.effectiveDate")}
+          </span>
+        </div>
+      </section>
+
+      {/* Content Section */}
+      <Section className="bg-slate-900">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-4 gap-10">
+            {/* Left Sidebar Table of Contents */}
+            <aside className="hidden lg:block lg:col-span-1">
+              <div className="sticky top-24 self-start bg-slate-800/40 border border-slate-700/50 rounded-2xl p-5 shadow-lg">
+                <h4 className="text-sm font-semibold text-white tracking-wider uppercase mb-4 pb-2 border-b border-slate-700/60 flex items-center gap-2">
+                  <Sparkles className="h-4 w-4 text-accent-500" />
+                  {t("app.terms.page.tocTitle")}
+                </h4>
+                <ul className="space-y-3">
+                  {sections.map((sec) => {
+                    const isActive = activeSection === sec.id;
+                    return (
+                      <li key={sec.id}>
+                        <a
+                          href={`#${sec.id}`}
+                          onClick={(e) => handleTocClick(e, sec.id)}
+                          className={`block text-sm font-medium transition-all duration-200 pl-3 border-l-2 py-0.5 ${
+                            isActive
+                              ? "text-accent-400 border-accent-500 font-bold scale-[1.02]"
+                              : "text-primary-300 border-transparent hover:text-white hover:border-slate-600"
+                          }`}
+                        >
+                          {t(sec.titleKey).split(".")[1]?.trim() || t(sec.titleKey)}
+                        </a>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
+            </aside>
+
+            {/* Right Column Detailed Terms */}
+            <div className="lg:col-span-3 space-y-8">
+              {sections.map((sec) => (
+                <Card
+                  key={sec.id}
+                  id={sec.id}
+                  className={`scroll-mt-24 p-6 md:p-8 transition-all duration-300 ${
+                    activeSection === sec.id ? "border-accent-500/60 shadow-xl" : ""
+                  }`}
+                >
+                  <h3 className="text-xl md:text-2xl font-bold text-white mb-4 flex items-center gap-2">
+                    <span className="w-1.5 h-6 bg-gradient-accent rounded-full shrink-0" />
+                    {t(sec.titleKey)}
+                  </h3>
+                  <p className="text-primary-200 text-sm md:text-base leading-relaxed whitespace-pre-line">
+                    {t(sec.contentKey)}
+                  </p>
+                </Card>
+              ))}
+            </div>
+          </div>
+        </div>
+      </Section>
+    </main>
   );
 }
