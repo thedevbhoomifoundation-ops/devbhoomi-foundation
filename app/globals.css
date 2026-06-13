@@ -45,6 +45,7 @@
   --animate-float: float 6s ease-in-out infinite;
   --animate-shimmer: shimmer 2s infinite;
   --animate-pulse-soft: pulseSoft 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  --animate-marquee: marquee 35s linear infinite;
 
   --spacing-xs: 0.25rem;
   --spacing-sm: 0.5rem;
@@ -168,6 +169,15 @@
 
     50% {
       opacity: 0.5;
+    }
+  }
+
+  @keyframes marquee {
+    from {
+      transform: translateX(0%);
+    }
+    to {
+      transform: translateX(-50%);
     }
   }
 }

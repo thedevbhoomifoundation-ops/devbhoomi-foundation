@@ -223,7 +223,6 @@ const getMobileTitle = (path: string) => {
 };
 
 export function Navbar() {
-  const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const pathname = usePathname();
   const router = useRouter();
@@ -237,21 +236,70 @@ export function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const toggleMenu = () => setIsOpen(!isOpen);
-
   const isSubpage = pathname !== "/";
 
   return (
     <nav
       className={`fixed top-0 w-full z-50 transition-all duration-300 ${
         isSubpage
-          ? "bg-white/95 dark:bg-slate-900/95 backdrop-blur-md shadow-sm border-b border-slate-100 dark:border-slate-800/60 h-16"
+          ? "bg-white/95 dark:bg-slate-900/95 backdrop-blur-md shadow-sm border-b border-slate-100 dark:border-slate-800/60 h-auto"
           : isScrolled
-          ? "bg-white/90 dark:bg-slate-900/90 backdrop-blur-md shadow-lg h-16"
-          : "bg-transparent h-20"
+          ? "bg-primary-900 dark:bg-slate-950 shadow-md lg:bg-white/90 lg:dark:bg-slate-900/90 lg:backdrop-blur-md lg:shadow-lg h-auto"
+          : "bg-primary-900 dark:bg-slate-950 shadow-md lg:bg-transparent h-auto"
       }`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full">
+      {/* Mobile Home Header Banner (full width, visible only on mobile, and when on homepage) */}
+      {!isSubpage && (
+        <div className="lg:hidden flex flex-col w-full bg-primary-900 dark:bg-slate-950 shadow-md">
+          {/* Main Header Row */}
+          <div className="flex items-center justify-between px-4 py-3">
+            {/* Left: Logo & Text */}
+            <div className="flex items-center gap-3">
+              <div className="relative w-11 h-11 shrink-0">
+                <Image
+                  src="/images/devbhoomi-logo.jpeg"
+                  alt="Nextgen Devbhoomi Foundation logo"
+                  width={44}
+                  height={44}
+                  className="rounded-full object-cover border border-white/20"
+                />
+              </div>
+              <div className="leading-tight">
+                <h1 className="text-[14px] sm:text-[15px] font-black tracking-tight leading-none text-white font-heading">
+                  NextGen <span className="text-accent-500">Devbhoomi</span> Foundation
+                </h1>
+                <p className="text-[9px] font-bold text-[#A8BDD1] tracking-wider uppercase mt-0.5 font-body">
+                  BUILDING A RESILIENT FUTURE
+                </p>
+                <p className="text-[8px] text-white/75 font-medium mt-0.5 truncate max-w-[55vw]">
+                  Industry-Oriented IT Internship Program | 2026 – 2027
+                </p>
+              </div>
+            </div>
+
+            {/* Right: Theme Toggle */}
+            <div className="shrink-0 flex items-center">
+              <ThemeToggle />
+            </div>
+          </div>
+
+          {/* Golden Sub-Bar Ticker */}
+          <div className="bg-accent-500 py-1.5 px-4 text-center">
+            <p className="text-[8px] sm:text-[9px] font-black text-primary-950 tracking-widest uppercase">
+              ★ TRANSFORMING STUDENTS INTO INDUSTRY-READY PROFESSIONALS ★
+            </p>
+          </div>
+        </div>
+      )}
+
+      {/* Container for Desktop Navbar & Mobile Subpage Navbar */}
+      <div className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 ${
+        isSubpage
+          ? "h-16"
+          : isScrolled
+          ? "h-16 lg:h-16"
+          : "h-16 lg:h-20"
+      } ${!isSubpage ? "hidden lg:block" : "block"}`}>
         {/* Mobile Subpage App Bar Mode (visible only on mobile and when on subpage) */}
         {isSubpage ? (
           <div className="flex lg:hidden items-center justify-between h-full w-full">
@@ -276,8 +324,8 @@ export function Navbar() {
           </div>
         ) : null}
 
-        {/* Standard Navbar Inner (hidden on mobile subpage views, but visible on desktop subpages AND all homepage views) */}
-        <div className={`justify-between items-center h-full ${isSubpage ? "hidden lg:flex" : "flex"}`}>
+        {/* Standard Navbar Inner (hidden on all mobile views, visible on desktop) */}
+        <div className="justify-between items-center h-full hidden lg:flex">
           {/* -------- Left: Logo -------- */}
           <Link href="/" className="flex-shrink-0">
             <div className="flex items-center gap-3 group cursor-pointer">
@@ -327,7 +375,7 @@ export function Navbar() {
             )}
           </div>
 
-          {/* -------- Right: Theme Toggle + CTA + Hamburger -------- */}
+          {/* -------- Right: Theme Toggle + CTA -------- */}
           <div className="flex items-center gap-3">
             <ThemeToggle />
 
@@ -338,67 +386,26 @@ export function Navbar() {
             >
               Login / Register
             </Link>
-
-            {/* Mobile menu button */}
-            <button
-              onClick={toggleMenu}
-              className="lg:hidden p-2 rounded-lg hover:bg-primary-50 dark:hover:bg-slate-800 transition-all duration-300 cursor-pointer"
-              aria-label="Toggle navigation menu"
-            >
-              {isOpen ? (
-                <X className="h-6 w-6 text-primary-900 dark:text-white" />
-              ) : (
-                <Menu className="h-6 w-6 text-primary-900 dark:text-white" />
-              )}
-            </button>
           </div>
         </div>
+      </div>
 
-        {/* -------- Mobile Menu -------- */}
-        <AnimatePresence>
-          {isOpen && !isSubpage && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: "auto" }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.3, ease: "easeInOut" }}
-              className="lg:hidden overflow-hidden bg-white dark:bg-slate-900 border-t border-primary-100 dark:border-slate-700 rounded-b-2xl shadow-xl"
-            >
-              <div className="px-4 py-4 space-y-1">
-                {displayLinks.map((link) =>
-                  link.dropdown ? (
-                    <MobileAccordion
-                      key={link.label}
-                      label={link.label}
-                      items={link.dropdown}
-                      onNavigate={() => setIsOpen(false)}
-                    />
-                  ) : (
-                    <Link
-                      key={link.href}
-                      href={link.href}
-                      className="block px-3 py-2 rounded-lg text-primary-900 dark:text-white hover:bg-primary-50 dark:hover:bg-slate-800 transition-colors"
-                      onClick={() => setIsOpen(false)}
-                    >
-                      {link.label}
-                    </Link>
-                  )
-                )}
-
-                {/* Divider + CTA */}
-                <div className="pt-3 mt-2 border-t border-primary-100 dark:border-slate-700">
-                  <Link
-                    href="/login"
-                    onClick={() => setIsOpen(false)}
-                    className="block w-full text-center bg-primary-900 hover:bg-primary-800 text-white text-sm font-semibold rounded-full px-5 py-2.5 transition-colors duration-300"
-                  >
-                    Login / Register
-                  </Link>
-                </div>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+      {/* Sliding Announcement Bar Ticker */}
+      <div className="w-full bg-slate-900 text-slate-200 dark:bg-slate-950 dark:text-slate-300 border-t border-b border-primary-800/10 dark:border-slate-800/60 overflow-hidden py-1.5 select-none z-40 relative">
+        <div className="flex whitespace-nowrap animate-marquee">
+          <div className="flex shrink-0 items-center justify-around gap-12 text-[10px] sm:text-xs font-bold uppercase tracking-wider min-w-full">
+            <span>★ Admissions open for 2026-27 IT Internship Program - Apply Today! ★</span>
+            <span>★ Free textbooks, notes, and reference guides available in our Digital Library! ★</span>
+            <span>★ Join our community of 2000+ passionate volunteers and make an impact! ★</span>
+            <span>★ Support our mission: verified 80G NGO donations are tax-deductible! ★</span>
+          </div>
+          <div className="flex shrink-0 items-center justify-around gap-12 text-[10px] sm:text-xs font-bold uppercase tracking-wider min-w-full">
+            <span>★ Admissions open for 2026-27 IT Internship Program - Apply Today! ★</span>
+            <span>★ Free textbooks, notes, and reference guides available in our Digital Library! ★</span>
+            <span>★ Join our community of 2000+ passionate volunteers and make an impact! ★</span>
+            <span>★ Support our mission: verified 80G NGO donations are tax-deductible! ★</span>
+          </div>
+        </div>
       </div>
     </nav>
   );
