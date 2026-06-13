@@ -1,4 +1,5 @@
 "use client";
+import { useTranslation } from "react-i18next";
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -13,7 +14,6 @@ import {
 } from "lucide-react";
 import { toast } from "sonner";
 import { Breadcrumbs } from "@/components/breadcrumbs";
-import { useLanguage } from "@/providers/language-provider";
 
 interface TranslatedField {
   en: string;
@@ -22,10 +22,10 @@ interface TranslatedField {
 
 interface DSAProblem {
   id: string;
-  title: TranslatedField;
-  difficulty: { en: string; hi: string };
-  category: TranslatedField;
-  description: TranslatedField;
+  title: string;
+  difficulty: string;
+  category: string;
+  description: string;
   inputFormat: string;
   outputFormat: string;
   exampleInput: string;
@@ -37,13 +37,10 @@ interface DSAProblem {
 const dsaProblems: DSAProblem[] = [
   {
     id: "1",
-    title: { en: "Two Sum", hi: "टू सम (Two Sum)" },
-    difficulty: { en: "Easy", hi: "आसान" },
-    category: { en: "Array", hi: "ऐरे" },
-    description: {
-      en: "Given an array of integers `nums` and an integer `target`, return indices of the two numbers such that they add up to `target`.\n\nYou may assume that each input would have exactly one solution, and you may not use the same element twice.",
-      hi: "पूर्णांकों का एक ऐरे `nums` और एक पूर्णांक `target` दिया गया है, उन दो संख्याओं के इंडेक्स लौटाएं ताकि उनका योग `target` के बराबर हो।\n\nआप मान सकते हैं कि प्रत्येक इनपुट का बिल्कुल एक समाधान होगा, और आप एक ही तत्व का दो बार उपयोग नहीं कर सकते।"
-    },
+    title: "app.dsa-solver.page.twoSum",
+    difficulty: "app.dsa-solver.page.easy",
+    category: "app.dsa-solver.page.array",
+    description: "app.dsa-solver.page.givenAnArrayOfIntegersNum",
     inputFormat: "nums = [2, 7, 11, 15], target = 9",
     outputFormat: "[0, 1]",
     exampleInput: "nums = [2,7,11,15], target = 9",
@@ -87,13 +84,10 @@ const dsaProblems: DSAProblem[] = [
   },
   {
     id: "2",
-    title: { en: "Reverse Linked List", hi: "रिवर्स लिंक्ड लिस्ट (Reverse Linked List)" },
-    difficulty: { en: "Medium", hi: "मध्यम" },
-    category: { en: "Linked List", hi: "लिंक्ड लिस्ट" },
-    description: {
-      en: "Given the `head` of a singly linked list, reverse the list, and return the reversed list.",
-      hi: "एक सिंगली लिंक्ड लिस्ट का `head` दिया गया है, सूची को उलट दें, और उलटी हुई सूची वापस करें।"
-    },
+    title: "app.dsa-solver.page.reverseLinkedList",
+    difficulty: "app.dsa-solver.page.medium",
+    category: "app.dsa-solver.page.linkedList",
+    description: "app.dsa-solver.page.givenTheHeadOfASinglyLin",
     inputFormat: "head = [1, 2, 3, 4, 5]",
     outputFormat: "[5, 4, 3, 2, 1]",
     exampleInput: "1 -> 2 -> 3 -> 4 -> 5 -> NULL",
@@ -138,13 +132,10 @@ const dsaProblems: DSAProblem[] = [
   },
   {
     id: "3",
-    title: { en: "Valid Parentheses", hi: "वैलिड पैरेंट्थीसिस (Valid Parentheses)" },
-    difficulty: { en: "Easy", hi: "आसान" },
-    category: { en: "Stack", hi: "स्टैक" },
-    description: {
-      en: "Given a string `s` containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.\n\nAn input string is valid if open brackets are closed by the same type of brackets and closed in the correct order.",
-      hi: "केवल '(', ')', '{', '}', '[' और ']' वर्णों वाली एक स्ट्रिंग `s` दी गई है, निर्धारित करें कि इनपुट स्ट्रिंग मान्य है या नहीं।\n\nएक इनपुट स्ट्रिंग मान्य होती है यदि खुले कोष्ठक उसी प्रकार के कोष्ठक द्वारा बंद किए जाते हैं और सही क्रम में बंद किए जाते हैं।"
-    },
+    title: "app.dsa-solver.page.validParentheses",
+    difficulty: "app.dsa-solver.page.easy",
+    category: "app.dsa-solver.page.stack",
+    description: "app.dsa-solver.page.givenAStringSContainingJu",
     inputFormat: "s = \"()[]{}\"",
     outputFormat: "true",
     exampleInput: "s = \"()[]{}\"",
@@ -197,13 +188,10 @@ const dsaProblems: DSAProblem[] = [
   },
   {
     id: "4",
-    title: { en: "Binary Search", hi: "बाइनरी सर्च (Binary Search)" },
-    difficulty: { en: "Easy", hi: "आसान" },
-    category: { en: "Binary Search", hi: "बाइनरी सर्च" },
-    description: {
-      en: "Given an array of integers `nums` which is sorted in ascending order, and an integer `target`, write a function to search `target` in `nums`. If `target` exists, then return its index. Otherwise, return `-1`.",
-      hi: "आरोही क्रम में क्रमबद्ध पूर्णांकों का एक ऐरे `nums` और एक पूर्णांक `target` दिया गया है, `nums` में `target` को खोजने के लिए एक फ़ंक्शन लिखें। यदि `target` मौजूद है, तो उसका इंडेक्स लौटाएं। अन्यथा, `-1` लौटाएं।"
-    },
+    title: "app.dsa-solver.page.binarySearch",
+    difficulty: "app.dsa-solver.page.easy",
+    category: "app.dsa-solver.page.binarySearch",
+    description: "app.dsa-solver.page.givenAnArrayOfIntegersNum",
     inputFormat: "nums = [-1, 0, 3, 5, 9, 12], target = 9",
     outputFormat: "4",
     exampleInput: "nums = [-1,0,3,5,9,12], target = 9",
@@ -250,7 +238,7 @@ const dsaProblems: DSAProblem[] = [
 ];
 
 export default function DSASolverPage() {
-  const { t } = useLanguage();
+  const { t } = useTranslation();
   const [activeProblem, setActiveProblem] = useState<DSAProblem>(dsaProblems[0]);
   const [selectedLanguage, setSelectedLanguage] = useState<string>("javascript");
   const [codeValue, setCodeValue] = useState<string>(activeProblem.templates[selectedLanguage]);
@@ -275,37 +263,31 @@ export default function DSASolverPage() {
 
   const handleRunCode = () => {
     setRunLoading(true);
-    setConsoleOutput(t({ en: "Compiling and running against test cases...", hi: "परीक्षण मामलों के विरुद्ध संकलित और चलाया जा रहा है..." }));
+    setConsoleOutput(t('app.dsa-solver.page.compilingAndRunningAgainst'));
     setOutputStatus("idle");
 
     setTimeout(() => {
       setRunLoading(false);
       setOutputStatus("success");
       setConsoleOutput(
-        t({
-          en: `⚡ Execution Successful!\n\nTest Case 1:\nInput:  ${activeProblem.inputFormat}\nOutput: ${activeProblem.expectedOutput}\n\nAll test cases passed (Time: 4ms, Memory: 8.2MB)`,
-          hi: `⚡ निष्पादन सफल!\n\nपरीक्षण मामला 1:\nइनपुट:  ${activeProblem.inputFormat}\nआउटपुट: ${activeProblem.expectedOutput}\n\nसभी परीक्षण मामले पास हो गए (समय: 4ms, मेमोरी: 8.2MB)`,
-        })
+        t('app.dsa-solver.page.executionSuccessfultestCase')
       );
-      toast.success(t({ en: "Code executed successfully!", hi: "कोड सफलतापूर्वक निष्पादित किया गया!" }));
+      toast.success(t('app.dsa-solver.page.codeExecutedSuccessfully'));
     }, 1200);
   };
 
   const handleSubmitCode = () => {
     setSubmitLoading(true);
-    setConsoleOutput(t({ en: "Submitting code to judge...", hi: "जज को कोड सबमिट किया जा रहा है..." }));
+    setConsoleOutput(t('app.dsa-solver.page.submittingCodeToJudge'));
     setOutputStatus("idle");
 
     setTimeout(() => {
       setSubmitLoading(false);
       setOutputStatus("success");
       setConsoleOutput(
-        t({
-          en: `🎉 All tests passed!\n\nStatus: Accepted\nRuntime: 2ms (Beats 98.4% of submissions)\nMemory: 8.1MB (Beats 92.6% of submissions)`,
-          hi: `🎉 सभी परीक्षण पास हुए!\n\nस्थिति: स्वीकृत\nरनटाइम: 2ms (98.4% सबमिशन से बेहतर)\nमेमोरी: 8.1MB (92.6% सबमिशन से बेहतर)`,
-        })
+        t('app.dsa-solver.page.allTestsPassedstatusAccept')
       );
-      toast.success(t({ en: "Congratulations! Problem Solved!", hi: "बधाई हो! समस्या का समाधान हो गया!" }));
+      toast.success(t('app.dsa-solver.page.congratulationsProblemSolved'));
     }, 1500);
   };
 
@@ -317,17 +299,14 @@ export default function DSASolverPage() {
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center">
           <Breadcrumbs />
           <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight mb-4 font-heading">
-            {t({ en: "DSA Problem Solver", hi: "डीएसए प्रॉब्लम सॉल्वर" })}
+            {t('app.dsa-solver.page.dsaProblemSolver')}
           </h1>
           <p className="max-w-2xl mx-auto text-primary-200 text-base sm:text-lg mb-6">
-            {t({
-              en: "Practice core programming problems, learn algorithm patterns, and run solutions inside our interactive environment.",
-              hi: "बुनियादी प्रोग्रामिंग समस्याओं का अभ्यास करें, एल्गोरिदम पैटर्न सीखें, और हमारे इंटरैक्टिव वातावरण में समाधान चलाएं।",
-            })}
+            {t('app.dsa-solver.page.practiceCoreProgrammingProb')}
           </p>
           <div className="flex items-center gap-2 bg-white/10 backdrop-blur-md px-4 py-2 rounded-2xl border border-white/20 w-fit">
             <Sparkles className="h-5 w-5 text-accent-400" />
-            <span className="text-xs font-semibold">{t({ en: "Workspace Live Sandbox", hi: "कार्यक्षेत्र लाइव सैंडबॉक्स" })}</span>
+            <span className="text-xs font-semibold">{t('app.dsa-solver.page.workspaceLiveSandbox')}</span>
           </div>
         </div>
       </section>
@@ -340,7 +319,7 @@ export default function DSASolverPage() {
             {/* Problems list */}
             <div className="bg-slate-800 rounded-2xl border border-slate-700/80 p-5 shadow-md">
               <h2 className="text-base font-bold text-white flex items-center gap-2 mb-4">
-                <BookOpen className="h-4 w-4 text-accent-500" /> {t({ en: "Select a Challenge", hi: "एक चुनौती चुनें" })}
+                <BookOpen className="h-4 w-4 text-accent-500" /> {t('app.dsa-solver.page.selectAChallenge')}
               </h2>
               <div className="space-y-2 max-h-[220px] overflow-y-auto pr-1">
                 {dsaProblems.map((p) => (
@@ -356,7 +335,7 @@ export default function DSASolverPage() {
                     <span>{t(p.title)}</span>
                     <span
                       className={`text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded ${
-                        p.difficulty.en === "Easy"
+                        p.difficulty === "app.dsa-solver.page.easy"
                           ? activeProblem.id === p.id
                             ? "bg-white/20 text-white"
                             : "bg-emerald-950/20 text-emerald-400"
@@ -380,7 +359,7 @@ export default function DSASolverPage() {
                 </span>
                 <span
                   className={`text-[10px] font-bold tracking-wide uppercase px-2 py-0.5 rounded ${
-                    activeProblem.difficulty.en === "Easy"
+                    activeProblem.difficulty === "app.dsa-solver.page.easy"
                       ? "bg-emerald-950/20 text-emerald-400"
                       : "bg-amber-950/20 text-amber-400"
                   }`}
@@ -398,11 +377,11 @@ export default function DSASolverPage() {
               {/* Example Block */}
               <div className="space-y-3 bg-slate-900/60 p-4 rounded-xl border border-slate-800 text-[11px] font-mono leading-normal shadow-inner">
                 <div>
-                  <span className="text-accent-400 font-bold">{t({ en: "Example Input:", hi: "उदाहरण इनपुट:" })}</span>
+                  <span className="text-accent-400 font-bold">{t('app.dsa-solver.page.exampleInput')}</span>
                   <p className="text-primary-200 mt-0.5">{activeProblem.exampleInput}</p>
                 </div>
                 <div className="pt-2 border-t border-slate-800">
-                  <span className="text-accent-400 font-bold">{t({ en: "Example Output:", hi: "उदाहरण आउटपुट:" })}</span>
+                  <span className="text-accent-400 font-bold">{t('app.dsa-solver.page.exampleOutput')}</span>
                   <p className="text-primary-200 mt-0.5">{activeProblem.exampleOutput}</p>
                 </div>
               </div>
@@ -417,7 +396,7 @@ export default function DSASolverPage() {
               <div className="flex items-center justify-between border-b border-slate-800 pb-3.5 mb-4">
                 <div className="flex items-center gap-2">
                   <Code className="h-4 w-4 text-accent-500" />
-                  <span className="text-xs font-bold text-slate-300">{t({ en: "Playground", hi: "प्लेग्राउंड" })}</span>
+                  <span className="text-xs font-bold text-slate-300">{t('app.dsa-solver.page.playground')}</span>
                 </div>
                 <select
                   value={selectedLanguage}
@@ -453,9 +432,9 @@ export default function DSASolverPage() {
                   disabled={runLoading || submitLoading}
                   className="inline-flex items-center justify-center gap-1.5 px-4.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 text-xs font-bold transition-colors disabled:opacity-50 cursor-pointer"
                 >
-                  {runLoading ? t({ en: "Running...", hi: "चलाया जा रहा है..." }) : (
+                  {runLoading ? t('app.dsa-solver.page.running') : (
                     <>
-                      {t({ en: "Run Code", hi: "कोड चलाएं" })} <Play className="h-3 w-3 fill-slate-200" />
+                      {t('app.dsa-solver.page.runCode')} <Play className="h-3 w-3 fill-slate-200" />
                     </>
                   )}
                 </button>
@@ -464,9 +443,9 @@ export default function DSASolverPage() {
                   disabled={runLoading || submitLoading}
                   className="inline-flex items-center justify-center gap-1.5 px-5 py-2 rounded-xl bg-accent-500 hover:bg-accent-600 text-white text-xs font-bold transition-colors disabled:opacity-50 cursor-pointer"
                 >
-                  {submitLoading ? t({ en: "Submitting...", hi: "जमा किया जा रहा है..." }) : (
+                  {submitLoading ? t('app.dsa-solver.page.submitting') : (
                     <>
-                      {t({ en: "Submit Solution", hi: "समाधान सबमिट करें" })} <CheckCircle2 className="h-3.5 w-3.5" />
+                      {t('app.dsa-solver.page.submitSolution')} <CheckCircle2 className="h-3.5 w-3.5" />
                     </>
                   )}
                 </button>
@@ -477,7 +456,7 @@ export default function DSASolverPage() {
             <div className="bg-slate-900 text-slate-100 rounded-2xl border border-slate-800 p-5 shadow-lg min-h-[140px] flex flex-col justify-between">
               <div className="flex items-center gap-2 border-b border-slate-800 pb-2.5 mb-3">
                 <Terminal className="h-3.5 w-3.5 text-accent-500" />
-                <span className="text-xs font-bold text-slate-350">{t({ en: "Console Output", hi: "कंसोल आउटपुट" })}</span>
+                <span className="text-xs font-bold text-slate-350">{t('app.dsa-solver.page.consoleOutput')}</span>
               </div>
               <div className="flex-1 font-mono text-[11px] leading-relaxed whitespace-pre-wrap max-h-[160px] overflow-y-auto text-slate-300">
                 {consoleOutput ? (
@@ -493,7 +472,7 @@ export default function DSASolverPage() {
                     {consoleOutput}
                   </span>
                 ) : (
-                  <span className="text-slate-500 italic">{t({ en: "Run your code to see the test results here.", hi: "यहाँ परीक्षण परिणाम देखने के लिए अपना कोड चलाएं।" })}</span>
+                  <span className="text-slate-500 italic">{t('app.dsa-solver.page.runYourCodeToSeeTheTest')}</span>
                 )}
               </div>
             </div>

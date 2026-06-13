@@ -1,10 +1,11 @@
 "use client";
+import { useTranslation } from "react-i18next";
+import { useLanguage } from "@/providers/language-provider";
 
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { useLanguage } from "@/providers/language-provider";
 import {
   Home,
   BookOpen,
@@ -24,7 +25,8 @@ import {
 export function BottomNavigation() {
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { t } = useLanguage();
+  const { t } = useTranslation();
+  const { language } = useLanguage();
 
   const tabs = [
     { label: "Home", href: "/", icon: Home },
@@ -54,8 +56,8 @@ export function BottomNavigation() {
       case "About Us": return t("nav.about");
       case "Volunteer": return t("nav.volunteer");
       case "Blogs": return t("nav.blogs");
-      case "Gallery": return t({ en: "Gallery", hi: "गैलरी" });
-      case "Careers": return t({ en: "Careers", hi: "करियर" });
+      case "Gallery": return t('components.bottom-navigation.gallery');
+      case "Careers": return t('components.bottom-navigation.careers');
       case "Dashboard": return t("nav.dashboard");
       case "Interview Prep": return t("nav.interviewPrep");
       case "DSA Solver": return t("nav.dsaSolver");

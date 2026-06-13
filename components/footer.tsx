@@ -1,11 +1,12 @@
 "use client";
+import { useTranslation } from "react-i18next";
+import { useLanguage } from "@/providers/language-provider";
 
 import Link from "next/link";
 import { foundationInfo, socialLinks } from "@/lib/constants";
 import Image from "next/image";
 import { Mail, Phone, MapPin, Heart, Clock } from "lucide-react";
 import { motion } from "framer-motion";
-import { useLanguage } from "@/providers/language-provider";
 import {
   LuFacebook,
   LuTwitter,
@@ -55,14 +56,14 @@ const contactDetails = [
     href: "tel:+919876543210",
   },
   {
-    icon: Mail,
-    text: "info@devbhoomifoundation.org",
-    href: "mailto:info@devbhoomifoundation.org",
-  },
-  {
     icon: Clock,
     text: "Mon - Sat: 9:00 AM - 6:00 PM",
     href: undefined,
+  },
+  {
+    icon: Mail,
+    text: "info@devbhoomifoundation.org",
+    href: "mailto:info@devbhoomifoundation.org",
   },
 ];
 
@@ -75,7 +76,8 @@ const socialIcons: Record<string, React.ReactNode> = {
 };
 
 export function Footer() {
-  const { t } = useLanguage();
+  const { t } = useTranslation();
+  const { language } = useLanguage();
 
   const getFooterLinkLabel = (label: string) => {
     switch (label) {
@@ -87,20 +89,20 @@ export function Footer() {
       case "DSA Problem Solver": return t("nav.dsaSolver");
       case "Blog": return t("nav.blogs");
       case "Contact Us": return t("nav.contact");
-      case "Gallery": return t({ en: "Gallery", hi: "गैलरी" });
-      case "Careers": return t({ en: "Careers", hi: "करियर" });
-      
+      case "Gallery": return t('components.footer.gallery');
+      case "Careers": return t('components.footer.careers');
+
       case "Donate Now": return t("nav.donate");
       case "Become a Volunteer": return t("nav.becomeVolunteer");
       case "Partner With Us": return t("nav.partnerWithUs");
       case "Fundraise": return t("nav.fundraise");
       case "Events": return t("nav.events");
-      
-      case "FAQ": return t({ en: "FAQ", hi: "एफएक्यू" });
-      case "Privacy Policy": return t({ en: "Privacy Policy", hi: "गोपनीयता नीति" });
-      case "Terms & Conditions": return t({ en: "Terms & Conditions", hi: "नियम और शर्तें" });
-      case "Refund Policy": return t({ en: "Refund Policy", hi: "धनवापसी नीति" });
-      case "Sitemap": return t({ en: "Sitemap", hi: "साइटमैप" });
+
+      case "FAQ": return t('components.footer.faq');
+      case "Privacy Policy": return t('components.footer.privacyPolicy');
+      case "Terms & Conditions": return t('components.footer.termsConditions');
+      case "Refund Policy": return t('components.footer.refundPolicy');
+      case "Sitemap": return t('components.footer.sitemap');
       default: return label;
     }
   };
@@ -133,7 +135,7 @@ export function Footer() {
               />
               <div>
                 <p className="font-heading font-semibold text-lg text-white tracking-wide">
-                  {t({ en: "Nextgen Devbhoomi", hi: "नेक्स्टजेन देवभूमि" })}
+                  {t('components.footer.nextgenDevbhoomi')}
                 </p>
               </div>
             </div>
@@ -199,25 +201,6 @@ export function Footer() {
             </ul>
           </div>
 
-          {/* ── Support ── */}
-          <div>
-            <h4 className="text-base font-semibold text-white mb-4">
-              {t("footer.support")}
-            </h4>
-            <ul className="space-y-2.5">
-              {supportLinks.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="text-primary-300 hover:text-accent-500 transition-colors duration-300 text-sm"
-                  >
-                    {getFooterLinkLabel(link.label)}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
           {/* ── Contact Us ── */}
           <div>
             <h4 className="text-base font-semibold text-white mb-4">
@@ -247,6 +230,26 @@ export function Footer() {
               })}
             </ul>
           </div>
+          {/* ── Support ── */}
+          <div>
+            <h4 className="text-base font-semibold text-white mb-4">
+              {t("footer.support")}
+            </h4>
+            <ul className="space-y-2.5">
+              {supportLinks.map((link) => (
+                <li key={link.href}>
+                  <Link
+                    href={link.href}
+                    className="text-primary-300 hover:text-accent-500 transition-colors duration-300 text-sm"
+                  >
+                    {getFooterLinkLabel(link.label)}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+
         </div>
       </div>
 

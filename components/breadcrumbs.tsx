@@ -1,65 +1,65 @@
 "use client";
+import { useTranslation } from "react-i18next";
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ChevronRight, Home } from "lucide-react";
-import { useLanguage } from "@/providers/language-provider";
 
 export function Breadcrumbs() {
   const pathname = usePathname();
-  const { t } = useLanguage();
+  const { t } = useTranslation();
 
   if (!pathname || pathname === "/") return null;
 
   // Define logical hierarchy mapping for flat paths
   const getBreadcrumbs = (path: string) => {
-    const items = [{ label: { en: "Home", hi: "मुख्य पृष्ठ" }, href: "/" }];
+    const items = [{ label: "components.breadcrumbs.home", href: "/" }];
 
     switch (path) {
       case "/about":
-        items.push({ label: { en: "About Us", hi: "हमारे बारे में" }, href: "/about" });
+        items.push({ label: "components.breadcrumbs.aboutUs", href: "/about" });
         break;
       case "/blogs":
-        items.push({ label: { en: "Blogs", hi: "ब्लॉग" }, href: "/blogs" });
+        items.push({ label: "components.breadcrumbs.blogs", href: "/blogs" });
         break;
       case "/careers":
-        items.push({ label: { en: "Careers", hi: "करियर" }, href: "/careers" });
+        items.push({ label: "components.breadcrumbs.careers", href: "/careers" });
         break;
       case "/contact":
-        items.push({ label: { en: "Contact Us", hi: "संपर्क करें" }, href: "/contact" });
+        items.push({ label: "components.breadcrumbs.contactUs", href: "/contact" });
         break;
       case "/courses":
-        items.push({ label: { en: "Courses", hi: "पाठ्यक्रम" }, href: "/courses" });
+        items.push({ label: "components.breadcrumbs.courses", href: "/courses" });
         break;
       case "/library":
-        items.push({ label: { en: "Courses", hi: "पाठ्यक्रम" }, href: "/courses" });
-        items.push({ label: { en: "Digital Library", hi: "डिजिटल लाइब्रेरी" }, href: "/library" });
+        items.push({ label: "components.breadcrumbs.courses", href: "/courses" });
+        items.push({ label: "components.breadcrumbs.digitalLibrary", href: "/library" });
         break;
       case "/digital-library":
-        items.push({ label: { en: "Courses", hi: "पाठ्यक्रम" }, href: "/courses" });
-        items.push({ label: { en: "Digital Library", hi: "डिजिटल लाइब्रेरी" }, href: "/library" });
+        items.push({ label: "components.breadcrumbs.courses", href: "/courses" });
+        items.push({ label: "components.breadcrumbs.digitalLibrary", href: "/library" });
         break;
       case "/interview-prep":
-        items.push({ label: { en: "Courses", hi: "पाठ्यक्रम" }, href: "/courses" });
-        items.push({ label: { en: "Interview Prep", hi: "इंटरव्यू तैयारी" }, href: "/interview-prep" });
+        items.push({ label: "components.breadcrumbs.courses", href: "/courses" });
+        items.push({ label: "components.breadcrumbs.interviewPrep", href: "/interview-prep" });
         break;
       case "/dsa-solver":
-        items.push({ label: { en: "Courses", hi: "पाठ्यक्रम" }, href: "/courses" });
-        items.push({ label: { en: "DSA Problem Solver", hi: "डीएसए प्रॉब्लम सॉल्वर" }, href: "/dsa-solver" });
+        items.push({ label: "components.breadcrumbs.courses", href: "/courses" });
+        items.push({ label: "components.breadcrumbs.dsaProblemSolver", href: "/dsa-solver" });
         break;
       case "/donate":
-        items.push({ label: { en: "Get Involved", hi: "शामिल हों" }, href: "/programs" });
-        items.push({ label: { en: "Donate", hi: "दान करें" }, href: "/donate" });
+        items.push({ label: "components.breadcrumbs.getInvolved", href: "/programs" });
+        items.push({ label: "components.breadcrumbs.donate", href: "/donate" });
         break;
       case "/volunteer":
-        items.push({ label: { en: "Get Involved", hi: "शामिल हों" }, href: "/programs" });
-        items.push({ label: { en: "Volunteer", hi: "स्वयंसेवक" }, href: "/volunteer" });
+        items.push({ label: "components.breadcrumbs.getInvolved", href: "/programs" });
+        items.push({ label: "components.breadcrumbs.volunteer", href: "/volunteer" });
         break;
       case "/programs":
-        items.push({ label: { en: "Programs", hi: "कार्यक्रम" }, href: "/programs" });
+        items.push({ label: "components.breadcrumbs.programs", href: "/programs" });
         break;
       case "/gallery":
-        items.push({ label: { en: "Gallery", hi: "गैलरी" }, href: "/gallery" });
+        items.push({ label: "components.breadcrumbs.gallery", href: "/gallery" });
         break;
       default:
         // Fallback parsing for other nested or single segment paths
@@ -67,7 +67,7 @@ export function Breadcrumbs() {
         segments.forEach((segment, idx) => {
           const href = "/" + segments.slice(0, idx + 1).join("/");
           const labelText = segment.charAt(0).toUpperCase() + segment.slice(1).replace(/-/g, " ");
-          items.push({ label: { en: labelText, hi: labelText }, href });
+          items.push({ label: labelText, href });
         });
     }
     return items;

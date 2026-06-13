@@ -1,12 +1,13 @@
 "use client";
 
 import React, { createContext, useContext, useState, useEffect } from "react";
-import { translations, Language } from "@/lib/translations";
+import i18n from "@/lib/i18n";
+
+export type Language = "en" | "hi";
 
 interface LanguageContextType {
   language: Language;
   setLanguage: (lang: Language) => void;
-  t: (keyOrObj: string | { en: string; hi: string }) => string;
   mounted: boolean;
 }
 
@@ -20,6 +21,7 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
     const savedLang = localStorage.getItem("language") as Language;
     if (savedLang === "en" || savedLang === "hi") {
       setLanguageState(savedLang);
+      i18n.changeLanguage(savedLang);
     }
     setMounted(true);
   }, []);
@@ -27,25 +29,11 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
   const setLanguage = (lang: Language) => {
     setLanguageState(lang);
     localStorage.setItem("language", lang);
-  };
-
-  const t = (keyOrObj: string | { en: string; hi: string }): string => {
-    // If we're not mounted yet, default to English to prevent hydration mismatch
-    const currentLang = mounted ? language : "en";
-
-    if (typeof keyOrObj === "string") {
-      const translation = translations[keyOrObj];
-      if (translation) {
-        return translation[currentLang];
-      }
-      return keyOrObj;
-    }
-
-    return keyOrObj[currentLang] || keyOrObj.en;
+    i18n.changeLanguage(lang);
   };
 
   return (
-    <LanguageContext.Provider value={{ language, setLanguage, t, mounted }}>
+    <LanguageContext.Provider value={{ language, setLanguage, mounted }}>
       {children}
     </LanguageContext.Provider>
   );

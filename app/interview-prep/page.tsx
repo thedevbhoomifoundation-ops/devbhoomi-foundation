@@ -1,4 +1,5 @@
 "use client";
+import { useTranslation } from "react-i18next";
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -14,7 +15,6 @@ import {
   Briefcase,
 } from "lucide-react";
 import { Breadcrumbs } from "@/components/breadcrumbs";
-import { useLanguage } from "@/providers/language-provider";
 
 interface TranslatedField {
   en: string;
@@ -23,23 +23,20 @@ interface TranslatedField {
 
 interface InterviewQuestion {
   id: string;
-  question: TranslatedField;
+  question: string;
   category: "frontend" | "backend" | "dsa" | "behavioral";
-  difficulty: { en: string; hi: string };
-  answer: TranslatedField;
+  difficulty: string;
+  answer: string;
   codeSnippet?: string;
 }
 
 const interviewQuestions: InterviewQuestion[] = [
   {
     id: "1",
-    question: { en: "What is a closure in JavaScript?", hi: "जावास्क्रिप्ट में क्लोजर (closure) क्या है?" },
+    question: "app.interview-prep.page.whatIsAClosureInJavascrip",
     category: "frontend",
-    difficulty: { en: "Medium", hi: "मध्यम" },
-    answer: {
-      en: "A closure is the combination of a function bundled together (enclosed) with references to its surrounding state (the lexical environment). In other words, a closure gives an inner function access to the outer function's scope even after the outer function has returned.",
-      hi: "क्लोजर एक फ़ंक्शन का अपने आस-पास की स्थिति (लेक्सिकल वातावरण) के संदर्भों के साथ बंडल (संलग्न) होने का संयोजन है। दूसरे शब्दों में, एक क्लोजर एक आंतरिक फ़ंक्शन को बाहरी फ़ंक्शन के दायरे (scope) तक पहुंच प्रदान करता है, भले ही बाहरी फ़ंक्शन वापस आ गया हो।"
-    },
+    difficulty: "app.interview-prep.page.medium",
+    answer: "app.interview-prep.page.aClosureIsTheCombinationO",
     codeSnippet: `function outerFunction(outerVariable) {
   return function innerFunction(innerVariable) {
     console.log('Outer:', outerVariable);
@@ -51,23 +48,17 @@ newFunction('inside'); // Logs: Outer: outside, Inner: inside`,
   },
   {
     id: "2",
-    question: { en: "Explain the difference between SQL and NoSQL databases.", hi: "SQL और NoSQL डेटाबेस के बीच अंतर स्पष्ट करें।" },
+    question: "app.interview-prep.page.explainTheDifferenceBetween",
     category: "backend",
-    difficulty: { en: "Easy", hi: "आसान" },
-    answer: {
-      en: "SQL databases are relational, table-based, have predefined schema, and scale vertically (buying bigger servers). NoSQL databases are non-relational, document/key-value/graph-based, have dynamic schemas, and scale horizontally (adding more servers).",
-      hi: "SQL डेटाबेस रिलेशनल, टेबल-आधारित होते हैं, इनमें पूर्व-निर्धारित स्कीमा होता है, और वे वर्टिकली स्केल (बड़े सर्वर खरीदकर) होते हैं। NoSQL डेटाबेस नॉन-रिलेशनल, दस्तावेज़/की-वैल्यू/ग्राफ-आधारित होते हैं, इनमें डायनेमिक स्कीमा होते हैं, और वे हॉरिजॉन्टली स्केल (अधिक सर्वर जोड़कर) होते हैं।"
-    },
+    difficulty: "app.interview-prep.page.easy",
+    answer: "app.interview-prep.page.sqlDatabasesAreRelationalT",
   },
   {
     id: "3",
-    question: { en: "How do you detect a cycle in a linked list?", hi: "आप एक लिंक्ड लिस्ट में चक्र (cycle) का पता कैसे लगाते हैं?" },
+    question: "app.interview-prep.page.howDoYouDetectACycleInA",
     category: "dsa",
-    difficulty: { en: "Medium", hi: "मध्यम" },
-    answer: {
-      en: "You can detect a cycle using Floyd's Cycle-Finding Algorithm (also known as the Tortoise and the Hare algorithm). You use two pointers: a slow pointer that moves 1 step at a time, and a fast pointer that moves 2 steps at a time. If there is a cycle, the fast pointer will eventually meet the slow pointer. If they hit null/end, there is no cycle.",
-      hi: "आप फ़्लॉइड के साइकिल-फाइंडिंग एल्गोरिदम (जिसे कछुआ और खरगोश एल्गोरिदम भी कहा जाता है) का उपयोग करके एक चक्र का पता लगा सकते हैं। आप दो पॉइंटर्स का उपयोग करते हैं: एक धीमा पॉइंटर जो एक बार में 1 कदम आगे बढ़ता है, और एक तेज़ पॉइंटर जो एक बार में 2 कदम आगे बढ़ता है। यदि कोई चक्र है, तो तेज़ पॉइंटर अंततः धीमे पॉइंटर से मिल जाएगा। यदि वे अंत (null) तक पहुँचते हैं, तो कोई चक्र नहीं है।"
-    },
+    difficulty: "app.interview-prep.page.medium",
+    answer: "app.interview-prep.page.youCanDetectACycleUsingF",
     codeSnippet: `function hasCycle(head) {
   let slow = head;
   let fast = head;
@@ -81,23 +72,17 @@ newFunction('inside'); // Logs: Outer: outside, Inner: inside`,
   },
   {
     id: "4",
-    question: { en: "How do you handle conflict with a co-worker or teammate?", hi: "आप किसी सहकर्मी या टीम के साथी के साथ संघर्ष (conflict) को कैसे संभालते हैं?" },
+    question: "app.interview-prep.page.howDoYouHandleConflictWit",
     category: "behavioral",
-    difficulty: { en: "Easy", hi: "आसान" },
-    answer: {
-      en: "Using the STAR method (Situation, Task, Action, Result): I stay calm, listen actively to their perspective without interrupting, focus on the objective/problem rather than personal feelings, identify a compromise or shared goal, and check in later to ensure a positive working relationship. For example, when a teammate and I disagreed on code architecture, we listed the pros and cons of both, consulted senior guidelines, and chose the one that met performance requirements better.",
-      hi: "STAR पद्धति (स्थिति, कार्य, क्रिया, परिणाम) का उपयोग करते हुए: मैं शांत रहता हूं, बिना किसी बाधा के सक्रिय रूप से उनके दृष्टिकोण को सुनता हूं, व्यक्तिगत भावनाओं के बजाय उद्देश्य/समस्या पर ध्यान केंद्रित करता हूं, एक समझौता या साझा लक्ष्य की पहचान करता हूं, और बाद में एक सकारात्मक कामकाजी संबंध सुनिश्चित करने के लिए जांच करता हूं। उदाहरण के लिए, जब एक टीम के साथी और मैं कोड आर्किटेक्चर पर असहमत थे, तो हमने दोनों के पक्ष और विपक्ष को सूचीबद्ध किया, वरिष्ठ दिशानिर्देशों से परामर्श किया, और उस एक को चुना जो प्रदर्शन आवश्यकताओं को बेहतर ढंग से पूरा करता था।"
-    },
+    difficulty: "app.interview-prep.page.easy",
+    answer: "app.interview-prep.page.usingTheStarMethodSituatio",
   },
   {
     id: "5",
-    question: { en: "What are React hooks, and why were they introduced?", hi: "रिएक्ट हुक्स (React hooks) क्या हैं, और उन्हें क्यों पेश किया गया था?" },
+    question: "app.interview-prep.page.whatAreReactHooksAndWhyW",
     category: "frontend",
-    difficulty: { en: "Medium", hi: "मध्यम" },
-    answer: {
-      en: "Hooks are functions that let you 'hook into' React state and lifecycle features from function components. They were introduced in React 16.8 to resolve class component issues: reusing stateful logic without changing component hierarchy, avoiding complex lifecycle methods, and keeping related logic grouped together.",
-      hi: "हुक्स ऐसे फ़ंक्शन हैं जो आपको फ़ंक्शन घटकों से रिएक्ट स्थिति और जीवनचक्र सुविधाओं से जुड़ने की अनुमति देते हैं। उन्हें क्लास घटकों की समस्याओं को हल करने के लिए रिएक्ट 16.8 में पेश किया गया था: घटक पदानुक्रम को बदले बिना स्टेटफुल तर्क का पुन: उपयोग करना, जटिल जीवनचक्र विधियों से बचना, और संबंधित तर्क को एक साथ समूहित रखना।"
-    },
+    difficulty: "app.interview-prep.page.medium",
+    answer: "app.interview-prep.page.hooksAreFunctionsThatLetY",
     codeSnippet: `import { useState, useEffect } from 'react';
 
 function Counter() {
@@ -113,15 +98,15 @@ function Counter() {
 ];
 
 const categoryTabs = [
-  { id: "all", label: { en: "All Topics", hi: "सभी विषय" }, icon: BookOpen },
-  { id: "frontend", label: { en: "Frontend", hi: "फ्रंटएंड" }, icon: Terminal },
-  { id: "backend", label: { en: "Backend", hi: "बैकएंड" }, icon: Cpu },
-  { id: "dsa", label: { en: "DSA Concepts", hi: "डीएसए अवधारणाएं" }, icon: Terminal },
-  { id: "behavioral", label: { en: "Behavioral / HR", hi: "व्यवहारिक / एचआर" }, icon: Users },
+  { id: "all", label: "app.interview-prep.page.allTopics", icon: BookOpen },
+  { id: "frontend", label: "app.interview-prep.page.frontend", icon: Terminal },
+  { id: "backend", label: "app.interview-prep.page.backend", icon: Cpu },
+  { id: "dsa", label: "app.interview-prep.page.dsaConcepts", icon: Terminal },
+  { id: "behavioral", label: "app.interview-prep.page.behavioralHr", icon: Users },
 ];
 
 export default function InterviewPrepPage() {
-  const { t } = useLanguage();
+  const { t } = useTranslation();
   const [activeTab, setActiveTab] = useState("all");
   const [searchQuery, setSearchQuery] = useState("");
   const [expandedId, setExpandedId] = useState<string | null>(null);
@@ -146,13 +131,10 @@ export default function InterviewPrepPage() {
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <Breadcrumbs />
           <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight mb-4 font-heading">
-            {t({ en: "Interview Preparation Portal", hi: "साक्षात्कार तैयारी पोर्टल" })}
+            {t('app.interview-prep.page.interviewPreparationPortal')}
           </h1>
           <p className="max-w-2xl mx-auto text-primary-200 text-base sm:text-lg">
-            {t({
-              en: "Master your coding, system design, and behavioral interviews with standard interview questions, cheat sheets, and structured answers.",
-              hi: "मानक साक्षात्कार प्रश्नों, चीट शीट्स और संरचित उत्तरों के साथ अपने कोडिंग, सिस्टम डिज़ाइन और व्यवहार संबंधी साक्षात्कार में महारत हासिल करें।",
-            })}
+            {t('app.interview-prep.page.masterYourCodingSystemDesi')}
           </p>
         </div>
       </section>
@@ -167,13 +149,10 @@ export default function InterviewPrepPage() {
             </div>
             <div>
               <h3 className="font-bold text-white text-sm mb-1">
-                {t({ en: "STAR Method", hi: "STAR विधि" })}
+                {t('app.interview-prep.page.starMethod')}
               </h3>
               <p className="text-xs text-primary-300 leading-relaxed">
-                {t({
-                  en: "Answer behavioral questions with Situation, Task, Action, and Result.",
-                  hi: "व्यवहार संबंधी प्रश्नों के उत्तर सिचुएशन (स्थिति), टास्क (कार्य), एक्शन (क्रिया) और रिजल्ट (परिणाम) के साथ दें।",
-                })}
+                {t('app.interview-prep.page.answerBehavioralQuestionsWi')}
               </p>
             </div>
           </div>
@@ -183,13 +162,10 @@ export default function InterviewPrepPage() {
             </div>
             <div>
               <h3 className="font-bold text-white text-sm mb-1">
-                {t({ en: "Explain First", hi: "पहले समझाएं" })}
+                {t('app.interview-prep.page.explainFirst')}
               </h3>
               <p className="text-xs text-primary-300 leading-relaxed">
-                {t({
-                  en: "Before writing DSA solutions, explain your logic, time & space complexities.",
-                  hi: "डीएसए समाधान लिखने से पहले, अपने तर्क, समय और स्थान जटिलताओं को समझाएं।",
-                })}
+                {t('app.interview-prep.page.beforeWritingDsaSolutionsE')}
               </p>
             </div>
           </div>
@@ -199,13 +175,10 @@ export default function InterviewPrepPage() {
             </div>
             <div>
               <h3 className="font-bold text-white text-sm mb-1">
-                {t({ en: "Clean Code", hi: "स्वच्छ कोड" })}
+                {t('app.interview-prep.page.cleanCode')}
               </h3>
               <p className="text-xs text-primary-300 leading-relaxed">
-                {t({
-                  en: "Write readable, self-documenting code with meaningful variable names.",
-                  hi: "अर्थपूर्ण चर (variable) नामों के साथ पठनीय, स्व-दस्तावेजी कोड लिखें।",
-                })}
+                {t('app.interview-prep.page.writeReadableSelfdocumenting')}
               </p>
             </div>
           </div>
@@ -218,7 +191,7 @@ export default function InterviewPrepPage() {
             <Search className="h-5 w-5 text-primary-400 shrink-0" />
             <input
               type="text"
-              placeholder={t({ en: "Search interview questions by keyword...", hi: "कीवर्ड द्वारा साक्षात्कार प्रश्न खोजें..." })}
+              placeholder={t('app.interview-prep.page.searchInterviewQuestionsBy')}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="w-full bg-transparent text-white placeholder-primary-500 focus:outline-none text-sm"
@@ -273,9 +246,9 @@ export default function InterviewPrepPage() {
                       <div className="space-y-1">
                         <span
                           className={`text-[9px] font-extrabold tracking-wider uppercase px-2 py-0.5 rounded-md ${
-                            q.difficulty.en === "Easy"
+                            q.difficulty === "app.interview-prep.page.easy"
                               ? "bg-emerald-950/20 text-emerald-400"
-                              : q.difficulty.en === "Medium"
+                              : q.difficulty === "app.interview-prep.page.medium"
                               ? "bg-amber-950/20 text-amber-400"
                               : "bg-rose-950/20 text-rose-400"
                           }`}
@@ -306,7 +279,7 @@ export default function InterviewPrepPage() {
                           <div className="space-y-4">
                             <div>
                               <h4 className="text-xs font-bold uppercase tracking-wider text-accent-400 mb-1.5">
-                                {t({ en: "Explanation", hi: "स्पष्टीकरण" })}
+                                {t('app.interview-prep.page.explanation')}
                               </h4>
                               <p className="text-sm text-primary-300 leading-relaxed">
                                 {t(q.answer)}
@@ -316,7 +289,7 @@ export default function InterviewPrepPage() {
                             {q.codeSnippet && (
                               <div>
                                 <h4 className="text-xs font-bold uppercase tracking-wider text-accent-400 mb-1.5">
-                                  {t({ en: "Example Code", hi: "उदाहरण कोड" })}
+                                  {t('app.interview-prep.page.exampleCode')}
                                 </h4>
                                 <pre className="bg-slate-900 text-slate-100 rounded-xl p-4 text-xs font-mono overflow-x-auto border border-slate-800 shadow-inner">
                                   <code>{q.codeSnippet}</code>
@@ -333,10 +306,7 @@ export default function InterviewPrepPage() {
             ) : (
               <div className="bg-slate-800 rounded-2xl border border-slate-700/80 p-12 text-center shadow-md">
                 <p className="text-sm text-primary-350">
-                  {t({
-                    en: `No interview questions found matching "${searchQuery}". Try different keywords.`,
-                    hi: `"${searchQuery}" से मेल खाने वाला कोई साक्षात्कार प्रश्न नहीं मिला। विभिन्न कीवर्ड आज़माएं।`,
-                  })}
+                  {t('app.interview-prep.page.noInterviewQuestionsFoundM')}
                 </p>
               </div>
             )}

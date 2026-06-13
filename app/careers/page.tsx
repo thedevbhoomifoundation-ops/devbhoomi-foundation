@@ -1,4 +1,5 @@
 "use client";
+import { useTranslation } from "react-i18next";
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -18,7 +19,6 @@ import {
 import { toast } from "sonner";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 import { Section, Card, Badge } from "@/components/ui";
-import { useLanguage } from "@/providers/language-provider";
 
 interface TranslatedField {
   en: string;
@@ -27,112 +27,100 @@ interface TranslatedField {
 
 interface Position {
   id: string;
-  title: TranslatedField;
-  department: TranslatedField;
-  location: TranslatedField;
-  type: TranslatedField;
-  description: TranslatedField;
-  requirements: TranslatedField[];
-  responsibilities: TranslatedField[];
+  title: string;
+  department: string;
+  location: string;
+  type: string;
+  description: string;
+  requirements: string[];
+  responsibilities: string[];
 }
 
 const positionsData: Position[] = [
   {
     id: "1",
-    title: { en: "Technical Instructor (Full-Stack Web)", hi: "तकनीकी प्रशिक्षक (फुल-स्टैक वेब)" },
-    department: { en: "Education", hi: "शिक्षा" },
-    location: { en: "Rishikesh, Uttarakhand (Hybrid)", hi: "ऋषिकेश, उत्तराखंड (हाइब्रिड)" },
-    type: { en: "Full-Time", hi: "पूर्णकालिक" },
-    description: {
-      en: "Teach and mentor young students from underprivileged backgrounds, helping them master frontend and backend web technologies to secure jobs.",
-      hi: "वंचित पृष्ठभूमि के युवा छात्रों को पढ़ाएं और उनका मार्गदर्शन करें, जिससे उन्हें नौकरी पाने के लिए फ्रंटएंड और बैकएंड वेब प्रौद्योगिकियों में महारत हासिल करने में मदद मिल सके।"
-    },
+    title: "app.careers.page.technicalInstructorFullstack",
+    department: "app.careers.page.education",
+    location: "app.careers.page.rishikeshUttarakhandHybrid",
+    type: "app.careers.page.fulltime",
+    description: "app.careers.page.teachAndMentorYoungStudent",
     requirements: [
-      { en: "2+ years of software development experience (JavaScript/React/Node.js/SQL)", hi: "2+ वर्ष का सॉफ्टवेयर विकास अनुभव (जावास्क्रिप्ट/रिएक्ट/नोड.जेएस/एसक्यूएल)" },
-      { en: "Strong understanding of core CS concepts (databases, web protocols, REST APIs)", hi: "कोर सीएस अवधारणाओं (डेटाबेस, वेब प्रोटोकॉल, रेस्ट एपीआई) की मजबूत समझ" },
-      { en: "Excellent communication and a passion for teaching and helping others grow", hi: "उत्कृष्ट संचार और शिक्षण तथा दूसरों को आगे बढ़ने में मदद करने का जुनून" },
-      { en: "Prior teaching, lecturing, or mentorship experience is a plus", hi: "पूर्व शिक्षण, व्याख्यान या मार्गदर्शन का अनुभव एक अतिरिक्त लाभ है" },
+      "app.careers.page.2YearsOfSoftwareDevelopmen",
+      "app.careers.page.strongUnderstandingOfCoreC",
+      "app.careers.page.excellentCommunicationAndA",
+      "app.careers.page.priorTeachingLecturingOrMe",
     ],
     responsibilities: [
-      { en: "Conduct daily interactive lectures and coding sandbox sessions", hi: "दैनिक इंटरैक्टिव व्याख्यान और कोडिंग सैंडबॉक्स सत्र आयोजित करना" },
-      { en: "Review student code submissions and provide constructive, detailed feedback", hi: "छात्रों के कोड सबमिशन की समीक्षा करना और रचनात्मक, विस्तृत प्रतिक्रिया प्रदान करना" },
-      { en: "Design project-based course curriculum aligned with standard tech requirements", hi: "मानक तकनीकी आवश्यकताओं के अनुरूप परियोजना-आधारित पाठ्यक्रम तैयार करना" },
-      { en: "Guide students through their final capstone web app projects", hi: "छात्रों को उनके अंतिम कैपस्टोन वेब ऐप प्रोजेक्ट्स के माध्यम से निर्देशित करना" },
+      "app.careers.page.conductDailyInteractiveLect",
+      "app.careers.page.reviewStudentCodeSubmission",
+      "app.careers.page.designProjectbasedCourseCur",
+      "app.careers.page.guideStudentsThroughTheirF",
     ],
   },
   {
     id: "2",
-    title: { en: "DSA & Algorithm Mentor", hi: "डीएसए और एल्गोरिदम मेंटर" },
-    department: { en: "Education", hi: "शिक्षा" },
-    location: { en: "Remote (India)", hi: "रिमोट (भारत)" },
-    type: { en: "Part-Time / Volunteer", hi: "अंशकालिक / स्वयंसेवक" },
-    description: {
-      en: "Prepare advanced students for competitive coding and engineering interviews by explaining data structures, patterns, and complex algorithms.",
-      hi: "उन्नत छात्रों को डेटा संरचनाओं, पैटर्नों और जटिल एल्गोरिदम को समझाकर प्रतिस्पर्धी कोडिंग और इंजीनियरिंग साक्षात्कार के लिए तैयार करें।"
-    },
+    title: "app.careers.page.dsaAlgorithmMentor",
+    department: "app.careers.page.education",
+    location: "app.careers.page.remoteIndia",
+    type: "app.careers.page.parttimeVolunteer",
+    description: "app.careers.page.prepareAdvancedStudentsFor",
     requirements: [
-      { en: "Solid mastery of Data Structures and Algorithms (Trees, Graphs, DP, Sorting)", hi: "डेटा स्ट्रक्चर्स और एल्गोरिदम (ट्री, ग्राफ, डीपी, सॉर्टिंग) पर ठोस महारत" },
-      { en: "Active profile on coding platforms (LeetCode, Codeforces, HackerRank, etc.)", hi: "कोडिंग प्लेटफॉर्म (लीटकोड, कोडफोर्स, हैकररैंक आदि) पर सक्रिय प्रोफाइल" },
-      { en: "Strong verbal and written guidance capability to clarify algorithmic approaches", hi: "एल्गोरिथम दृष्टिकोण को स्पष्ट करने के लिए मजबूत मौखिक और लिखित मार्गदर्शन क्षमता" },
-      { en: "Available for at least 6-8 hours per week", hi: "प्रति सप्ताह कम से कम 6-8 घंटे उपलब्ध रहें" },
+      "app.careers.page.solidMasteryOfDataStructur",
+      "app.careers.page.activeProfileOnCodingPlatf",
+      "app.careers.page.strongVerbalAndWrittenGuid",
+      "app.careers.page.availableForAtLeast68Hour",
     ],
     responsibilities: [
-      { en: "Conduct weekly live interactive coding sandboxes explaining key patterns", hi: "प्रमुख पैटर्नों को समझाते हुए साप्ताहिक लाइव इंटरैक्टिव कोडिंग सैंडबॉक्स आयोजित करना" },
-      { en: "Run mock interviews (technical & behavioral) and provide improvement scorecards", hi: "मॉक इंटरव्यू (तकनीकी और व्यवहार संबंधी) आयोजित करना और सुधार स्कोरकार्ड प्रदान करना" },
-      { en: "Moderate student coding discussion channels to resolve query roadblocks", hi: "प्रश्नों के समाधान के लिए छात्र कोडिंग चर्चा चैनलों का संचालन करना" },
-      { en: "Formulate practice assignment sheets targeting company interview patterns", hi: "कंपनी के साक्षात्कार पैटर्नों को लक्षित करने वाली अभ्यास असाइनमेंट शीट तैयार करना" },
+      "app.careers.page.conductWeeklyLiveInteractiv",
+      "app.careers.page.runMockInterviewsTechnical",
+      "app.careers.page.moderateStudentCodingDiscus",
+      "app.careers.page.formulatePracticeAssignment",
     ],
   },
   {
     id: "3",
-    title: { en: "Program Coordinator", hi: "कार्यक्रम समन्वयक" },
-    department: { en: "Operations", hi: "संचालन" },
-    location: { en: "Rishikesh, Uttarakhand (On-Site)", hi: "ऋषिकेश, उत्तराखंड (ऑन-साइट)" },
-    type: { en: "Full-Time", hi: "पूर्णकालिक" },
-    description: {
-      en: "Oversee operations at our local Uttarakhand training centers, handle student enrollments, coordinate guest workshops, and manage logistics.",
-      hi: "हमारे स्थानीय उत्तराखंड प्रशिक्षण केंद्रों पर संचालन की निगरानी करें, छात्र नामांकन संभालें, अतिथि कार्यशालाओं का समन्वय करें और रसद का प्रबंधन करें।"
-    },
+    title: "app.careers.page.programCoordinator",
+    department: "app.careers.page.operations",
+    location: "app.careers.page.rishikeshUttarakhandOnsite",
+    type: "app.careers.page.fulltime",
+    description: "app.careers.page.overseeOperationsAtOurLoca",
     requirements: [
-      { en: "1+ year of experience in project coordination, community management, or operations", hi: "परियोजना समन्वय, समुदाय प्रबंधन या संचालन में 1+ वर्ष का अनुभव" },
-      { en: "Exceptional organizational and schedule management abilities", hi: "असाधारण संगठनात्मक और समय-सारणी प्रबंधन क्षमताएं" },
-      { en: "Fluency in Hindi and English with strong interpersonal skills", hi: "मजबूत पारस्परिक कौशल के साथ हिंदी और अंग्रेजी में प्रवाह" },
-      { en: "Empathy and dedication to rural community empowerment", hi: "ग्रामीण समुदाय के सशक्तिकरण के लिए सहानुभूति और समर्पण" },
+      "app.careers.page.1YearOfExperienceInProjec",
+      "app.careers.page.exceptionalOrganizationalAnd",
+      "app.careers.page.fluencyInHindiAndEnglishW",
+      "app.careers.page.empathyAndDedicationToRura",
     ],
     responsibilities: [
-      { en: "Oversee day-to-day facilities management at local learning hubs", hi: "स्थानीय शिक्षण केंद्रों पर दैनिक सुविधा प्रबंधन की निगरानी करना" },
-      { en: "Organize student outreach, intake registrations, and course completion certificates", hi: "छात्र आउटरीच, पंजीकरण और पाठ्यक्रम पूर्णता प्रमाण पत्र व्यवस्थित करना" },
-      { en: "Coordinate scheduling between corporate instructors and student cohorts", hi: "कॉर्पोरेट प्रशिक्षकों और छात्र समूहों के बीच शेड्यूलिंग का समन्वय करना" },
-      { en: "Generate monthly center performance reports and student retention scores", hi: "मासिक केंद्र प्रदर्शन रिपोर्ट और छात्र प्रतिधारण स्कोर उत्पन्न करना" },
+      "app.careers.page.overseeDaytodayFacilitiesMa",
+      "app.careers.page.organizeStudentOutreachInta",
+      "app.careers.page.coordinateSchedulingBetween",
+      "app.careers.page.generateMonthlyCenterPerfor",
     ],
   },
   {
     id: "4",
-    title: { en: "Community Outreach Lead", hi: "सामुदायिक आउटरीच लीड" },
-    department: { en: "Outreach & Growth", hi: "आउटरीच और विकास" },
-    location: { en: "Rishikesh, Uttarakhand (Hybrid)", hi: "ऋषिकेश, उत्तराखंड (हाइब्रिड)" },
-    type: { en: "Full-Time / Partner", hi: "पूर्णकालिक / भागीदार" },
-    description: {
-      en: "Drive corporate sponsorship partnerships, manage digital channels, compile impact stories, and coordinate volunteer campaigns to raise support.",
-      hi: "कॉर्पोरेट प्रायोजन साझेदारी चलाएं, डिजिटल चैनलों का प्रबंधन करें, प्रभाव की कहानियां संकलित करें और समर्थन जुटाने के लिए स्वयंसेवक अभियानों का समन्वय करें।"
-    },
+    title: "app.careers.page.communityOutreachLead",
+    department: "app.careers.page.outreachGrowth",
+    location: "app.careers.page.rishikeshUttarakhandHybrid",
+    type: "app.careers.page.fulltimePartner",
+    description: "app.careers.page.driveCorporateSponsorshipPa",
     requirements: [
-      { en: "Background in digital marketing, public relations, or NGO management", hi: "डिजिटल मार्केटिंग, जनसंपर्क या एनजीओ प्रबंधन में पृष्ठभूमि" },
-      { en: "Excellent copywriting, presentation skills, and graphic creation comfort", hi: "असाधारण कॉपीराइटिंग, प्रस्तुति कौशल और ग्राफिक निर्माण में सहजता" },
-      { en: "Familiarity with LinkedIn engagement, newsletter campaigns, and PR outreach", hi: "लिंक्डइन जुड़ाव, समाचार पत्र अभियानों और पीआर आउटरीच से परिचित होना" },
-      { en: "Energetic personality comfortable networking with corporate donors", hi: "कॉर्पोरेट दाताओं के साथ नेटवर्किंग में सहज ऊर्जावान व्यक्तित्व" },
+      "app.careers.page.backgroundInDigitalMarketin",
+      "app.careers.page.excellentCopywritingPresenta",
+      "app.careers.page.familiarityWithLinkedinEnga",
+      "app.careers.page.energeticPersonalityComforta",
     ],
     responsibilities: [
-      { en: "Design and execute digital outreach campaigns on LinkedIn, Instagram, and web portals", hi: "लिंक्डइन, इंस्टाग्राम और वेब पोर्टल्स पर डिजिटल आउटरीच अभियान तैयार करना और निष्पादित करना" },
-      { en: "Create monthly impact newsletters highlighting student success stories", hi: "छात्रों की सफलता की कहानियों को उजागर करने वाले मासिक प्रभाव समाचार पत्र बनाना" },
-      { en: "Pitch program models to potential corporate partners (CSR) and academic sponsors", hi: "संभावित कॉर्पोरेट भागीदारों (सीएसआर) और शैक्षणिक प्रायोजकों के सामने कार्यक्रम मॉडल पेश करना" },
-      { en: "Coordinate onboarding and task assignments for our global network of volunteers", hi: "स्वयंसेवकों के हमारे वैश्विक नेटवर्क के लिए ऑनबोर्डिंग और कार्य असाइनमेंट का समन्वय करना" },
+      "app.careers.page.designAndExecuteDigitalOut",
+      "app.careers.page.createMonthlyImpactNewslett",
+      "app.careers.page.pitchProgramModelsToPotent",
+      "app.careers.page.coordinateOnboardingAndTask",
     ],
   },
 ];
 
 export default function CareersPage() {
-  const { t } = useLanguage();
+  const { t } = useTranslation();
   const [expandedId, setExpandedId] = useState<string | null>(null);
   const [selectedRole, setSelectedRole] = useState("");
   const [formInputs, setFormInputs] = useState({
@@ -164,20 +152,17 @@ export default function CareersPage() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!selectedRole) {
-      toast.error(t({ en: "Please select a position to apply for.", hi: "कृपया आवेदन करने के लिए एक पद का चयन करें।" }));
+      toast.error(t('app.careers.page.pleaseSelectAPositionToAp'));
       return;
     }
     setSubmitLoading(true);
-    toast.loading(t({ en: "Submitting your application...", hi: "आपका आवेदन जमा किया जा रहा है..." }));
+    toast.loading(t('app.careers.page.submittingYourApplication'));
 
     setTimeout(() => {
       setSubmitLoading(false);
       toast.dismiss();
       toast.success(
-        t({
-          en: `Application for '${selectedRole}' submitted successfully! We will contact you soon.`,
-          hi: `'${selectedRole}' के लिए आपका आवेदन सफलतापूर्वक प्राप्त हुआ! हम आपसे जल्द ही संपर्क करेंगे।`,
-        })
+        t('app.careers.page.applicationSuccess', { role: t(selectedRole) })
       );
       setFormInputs({
         name: "",
@@ -198,24 +183,18 @@ export default function CareersPage() {
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center">
           <Breadcrumbs />
           <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight mb-4 font-heading">
-            {t({ en: "Join Our Team", hi: "हमारी टीम में शामिल हों" })}
+            {t('app.careers.page.joinOurTeam')}
           </h1>
           <p className="max-w-2xl mx-auto text-primary-200 text-base sm:text-lg">
-            {t({
-              en: "Build a resilient future by empowering rural youth with technical education. Find full-time, part-time, and volunteer roles.",
-              hi: "तकनीकी शिक्षा के साथ ग्रामीण युवाओं को सशक्त बनाकर एक लचीला भविष्य बनाएं। पूर्णकालिक, अंशकालिक और स्वयंसेवक भूमिकाएं खोजें।",
-            })}
+            {t('app.careers.page.buildAResilientFutureByEm')}
           </p>
         </div>
       </section>
 
       {/* Core Values Section */}
       <Section
-        title={t({ en: "Why Work With Us?", hi: "हमारे साथ काम क्यों करें?" })}
-        subtitle={t({
-          en: "Be part of a thriving ecosystem focused on educational inclusion and digital empowerment.",
-          hi: "शैक्षिक समावेश और डिजिटल सशक्तिकरण पर केंद्रित एक फलते-फूलते पारिस्थितिकी तंत्र का हिस्सा बनें।",
-        })}
+        title={t('app.careers.page.whyWorkWithUs')}
+        subtitle={t('app.careers.page.bePartOfAThrivingEcosyste')}
         className="bg-slate-900"
       >
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -224,13 +203,10 @@ export default function CareersPage() {
               <Sparkles className="h-6 w-6" />
             </div>
             <h3 className="text-xl font-bold text-white mb-2">
-              {t({ en: "Meaningful Impact", hi: "सार्थक प्रभाव" })}
+              {t('app.careers.page.meaningfulImpact')}
             </h3>
             <p className="text-sm text-primary-300 leading-relaxed">
-              {t({
-                en: "Your daily efforts directly help students from remote communities learn technology, crack placement interviews, and lift their families.",
-                hi: "आपके दैनिक प्रयास सीधे दूरदराज के समुदायों के छात्रों को प्रौद्योगिकी सीखने, प्लेसमेंट साक्षात्कार पास करने और उनके परिवारों के उत्थान में मदद करते हैं।",
-              })}
+              {t('app.careers.page.yourDailyEffortsDirectlyHe')}
             </p>
           </Card>
           <Card hover className="text-center p-8 flex flex-col items-center">
@@ -238,13 +214,10 @@ export default function CareersPage() {
               <Users className="h-6 w-6" />
             </div>
             <h3 className="text-xl font-bold text-white mb-2">
-              {t({ en: "Empowering Culture", hi: "सशक्त बनाने वाली संस्कृति" })}
+              {t('app.careers.page.empoweringCulture')}
             </h3>
             <p className="text-sm text-primary-300 leading-relaxed">
-              {t({
-                en: "Work alongside passionate software engineers, expert educators, and global community builders committed to positive social change.",
-                hi: "सकारात्मक सामाजिक परिवर्तन के लिए प्रतिबद्ध उत्साही सॉफ्टवेयर इंजीनियरों, विशेषज्ञ शिक्षकों और वैश्विक समुदाय के निर्माताओं के साथ मिलकर काम करें।",
-              })}
+              {t('app.careers.page.workAlongsidePassionateSoft')}
             </p>
           </Card>
           <Card hover className="text-center p-8 flex flex-col items-center">
@@ -252,13 +225,10 @@ export default function CareersPage() {
               <Award className="h-6 w-6" />
             </div>
             <h3 className="text-xl font-bold text-white mb-2">
-              {t({ en: "Growth & Learning", hi: "विकास और सीखना" })}
+              {t('app.careers.page.growthLearning')}
             </h3>
             <p className="text-sm text-primary-300 leading-relaxed">
-              {t({
-                en: "Design cutting-edge tech curriculum, build learning systems, and take absolute ownership of educational operations.",
-                hi: "अत्याधुनिक तकनीकी पाठ्यक्रम तैयार करें, शिक्षण प्रणालियों का निर्माण करें और शैक्षिक कार्यों का पूर्ण स्वामित्व लें।",
-              })}
+              {t('app.careers.page.designCuttingedgeTechCurric')}
             </p>
           </Card>
         </div>
@@ -266,11 +236,8 @@ export default function CareersPage() {
 
       {/* Open Positions Accordions */}
       <Section
-        title={t({ en: "Open Opportunities", hi: "खुले अवसर" })}
-        subtitle={t({
-          en: "Explore open positions and pick the one that matches your passion and skill set.",
-          hi: "खुले पदों का अन्वेषण करें और वह चुनें जो आपके जुनून और कौशल सेट से मेल खाता हो।",
-        })}
+        title={t('app.careers.page.openOpportunities')}
+        subtitle={t('app.careers.page.exploreOpenPositionsAndPic')}
         className="bg-slate-800/40"
       >
         <div className="max-w-4xl mx-auto px-4 sm:px-6 space-y-4">
@@ -306,8 +273,8 @@ export default function CareersPage() {
                   <div className="flex items-center self-end sm:self-center gap-2">
                     <span className="text-xs font-bold text-accent-400 hidden sm:inline">
                       {isExpanded
-                        ? t({ en: "Show Less", hi: "कम दिखाएं" })
-                        : t({ en: "View Details", hi: "विवरण देखें" })}
+                        ? t('app.careers.page.showLess')
+                        : t('app.careers.page.viewDetails')}
                     </span>
                     {isExpanded ? (
                       <ChevronUp className="h-5 w-5 text-primary-400" />
@@ -331,7 +298,7 @@ export default function CareersPage() {
                         {/* Description */}
                         <div>
                           <h4 className="text-xs font-bold uppercase tracking-wider text-accent-400 mb-2">
-                            {t({ en: "Role Description", hi: "भूमिका का विवरण" })}
+                            {t('app.careers.page.roleDescription')}
                           </h4>
                           <p className="text-sm text-primary-300 leading-relaxed">
                             {t(position.description)}
@@ -341,7 +308,7 @@ export default function CareersPage() {
                         {/* Responsibilities */}
                         <div>
                           <h4 className="text-xs font-bold uppercase tracking-wider text-accent-400 mb-2 flex items-center gap-1.5">
-                            <BookOpen className="h-4 w-4" /> {t({ en: "Key Responsibilities", hi: "मुख्य जिम्मेदारियां" })}
+                            <BookOpen className="h-4 w-4" /> {t('app.careers.page.keyResponsibilities')}
                           </h4>
                           <ul className="list-disc pl-5 text-sm text-primary-300 space-y-1.5">
                             {position.responsibilities.map((resp, i) => (
@@ -353,7 +320,7 @@ export default function CareersPage() {
                         {/* Requirements */}
                         <div>
                           <h4 className="text-xs font-bold uppercase tracking-wider text-accent-400 mb-2 flex items-center gap-1.5">
-                            <GraduationCap className="h-4 w-4" /> {t({ en: "Role Requirements", hi: "भूमिका की आवश्यकताएं" })}
+                            <GraduationCap className="h-4 w-4" /> {t('app.careers.page.roleRequirements')}
                           </h4>
                           <ul className="list-disc pl-5 text-sm text-primary-300 space-y-1.5">
                             {position.requirements.map((req, i) => (
@@ -365,10 +332,10 @@ export default function CareersPage() {
                         {/* Quick Apply button */}
                         <div className="pt-4 border-t border-slate-800 flex justify-end">
                           <button
-                            onClick={() => handleApplyClick(position.title.en)}
+                            onClick={() => handleApplyClick(position.title)}
                             className="px-5 py-2.5 rounded-xl bg-gradient-accent hover:shadow-lg text-white font-bold text-xs transition-all cursor-pointer"
                           >
-                            {t({ en: "Apply for this Role", hi: "इस भूमिका के लिए आवेदन करें" })}
+                            {t('app.careers.page.applyForThisRole')}
                           </button>
                         </div>
                       </div>
@@ -386,13 +353,10 @@ export default function CareersPage() {
         <Card className="p-8 sm:p-10 shadow-lg bg-slate-800 border-slate-700/80">
           <div className="text-center mb-8">
             <h2 className="text-3xl font-bold text-white mb-2">
-              {t({ en: "Job Application Form", hi: "नौकरी आवेदन पत्र" })}
+              {t('app.careers.page.jobApplicationForm')}
             </h2>
             <p className="text-sm text-primary-300">
-              {t({
-                en: "Submit your profile details. Our hiring team will review your background and respond within 5 business days.",
-                hi: "अपने प्रोफाइल का विवरण जमा करें। हमारी भर्ती टीम आपकी पृष्ठभूमि की समीक्षा करेगी और 5 कार्य दिवसों के भीतर प्रतिक्रिया देगी।",
-              })}
+              {t('app.careers.page.submitYourProfileDetailsOu')}
             </p>
           </div>
 
@@ -401,7 +365,7 @@ export default function CareersPage() {
               {/* Name */}
               <div>
                 <label className="block text-sm font-semibold text-white mb-2">
-                  {t({ en: "Full Name", hi: "पूरा नाम" })}
+                  {t('app.careers.page.fullName')}
                 </label>
                 <input
                   type="text"
@@ -409,7 +373,7 @@ export default function CareersPage() {
                   required
                   value={formInputs.name}
                   onChange={handleInputChange}
-                  placeholder={t({ en: "Enter your full name", hi: "अपना पूरा नाम दर्ज करें" })}
+                  placeholder={t('app.careers.page.enterYourFullName')}
                   className="w-full px-4 py-2.5 border border-slate-700 rounded-xl bg-slate-900 text-white placeholder-primary-500 focus:outline-none focus:ring-2 focus:ring-accent-500 text-sm shadow-inner"
                 />
               </div>
@@ -417,7 +381,7 @@ export default function CareersPage() {
               {/* Email */}
               <div>
                 <label className="block text-sm font-semibold text-white mb-2">
-                  {t({ en: "Email Address", hi: "ईमेल पता" })}
+                  {t('app.careers.page.emailAddress')}
                 </label>
                 <input
                   type="email"
@@ -435,7 +399,7 @@ export default function CareersPage() {
               {/* Phone */}
               <div>
                 <label className="block text-sm font-semibold text-white mb-2">
-                  {t({ en: "Phone Number", hi: "फ़ोन नंबर" })}
+                  {t('app.careers.page.phoneNumber')}
                 </label>
                 <input
                   type="tel"
@@ -443,7 +407,7 @@ export default function CareersPage() {
                   required
                   value={formInputs.phone}
                   onChange={handleInputChange}
-                  placeholder={t({ en: "10-digit phone number", hi: "10 अंकों का फ़ोन नंबर" })}
+                  placeholder={t('app.careers.page.10digitPhoneNumber')}
                   className="w-full px-4 py-2.5 border border-slate-700 rounded-xl bg-slate-900 text-white placeholder-primary-500 focus:outline-none focus:ring-2 focus:ring-accent-500 text-sm shadow-inner"
                 />
               </div>
@@ -451,7 +415,7 @@ export default function CareersPage() {
               {/* Role Select */}
               <div>
                 <label className="block text-sm font-semibold text-white mb-2">
-                  {t({ en: "Position Applying For", hi: "जिस पद के लिए आवेदन कर रहे हैं" })}
+                  {t('app.careers.page.positionApplyingFor')}
                 </label>
                 <select
                   name="role"
@@ -460,13 +424,13 @@ export default function CareersPage() {
                   onChange={(e) => setSelectedRole(e.target.value)}
                   className="w-full px-4 py-2.5 border border-slate-700 rounded-xl bg-slate-900 text-white placeholder-primary-500 focus:outline-none focus:ring-2 focus:ring-accent-500 text-sm shadow-inner cursor-pointer"
                 >
-                  <option value="">{t({ en: "Select a position...", hi: "एक पद चुनें..." })}</option>
+                  <option value="">{t('app.careers.page.selectAPosition')}</option>
                   {positionsData.map((p) => (
-                    <option key={p.id} value={p.title.en}>
+                    <option key={p.id} value={p.title}>
                       {t(p.title)}
                     </option>
                   ))}
-                  <option value="General Volunteer">{t({ en: "General Volunteer / Intern", hi: "सामान्य स्वयंसेवक / इंटर्न" })}</option>
+                  <option value="General Volunteer">{t('app.careers.page.generalVolunteerIntern')}</option>
                 </select>
               </div>
             </div>
@@ -474,7 +438,7 @@ export default function CareersPage() {
             {/* Resume Link */}
             <div>
               <label className="block text-sm font-semibold text-white mb-2">
-                {t({ en: "Resume / Portfolio URL", hi: "रिज्यूमे / पोर्टफोलियो URL" })}
+                {t('app.careers.page.resumePortfolioUrl')}
               </label>
               <input
                 type="url"
@@ -482,7 +446,7 @@ export default function CareersPage() {
                 required
                 value={formInputs.resumeUrl}
                 onChange={handleInputChange}
-                placeholder={t({ en: "Google Drive, Dropbox, or LinkedIn link", hi: "गूगल ड्राइव, ड्रॉपबॉक्स या लिंक्डइन लिंक" })}
+                placeholder={t('app.careers.page.googleDriveDropboxOrLinked')}
                 className="w-full px-4 py-2.5 border border-slate-700 rounded-xl bg-slate-900 text-white placeholder-primary-500 focus:outline-none focus:ring-2 focus:ring-accent-500 text-sm shadow-inner"
               />
             </div>
@@ -490,7 +454,7 @@ export default function CareersPage() {
             {/* Cover Letter */}
             <div>
               <label className="block text-sm font-semibold text-white mb-2">
-                {t({ en: "Why do you want to join us?", hi: "आप हमारे साथ क्यों जुड़ना चाहते हैं?" })}
+                {t('app.careers.page.whyDoYouWantToJoinUs')}
               </label>
               <textarea
                 name="coverLetter"
@@ -498,10 +462,7 @@ export default function CareersPage() {
                 required
                 value={formInputs.coverLetter}
                 onChange={handleInputChange}
-                placeholder={t({
-                  en: "Share a brief statement about your drive and how you can add value to the community...",
-                  hi: "अपने जुनून और इस बारे में एक संक्षिप्त विवरण साझा करें कि आप समुदाय में कैसे मूल्य जोड़ सकते हैं...",
-                })}
+                placeholder={t('app.careers.page.shareABriefStatementAbout')}
                 className="w-full px-4 py-2.5 border border-slate-700 rounded-xl bg-slate-900 text-white placeholder-primary-500 focus:outline-none focus:ring-2 focus:ring-accent-500 text-sm shadow-inner resize-none"
               />
             </div>
@@ -512,9 +473,9 @@ export default function CareersPage() {
               disabled={submitLoading}
               className="w-full py-3.5 rounded-xl bg-gradient-primary hover:shadow-lg text-white font-bold text-sm flex items-center justify-center gap-2 transition-all disabled:opacity-50 cursor-pointer"
             >
-              {submitLoading ? t({ en: "Submitting Application...", hi: "आवेदन जमा किया जा रहा है..." }) : (
+              {submitLoading ? t('app.careers.page.submittingApplication') : (
                 <>
-                  {t({ en: "Submit Application", hi: "आवेदन जमा करें" })} <Send className="h-4 w-4" />
+                  {t('app.careers.page.submitApplication')} <Send className="h-4 w-4" />
                 </>
               )}
             </button>

@@ -1,11 +1,11 @@
 "use client";
+import { useTranslation } from "react-i18next";
 
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { ArrowLeft, Construction, Mail, ArrowRight } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
-import { useLanguage } from "@/providers/language-provider";
 
 interface ComingSoonProps {
   title: string;
@@ -14,84 +14,57 @@ interface ComingSoonProps {
 
 const pageTranslations: Record<
   string,
-  { title: { en: string; hi: string }; description: { en: string; hi: string } }
+  { title: string; description: string }
 > = {
   "Upcoming Events": {
-    title: { en: "Upcoming Events", hi: "आगामी कार्यक्रम" },
-    description: {
-      en: "Stay tuned for upcoming community training programs, tech hackathons, and volunteer meetups. We will be sharing our event calendar shortly.",
-      hi: "आगामी सामुदायिक प्रशिक्षण कार्यक्रमों, टेक हैकाथॉन और स्वयंसेवक बैठकों के लिए बने रहें। हम जल्द ही अपना कार्यक्रम कैलेंडर साझा करेंगे।"
-    }
+    title: "components.coming-soon.upcomingEvents",
+    description: "components.coming-soon.stayTunedForUpcomingCommun"
   },
   "Frequently Asked Questions (FAQ)": {
-    title: { en: "Frequently Asked Questions (FAQ)", hi: "अक्सर पूछे जाने वाले प्रश्न (FAQ)" },
-    description: {
-      en: "Have questions about Nextgen Devbhoomi Foundation, our courses, donation campaigns, or volunteer options? We are compiling a comprehensive list of FAQs, online soon.",
-      hi: "नेक्स्टजेन देवभूमि फाउंडेशन, हमारे पाठ्यक्रमों, दान अभियानों या स्वयंसेवक विकल्पों के बारे में प्रश्न हैं? हम एफएक्यू की एक व्यापक सूची तैयार कर रहे हैं, जो जल्द ही ऑनलाइन होगी।"
-    }
+    title: "components.coming-soon.frequentlyAskedQuestionsFaq",
+    description: "components.coming-soon.haveQuestionsAboutNextgenD"
   },
   "Fundraise for Us": {
-    title: { en: "Fundraise for Us", hi: "हमारे लिए धन जुटाएं" },
-    description: {
-      en: "Help us bring learning spaces and technical skills to remote corners of the Himalayas by setting up your own fundraising campaign. Detailed tooling is coming soon.",
-      hi: "अपनी खुद की धन जुटाने की मुहिम शुरू करके हिमालय के दूरदराज के कोनों में सीखने की जगहें और तकनीकी कौशल लाने में हमारी मदद करें। विस्तृत टूलिंग जल्द ही आ रही है।"
-    }
+    title: "components.coming-soon.fundraiseForUs",
+    description: "components.coming-soon.helpUsBringLearningSpaces"
   },
   "Login / Register": {
-    title: { en: "Login / Register", hi: "लॉगिन / पंजीकरण" },
-    description: {
-      en: "Access to the Student and Volunteer portal is currently being integrated. Check back soon for the login page!",
-      hi: "छात्र और स्वयंसेवक पोर्टल तक पहुंच वर्तमान में एकीकृत की जा रही है। लॉगिन पेज के लिए जल्द ही वापस जांचें!"
-    }
+    title: "components.coming-soon.loginRegister",
+    description: "components.coming-soon.accessToTheStudentAndVolu"
   },
   "Partner With Us": {
-    title: { en: "Partner With Us", hi: "हमारे साथ भागीदार बनें" },
-    description: {
-      en: "We are establishing collaborations with educational institutions, corporates, and technology leaders to amplify our impact. This page will be available soon.",
-      hi: "हम अपने प्रभाव को बढ़ाने के लिए शैक्षणिक संस्थानों, कॉर्पोरेट्स और तकनीकी नेताओं के साथ साझेदारी स्थापित कर रहे हैं। यह पृष्ठ जल्द ही उपलब्ध होगा।"
-    }
+    title: "components.coming-soon.partnerWithUs",
+    description: "components.coming-soon.weAreEstablishingCollaborat"
   },
   "Privacy Policy": {
-    title: { en: "Privacy Policy", hi: "गोपनीयता नीति" },
-    description: {
-      en: "We take data privacy and trust seriously. Our updated Privacy Policy explaining how we manage data for volunteers, donors, and students is currently under review and will be published shortly.",
-      hi: "हम डेटा गोपनीयता और विश्वास को गंभीरता से लेते हैं। हमारी अद्यतित गोपनीयता नीति, जो बताती है कि हम स्वयंसेवकों, दाताओं और छात्रों के डेटा का प्रबंधन कैसे करते हैं, वर्तमान में समीक्षा के अधीन है और जल्द ही प्रकाशित की जाएगी।"
-    }
+    title: "components.coming-soon.privacyPolicy",
+    description: "components.coming-soon.weTakeDataPrivacyAndTrust"
   },
   "Refund Policy": {
-    title: { en: "Refund Policy", hi: "धनवापसी नीति" },
-    description: {
-      en: "Our guidelines and policies regarding donation refunds and educational course cancellations are being finalized and will be detailed on this page soon.",
-      hi: "दान वापसी और शैक्षिक पाठ्यक्रम रद्दीकरण के संबंध में हमारे दिशानिर्देशों और नीतियों को अंतिम रूप दिया जा रहा है और जल्द ही इस पृष्ठ पर विवरण दिया जाएगा।"
-    }
+    title: "components.coming-soon.refundPolicy",
+    description: "components.coming-soon.ourGuidelinesAndPoliciesRe"
   },
   "Sitemap": {
-    title: { en: "Sitemap", hi: "साइटमैप" },
-    description: {
-      en: "A complete directory of all our programs, courses, blogs, and other sub-pages is being generated. This page will be available soon to help you navigate our platform.",
-      hi: "हमारे सभी कार्यक्रमों, पाठ्यक्रमों, ब्लॉगों और अन्य उप-पृष्ठों की एक पूरी निर्देशिका तैयार की जा रही है। हमारे प्लेटफॉर्म को नेविगेट करने में आपकी सहायता के लिए यह पृष्ठ जल्द ही उपलब्ध होगा।"
-    }
+    title: "components.coming-soon.sitemap",
+    description: "components.coming-soon.aCompleteDirectoryOfAllOu"
   },
   "Terms & Conditions": {
-    title: { en: "Terms & Conditions", hi: "नियम और शर्तें" },
-    description: {
-      en: "Our standard user terms, volunteer agreements, and platform guidelines are currently being updated. They will be available for review shortly.",
-      hi: "हमारे मानक उपयोगकर्ता नियम, स्वयंसेवक समझौते और प्लेटफॉर्म दिशानिर्देश वर्तमान में अपडेट किए जा रहे हैं। वे जल्द ही समीक्षा के लिए उपलब्ध होंगे।"
-    }
+    title: "components.coming-soon.termsConditions",
+    description: "components.coming-soon.ourStandardUserTermsVolunt"
   }
 };
 
 export function ComingSoon({ title, description }: ComingSoonProps) {
-  const { t } = useLanguage();
+  const { t } = useTranslation();
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
 
   const translation = pageTranslations[title];
   const translatedTitle = translation ? t(translation.title) : title;
-  const translatedDescription = description
-    ? t({ en: description, hi: description })
-    : translation
+  const translatedDescription = translation
     ? t(translation.description)
+    : description
+    ? t(description)
     : "";
 
   const handleSubmit = (e: React.FormEvent) => {

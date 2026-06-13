@@ -1,8 +1,8 @@
 "use client";
+import { useTranslation } from "react-i18next";
 
 import { Section } from "@/components/ui";
 import { Breadcrumbs } from "@/components/breadcrumbs";
-import { useLanguage } from "@/providers/language-provider";
 
 interface TranslatedField {
   en: string;
@@ -10,8 +10,8 @@ interface TranslatedField {
 }
 
 interface GalleryImage {
-  title: TranslatedField;
-  category: TranslatedField;
+  title: string;
+  category: string;
   aspect: "square" | "rect-h" | "rect-w";
 }
 
@@ -25,20 +25,17 @@ export default function Gallery() {
 }
 
 function HeroGallery() {
-  const { t } = useLanguage();
+  const { t } = useTranslation();
   return (
     <section className="relative overflow-hidden bg-primary-950 text-white py-16">
       <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:16px_16px]" />
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <Breadcrumbs />
         <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight mb-4 font-heading">
-          {t({ en: "Gallery", hi: "गैलरी" })}
+          {t('app.gallery.page.gallery')}
         </h1>
         <p className="max-w-2xl mx-auto text-primary-200 text-base sm:text-lg">
-          {t({
-            en: "Moments from our community, events, and impact stories",
-            hi: "हमारे समुदाय, कार्यक्रमों और प्रभाव की कहानियों के क्षण",
-          })}
+          {t('app.gallery.page.momentsFromOurCommunityEve')}
         </p>
       </div>
     </section>
@@ -46,52 +43,52 @@ function HeroGallery() {
 }
 
 function GalleryGrid() {
-  const { t } = useLanguage();
+  const { t } = useTranslation();
 
   const images: GalleryImage[] = [
     {
-      title: { en: "Workshop Session", hi: "कार्यशाला सत्र" },
-      category: { en: "Events", hi: "कार्यक्रम" },
+      title: "app.gallery.page.workshopSession",
+      category: "app.gallery.page.events",
       aspect: "square",
     },
     {
-      title: { en: "Student Success Story", hi: "छात्र सफलता की कहानी" },
-      category: { en: "Impact", hi: "प्रभाव" },
+      title: "app.gallery.page.studentSuccessStory",
+      category: "app.gallery.page.impact",
       aspect: "rect-h",
     },
     {
-      title: { en: "Volunteer Meetup", hi: "स्वयंसेवक बैठक" },
-      category: { en: "Community", hi: "समुदाय" },
+      title: "app.gallery.page.volunteerMeetup",
+      category: "app.gallery.page.community",
       aspect: "rect-w",
     },
     {
-      title: { en: "Coding Bootcamp", hi: "कोडिंग बूटकैंप" },
-      category: { en: "Education", hi: "शिक्षा" },
+      title: "app.gallery.page.codingBootcamp",
+      category: "app.gallery.page.education",
       aspect: "square",
     },
     {
-      title: { en: "Team Celebration", hi: "टीम उत्सव" },
-      category: { en: "Behind Scenes", hi: "पर्दे के पीछे" },
+      title: "app.gallery.page.teamCelebration",
+      category: "app.gallery.page.behindScenes",
       aspect: "rect-w",
     },
     {
-      title: { en: "Classroom Learning", hi: "कक्षा शिक्षण" },
-      category: { en: "Education", hi: "शिक्षा" },
+      title: "app.gallery.page.classroomLearning",
+      category: "app.gallery.page.education",
       aspect: "rect-h",
     },
     {
-      title: { en: "Hackathon Winners", hi: "हैकाथॉन विजेता" },
-      category: { en: "Events", hi: "कार्यक्रम" },
+      title: "app.gallery.page.hackathonWinners",
+      category: "app.gallery.page.events",
       aspect: "square",
     },
     {
-      title: { en: "Community Impact", hi: "सामुदायिक प्रभाव" },
-      category: { en: "Impact", hi: "प्रभाव" },
+      title: "app.gallery.page.communityImpact",
+      category: "app.gallery.page.impact",
       aspect: "rect-w",
     },
     {
-      title: { en: "Mentor Sessions", hi: "मेंटर सत्र" },
-      category: { en: "Community", hi: "समुदाय" },
+      title: "app.gallery.page.mentorSessions",
+      category: "app.gallery.page.community",
       aspect: "square",
     },
   ];
@@ -126,7 +123,7 @@ function GalleryGrid() {
                     </div>
                     <h3 className="text-lg font-bold mb-4">{t(image.title)}</h3>
                     <button className="px-4 py-2 rounded-lg bg-accent-500 hover:bg-accent-600 text-white font-semibold transition-all text-xs cursor-pointer">
-                      {t({ en: "View", hi: "देखें" })}
+                      {t('app.gallery.page.view')}
                     </button>
                   </div>
                 </div>
@@ -145,7 +142,7 @@ function GalleryGrid() {
         {/* Load More */}
         <div className="text-center mt-12">
           <button className="px-8 py-3 rounded-lg bg-gradient-accent text-white font-semibold hover:shadow-lg transition-all hover:scale-105 cursor-pointer text-sm">
-            {t({ en: "Load More Photos", hi: "अधिक तस्वीरें लोड करें" })}
+            {t('app.gallery.page.loadMorePhotos')}
           </button>
         </div>
       </div>
