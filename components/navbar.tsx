@@ -211,6 +211,8 @@ const getMobileTitle = (path: string) => {
       return "Our Programs";
     case "/gallery":
       return "Gallery";
+    case "/careers":
+      return "Careers";
     case "/login":
       return "Account Access";
     default:

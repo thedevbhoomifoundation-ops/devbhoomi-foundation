@@ -23,6 +23,7 @@ const quickLinks = [
   { label: "Blog", href: "/blogs" },
   { label: "Contact Us", href: "/contact" },
   { label: "Gallery", href: "/gallery" },
+  { label: "Careers", href: "/careers" },
 ];
 
 const getInvolvedLinks = [
