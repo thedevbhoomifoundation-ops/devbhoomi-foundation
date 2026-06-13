@@ -20,6 +20,9 @@ export function Breadcrumbs() {
       case "/blogs":
         items.push({ label: "Blogs", href: "/blogs" });
         break;
+      case "/careers":
+        items.push({ label: "Careers", href: "/careers" });
+        break;
       case "/contact":
         items.push({ label: "Contact Us", href: "/contact" });
         break;
