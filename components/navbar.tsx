@@ -4,41 +4,28 @@ import { useLanguage } from "@/providers/language-provider";
 
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
-import { Menu, X, ChevronDown, ArrowLeft } from "lucide-react";
+import { ChevronDown, X, User, BookOpen, FileText, Heart, Settings, LogOut, HelpCircle, Phone, Info, UserPlus } from "lucide-react";
 import Image from "next/image";
-import { navLinks } from "@/lib/constants";
 import { LanguageSwitcher } from "./language-switcher";
 import { motion, AnimatePresence } from "framer-motion";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 
 /* ------------------------------------------------------------------ */
-/*  Derive sub-items from the flat navLinks constant                   */
+/*  Nav structure matching the design exactly                          */
 /* ------------------------------------------------------------------ */
 
-const programsSubItems = [
-  { label: "All Programs", href: "/programs" },
-  { label: "Education", href: "/programs#education" },
-  { label: "Community Development", href: "/programs#community" },
-  { label: "Technology Training", href: "/programs#technology" },
-];
-
-const getInvolvedSubItems = [
-  {
-    label: "Volunteer",
-    href: navLinks.find((l) => l.label === "Volunteer")?.href ?? "/volunteer",
-  },
-  {
-    label: "Donate",
-    href: navLinks.find((l) => l.label === "Donate")?.href ?? "/donate",
-  },
-];
-
-/** The visible top-level items shown in the navbar (re-ordered). */
-const displayLinks = [
+const desktopLinks = [
   { label: "Home", href: "/" },
-  { label: "About Us", href: "/about" },
-  { label: "Programs", href: "/programs", dropdown: programsSubItems },
-  { label: "Get Involved", href: "#", dropdown: getInvolvedSubItems },
+  {
+    label: "Programs",
+    href: "/programs",
+    dropdown: [
+      { label: "All Programs", href: "/programs" },
+      { label: "Education", href: "/programs#education" },
+      { label: "Community Development", href: "/programs#community" },
+      { label: "Technology Training", href: "/programs#technology" },
+    ],
+  },
   {
     label: "Courses",
     href: "/courses",
@@ -49,96 +36,89 @@ const displayLinks = [
       { label: "DSA Problem Solver", href: "/dsa-solver" },
     ],
   },
-  { label: "Blogs", href: "/blogs" },
+  { label: "Digital Library", href: "/library" },
+  { label: "About Us", href: "/about" },
   { label: "Contact Us", href: "/contact" },
 ];
 
-const getNavLinkTranslation = (label: string, t: any) => {
-  switch (label) {
-    case "Home": return t("nav.home");
-    case "About Us": return t("nav.about");
-    case "Programs": return t("nav.programs");
-    case "All Programs": return t("nav.allPrograms");
-    case "Education": return t("nav.education");
-    case "Community Development": return t("nav.communityDev");
-    case "Technology Training": return t("nav.techTraining");
-    case "Get Involved": return t("nav.getInvolved");
-    case "Volunteer": return t("nav.volunteer");
-    case "Donate": return t("nav.donate");
-    case "Courses": return t("nav.courses");
-    case "All Courses": return t("nav.allCourses");
-    case "Digital Library": return t("nav.digitalLibrary");
-    case "Interview Prep": return t("nav.interviewPrep");
-    case "DSA Problem Solver": return t("nav.dsaSolver");
-    case "Blogs": return t("nav.blogs");
-    case "Contact Us": return t("nav.contact");
-    default: return label;
-  }
+const getLinkLabel = (label: string, t: ReturnType<typeof useTranslation>["t"]) => {
+  const map: Record<string, string> = {
+    "Home": t("nav.home"),
+    "About Us": t("nav.about"),
+    "Programs": t("nav.programs"),
+    "All Programs": t("nav.allPrograms"),
+    "Education": t("nav.education"),
+    "Community Development": t("nav.communityDev"),
+    "Technology Training": t("nav.techTraining"),
+    "Get Involved": t("nav.getInvolved"),
+    "Volunteer": t("nav.volunteer"),
+    "Donate": t("nav.donate"),
+    "Courses": t("nav.courses"),
+    "All Courses": t("nav.allCourses"),
+    "Digital Library": t("nav.digitalLibrary"),
+    "Interview Prep": t("nav.interviewPrep"),
+    "DSA Problem Solver": t("nav.dsaSolver"),
+    "Blogs": t("nav.blogs"),
+    "Contact Us": t("nav.contact"),
+  };
+  return map[label] ?? label;
 };
 
 /* ------------------------------------------------------------------ */
-/*  Dropdown component (desktop)                                       */
+/*  Desktop Dropdown                                                   */
 /* ------------------------------------------------------------------ */
 
 function DesktopDropdown({
   label,
-  items,
   href,
+  items,
+  isActive,
 }: {
   label: string;
-  items: { label: string; href: string }[];
   href: string;
+  items: { label: string; href: string }[];
+  isActive: boolean;
 }) {
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
-  const timeout = useRef<ReturnType<typeof setTimeout> | null>(null);
-
-  const handleEnter = () => {
-    if (timeout.current) clearTimeout(timeout.current);
-    setOpen(true);
-  };
-
-  const handleLeave = () => {
-    timeout.current = setTimeout(() => setOpen(false), 150);
-  };
+  const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   return (
     <div
       className="relative"
-      onMouseEnter={handleEnter}
-      onMouseLeave={handleLeave}
+      onMouseEnter={() => { if (timer.current) clearTimeout(timer.current); setOpen(true); }}
+      onMouseLeave={() => { timer.current = setTimeout(() => setOpen(false), 120); }}
     >
       <Link
         href={href}
-        className="inline-flex items-center gap-1 px-3 py-2 text-sm font-medium text-primary-100 hover:text-accent-500 transition-colors duration-300 relative group"
+        className={`inline-flex items-center gap-1 px-3.5 py-2 text-[13.5px] font-medium transition-colors duration-200 relative group
+          ${isActive ? "text-white" : "text-slate-300 hover:text-white"}`}
       >
-        {getNavLinkTranslation(label, t)}
-        <ChevronDown
-          className={`h-3.5 w-3.5 transition-transform duration-300 ${
-            open ? "rotate-180" : ""
-          }`}
-        />
-        <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-accent group-hover:w-full transition-all duration-300" />
+        {getLinkLabel(label, t)}
+        <ChevronDown className={`h-3.5 w-3.5 transition-transform duration-200 ${open ? "rotate-180" : ""}`} />
+        {/* Active underline */}
+        <span className={`absolute bottom-0 left-3.5 right-3.5 h-[2px] rounded-full bg-[#F97316] transition-all duration-200
+          ${isActive ? "opacity-100" : "opacity-0 group-hover:opacity-100"}`} />
       </Link>
 
       <AnimatePresence>
         {open && (
           <motion.div
-            initial={{ opacity: 0, y: 8 }}
+            initial={{ opacity: 0, y: 6 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 8 }}
-            transition={{ duration: 0.2 }}
-            className="absolute left-0 top-full mt-1 w-52 origin-top-left rounded-xl bg-slate-800 border border-slate-700 shadow-xl ring-1 ring-white/5 overflow-hidden z-50"
+            exit={{ opacity: 0, y: 6 }}
+            transition={{ duration: 0.15 }}
+            className="absolute left-0 top-full mt-2 w-52 origin-top-left rounded-xl bg-[#0F2233] border border-[#1E3A4C] shadow-2xl ring-1 ring-white/5 overflow-hidden z-50"
           >
-            <div className="p-1.5">
+            <div className="p-1.5 space-y-0.5">
               {items.map((item) => (
                 <Link
                   key={item.href}
                   href={item.href}
                   onClick={() => setOpen(false)}
-                  className="block px-3 py-2.5 rounded-lg text-sm font-medium text-primary-200 hover:bg-slate-700/60 hover:text-white transition-colors duration-200"
+                  className="block px-3.5 py-2.5 rounded-lg text-sm text-slate-300 hover:bg-[#1A3347] hover:text-white transition-colors duration-150"
                 >
-                  {getNavLinkTranslation(item.label, t)}
+                  {getLinkLabel(item.label, t)}
                 </Link>
               ))}
             </div>
@@ -150,53 +130,76 @@ function DesktopDropdown({
 }
 
 /* ------------------------------------------------------------------ */
-/*  Mobile accordion for dropdowns                                     */
+/*  Desktop User Dropdown (logged-in state)                            */
 /* ------------------------------------------------------------------ */
 
-function MobileAccordion({
-  label,
-  items,
-  onNavigate,
-}: {
-  label: string;
-  items: { label: string; href: string }[];
-  onNavigate: () => void;
-}) {
+function DesktopUserMenu({ name }: { name: string }) {
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handler = (e: MouseEvent) => {
+      if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
+    };
+    document.addEventListener("mousedown", handler);
+    return () => document.removeEventListener("mousedown", handler);
+  }, []);
+
+  const initial = name.charAt(0).toUpperCase();
+
+  const menuItems = [
+    { icon: User, label: "My Profile", href: "/dashboard" },
+    { icon: BookOpen, label: "My Courses", href: "/dashboard" },
+    { icon: FileText, label: "My Applications", href: "/dashboard" },
+    { icon: Heart, label: "Donations", href: "/donate" },
+    { icon: Settings, label: "Settings", href: "/dashboard" },
+  ];
 
   return (
-    <div>
+    <div className="relative" ref={ref}>
       <button
         onClick={() => setOpen((v) => !v)}
-        className="flex w-full items-center justify-between px-3 py-2 rounded-lg text-white hover:bg-slate-800 transition-colors"
+        className="inline-flex items-center gap-2 h-9 px-3 rounded-xl bg-slate-800/60 hover:bg-slate-700/70 border border-slate-700/50 transition-all duration-200 cursor-pointer focus:outline-none"
       >
-        <span>{getNavLinkTranslation(label, t)}</span>
-        <ChevronDown
-          className={`h-4 w-4 transition-transform duration-300 ${
-            open ? "rotate-180" : ""
-          }`}
-        />
+        {/* Avatar circle */}
+        <span className="w-7 h-7 rounded-full bg-[#F97316] flex items-center justify-center text-white text-[13px] font-bold shrink-0">
+          {initial}
+        </span>
+        <span className="text-[13px] font-semibold text-white">{name}</span>
+        <ChevronDown className={`h-3.5 w-3.5 text-slate-400 transition-transform duration-200 ${open ? "rotate-180" : ""}`} />
       </button>
 
       <AnimatePresence>
         {open && (
           <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            className="overflow-hidden pl-4"
+            initial={{ opacity: 0, y: 6 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 6 }}
+            transition={{ duration: 0.15 }}
+            className="absolute right-0 mt-2 w-52 origin-top-right rounded-xl bg-[#0F2233] border border-[#1E3A4C] shadow-2xl ring-1 ring-white/5 overflow-hidden z-50"
           >
-            {items.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                onClick={onNavigate}
-                className="block px-3 py-2 rounded-lg text-sm text-primary-300 hover:bg-slate-800 transition-colors"
+            <div className="p-1.5 space-y-0.5">
+              {menuItems.map(({ icon: Icon, label, href }) => (
+                <Link
+                  key={label}
+                  href={href}
+                  onClick={() => setOpen(false)}
+                  className="flex items-center gap-3 px-3.5 py-2.5 rounded-lg text-sm text-slate-300 hover:bg-[#1A3347] hover:text-white transition-colors duration-150"
+                >
+                  <Icon className="h-4 w-4 shrink-0 text-slate-400" />
+                  {label}
+                </Link>
+              ))}
+              <div className="h-px bg-slate-700/50 mx-2 my-1" />
+              <button
+                onClick={() => setOpen(false)}
+                className="flex w-full items-center gap-3 px-3.5 py-2.5 rounded-lg text-sm text-[#F97316] hover:bg-[#F97316]/10 transition-colors duration-150 cursor-pointer"
               >
-                {getNavLinkTranslation(item.label, t)}
-              </Link>
-            ))}
+                <LogOut className="h-4 w-4 shrink-0" />
+                Logout
+              </button>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
@@ -205,232 +208,329 @@ function MobileAccordion({
 }
 
 /* ------------------------------------------------------------------ */
-/*  Navbar                                                             */
+/*  Mobile: Hamburger Menu (not-logged-in)                             */
 /* ------------------------------------------------------------------ */
 
-const getMobileTitle = (path: string, t: any) => {
-  switch (path) {
-    case "/about":
-      return t("nav.about");
-    case "/blogs":
-      return t("nav.blogs");
-    case "/contact":
-      return t("nav.contact");
-    case "/courses":
-      return t("nav.courses");
-    case "/library":
-    case "/digital-library":
-      return t("nav.digitalLibrary");
-    case "/interview-prep":
-      return t("nav.interviewPrep");
-    case "/dsa-solver":
-      return t("nav.dsaSolver");
-    case "/donate":
-      return t("nav.donate");
-    case "/volunteer":
-      return t("nav.volunteer");
-    case "/programs":
-      return t("nav.programs");
-    case "/gallery":
-      return t('components.navbar.gallery');
-    case "/careers":
-      return t('components.navbar.careers');
-    case "/login":
-      return t('components.navbar.accountAccess');
-    default:
-      const lastSegment = path.split("/").pop();
-      if (!lastSegment) return "Nextgen";
-      return lastSegment.charAt(0).toUpperCase() + lastSegment.slice(1).replace(/-/g, " ");
-  }
-};
+function MobileGuestMenu({ onClose }: { onClose: () => void }) {
+  const menuItems = [
+    { icon: LogOut, label: "Login", href: "/login" },
+    { icon: UserPlus, label: "Register", href: "/login" },
+    { icon: Info, label: "About Us", href: "/about" },
+    { icon: Phone, label: "Contact Us", href: "/contact" },
+    { icon: HelpCircle, label: "Help & Support", href: "/contact" },
+  ];
+
+  return (
+    <div className="p-2 space-y-0.5">
+      {menuItems.map(({ icon: Icon, label, href }) => (
+        <Link
+          key={label}
+          href={href}
+          onClick={onClose}
+          className="flex items-center gap-3 px-4 py-3 rounded-xl text-[14px] text-slate-200 hover:bg-[#1A3347] hover:text-white transition-colors duration-150"
+        >
+          <Icon className="h-4 w-4 shrink-0 text-slate-400" />
+          {label}
+        </Link>
+      ))}
+    </div>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/*  Mobile: Profile Menu (logged-in)                                   */
+/* ------------------------------------------------------------------ */
+
+function MobileProfileMenu({ name, onClose }: { name: string; onClose: () => void }) {
+  const profileItems = [
+    { icon: User, label: "My Profile", href: "/dashboard" },
+    { icon: BookOpen, label: "My Courses", href: "/dashboard" },
+    { icon: FileText, label: "My Applications", href: "/dashboard" },
+    { icon: Heart, label: "Donations", href: "/donate" },
+    { icon: Settings, label: "Settings", href: "/dashboard" },
+  ];
+
+  return (
+    <div className="p-2 space-y-0.5">
+      {profileItems.map(({ icon: Icon, label, href }) => (
+        <Link
+          key={label}
+          href={href}
+          onClick={onClose}
+          className="flex items-center gap-3 px-4 py-3 rounded-xl text-[14px] text-slate-200 hover:bg-[#1A3347] hover:text-white transition-colors duration-150"
+        >
+          <Icon className="h-4 w-4 shrink-0 text-slate-400" />
+          {label}
+        </Link>
+      ))}
+      <div className="h-px bg-slate-700/50 mx-2 my-1" />
+      <button
+        onClick={onClose}
+        className="flex w-full items-center gap-3 px-4 py-3 rounded-xl text-[14px] text-[#F97316] hover:bg-[#F97316]/10 transition-colors duration-150 cursor-pointer"
+      >
+        <LogOut className="h-4 w-4 shrink-0" />
+        Logout
+      </button>
+    </div>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/*  Main Navbar                                                         */
+/* ------------------------------------------------------------------ */
+
+// Toggle this to simulate logged-in state
+const LOGGED_IN = false;
+const USER_NAME = "Aashish";
 
 export function Navbar() {
   const { t } = useTranslation();
   const { language } = useLanguage();
-  const [isScrolled, setIsScrolled] = useState(false);
   const pathname = usePathname();
-  const router = useRouter();
+  const [scrolled, setScrolled] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [mobileMenuType, setMobileMenuType] = useState<"guest" | "profile">("guest");
+  const mobileMenuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    const onScroll = () => setScrolled(window.scrollY > 40);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  const isSubpage = pathname !== "/";
+  // Close mobile menu on route change
+  useEffect(() => {
+    setMobileMenuOpen(false);
+  }, [pathname]);
+
+  const openMobileMenu = (type: "guest" | "profile") => {
+    setMobileMenuType(type);
+    setMobileMenuOpen(true);
+  };
+
+  const isActive = (href: string) => {
+    if (href === "/") return pathname === "/";
+    return pathname.startsWith(href);
+  };
 
   return (
-    <nav
-      className={`fixed top-0 w-full z-50 transition-all duration-300 ${
-        isSubpage
-          ? "bg-slate-900/95 backdrop-blur-md shadow-sm border-b border-slate-800/60 h-auto"
-          : isScrolled
-          ? "bg-slate-950 shadow-md lg:bg-slate-900/90 lg:backdrop-blur-md lg:shadow-lg h-auto"
-          : "bg-slate-950 shadow-md lg:bg-transparent h-auto"
-      }`}
-    >
-      {/* Mobile Home Header Banner (full width, visible only on mobile, and when on homepage) */}
-      {!isSubpage && (
-        <div className="lg:hidden flex flex-col w-full bg-slate-950 shadow-md">
-          {/* Main Header Row */}
-          <div className="flex items-center justify-between px-4 py-3">
-            {/* Left: Logo & Text */}
-            <div className="flex items-center gap-3">
-              <div className="relative w-11 h-11 shrink-0">
-                <Image
-                  src="/images/devbhoomi-logo.jpeg"
-                  alt="Nextgen Devbhoomi Foundation logo"
-                  width={44}
-                  height={44}
-                  className="rounded-full object-cover border border-white/20"
-                />
-              </div>
-              <div className="leading-tight">
-                <h1 className="text-[14px] sm:text-[15px] font-black tracking-tight leading-none text-white font-heading">
-                  NextGen <span className="text-accent-500">Devbhoomi</span> Foundation
-                </h1>
-                <p className="text-[9px] font-bold text-[#A8BDD1] tracking-wider uppercase mt-0.5 font-body">
-                  {t("brand.tagline")}
-                </p>
-                <p className="text-[8px] text-white/75 font-medium mt-0.5 truncate max-w-[55vw]">
-                  {t("brand.mobileSubtitle")}
-                </p>
-              </div>
+    <>
+      <nav
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+          scrolled || pathname !== "/"
+            ? "bg-[#071826]/95 backdrop-blur-md border-b border-white/5 shadow-lg"
+            : "bg-[#071826]"
+        }`}
+      >
+        {/* ============================================================ */}
+        {/* MOBILE HEADER                                                */}
+        {/* ============================================================ */}
+        <div className="lg:hidden flex items-center justify-between px-4 py-3">
+          {/* Left: Logo + Name */}
+          <Link href="/" className="flex items-center gap-2.5 flex-1 min-w-0">
+            <div className="relative w-10 h-10 shrink-0">
+              <Image
+                src="/images/devbhoomi-logo.jpeg"
+                alt="NextGen Devbhoomi Foundation logo"
+                width={40}
+                height={40}
+                className="rounded-full object-cover border border-white/20"
+              />
             </div>
-
-            {/* Right: Language Switcher */}
-            <div className="shrink-0 flex items-center">
-              <LanguageSwitcher />
-            </div>
-          </div>
-
-          {/* Golden Sub-Bar Ticker */}
-          <div className="bg-accent-500 py-1.5 px-4 text-center">
-            <p className="text-[8px] sm:text-[9px] font-black text-primary-950 tracking-widest uppercase">
-              {t("brand.goldenBar")}
-            </p>
-          </div>
-        </div>
-      )}
-
-      {/* Container for Desktop Navbar & Mobile Subpage Navbar */}
-      <div className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 ${
-        isSubpage
-          ? "h-16"
-          : isScrolled
-          ? "h-16 lg:h-16"
-          : "h-16 lg:h-20"
-      } ${!isSubpage ? "hidden lg:block" : "block"}`}>
-        {/* Mobile Subpage App Bar Mode (visible only on mobile and when on subpage) */}
-        {isSubpage ? (
-          <div className="flex lg:hidden items-center justify-between h-full w-full">
-            {/* Left: Native Back Button */}
-            <button
-              onClick={() => router.back()}
-              className="p-2 -ml-2 rounded-full hover:bg-slate-800 text-slate-200 transition-colors cursor-pointer"
-              aria-label={t("nav.back")}
-            >
-              <ArrowLeft className="h-5 w-5" />
-            </button>
-
-            {/* Center: Screen Title */}
-            <span className="text-base font-bold text-white truncate max-w-[60vw]">
-              {getMobileTitle(pathname, t)}
-            </span>
-
-            {/* Right: Language Switcher */}
-            <div className="flex items-center">
-              <LanguageSwitcher />
-            </div>
-          </div>
-        ) : null}
-
-        {/* Standard Navbar Inner (hidden on all mobile views, visible on desktop) */}
-        <div className="justify-between items-center h-full hidden lg:flex">
-          {/* -------- Left: Logo -------- */}
-          <Link href="/" className="flex-shrink-0">
-            <div className="flex items-center gap-3 group cursor-pointer">
-              {/* Logo image */}
-              <div className="relative w-10 h-10 flex items-center justify-center">
-                <Image
-                  src="/images/devbhoomi-logo.jpeg"
-                  alt="Nextgen Devbhoomi Foundation logo"
-                  width={40}
-                  height={40}
-                  className="rounded-full object-cover shadow-lg group-hover:shadow-xl transition-shadow"
-                />
-              </div>
-
-              {/* Name + tagline */}
-              <div className="hidden sm:block leading-tight">
-                <p className="text-sm font-bold uppercase tracking-wide text-white">
-                  {t("brand.title")}
-                </p>
-                <p className="text-[11px] text-primary-400">
-                  {t("brand.tagline")}
-                </p>
-              </div>
+            <div className="leading-tight min-w-0">
+              <p className="text-[13.5px] font-black text-white leading-none">
+                NextGen{" "}
+                <span className="text-[#F97316]">Devbhoomi</span>
+              </p>
+              <p className="text-[11px] font-semibold text-white leading-tight">
+                Foundation
+              </p>
             </div>
           </Link>
 
-          {/* -------- Center: Desktop Navigation -------- */}
-          <div className="hidden lg:flex items-center gap-0.5">
-            {displayLinks.map((link) =>
+          {/* Right: Language + Login or Avatar */}
+          <div className="flex items-center gap-2 shrink-0">
+            <LanguageSwitcher />
+
+            {LOGGED_IN ? (
+              /* Logged-in avatar button */
+              <button
+                onClick={() => openMobileMenu("profile")}
+                className="inline-flex items-center gap-1.5 h-9 px-2.5 rounded-xl bg-slate-800/60 border border-slate-700/50 transition-all duration-200 cursor-pointer"
+                aria-label="Open profile menu"
+              >
+                <span className="w-7 h-7 rounded-full bg-[#F97316] flex items-center justify-center text-white text-[12px] font-bold">
+                  {USER_NAME.charAt(0)}
+                </span>
+                <ChevronDown className="h-3.5 w-3.5 text-slate-400" />
+              </button>
+            ) : (
+              /* Not logged in: Login button */
+              <button
+                onClick={() => openMobileMenu("guest")}
+                className="h-9 px-4 rounded-xl border border-[#F97316] text-[#F97316] text-[13px] font-bold hover:bg-[#F97316]/10 transition-all duration-200 cursor-pointer"
+              >
+                {t("nav.loginRegister").split("/")[0].trim()}
+              </button>
+            )}
+          </div>
+        </div>
+
+        {/* Announcement ticker – full width below mobile header */}
+        <div className="w-full bg-accent-500 text-black overflow-hidden py-2 md:py-4 select-none">
+          <div className="flex whitespace-nowrap animate-marquee">
+            <div className="flex shrink-0 items-center justify-around gap-12 text-[9px] sm:text-[10px] font-bold uppercase tracking-wider min-w-full">
+              <span>{t("ticker.admissions")}</span>
+              <span>{t("ticker.library")}</span>
+              <span>{t("ticker.volunteers")}</span>
+              <span>{t("ticker.taxBenefit")}</span>
+            </div>
+            <div className="flex shrink-0 items-center justify-around gap-12 text-[9px] sm:text-[10px] font-bold uppercase tracking-wider min-w-full text-slate-400">
+              <span>{t("ticker.admissions")}</span>
+              <span>{t("ticker.library")}</span>
+              <span>{t("ticker.volunteers")}</span>
+              <span>{t("ticker.taxBenefit")}</span>
+            </div>
+          </div>
+        </div>
+
+        {/* ============================================================ */}
+        {/* DESKTOP HEADER                                               */}
+        {/* ============================================================ */}
+        <div className="hidden lg:flex items-center justify-between h-[68px] max-w-7xl mx-auto px-6">
+          {/* Left: Logo + Name */}
+          <Link href="/" className="flex items-center gap-3 group shrink-0">
+            <div className="relative w-11 h-11 shrink-0">
+              <Image
+                src="/images/devbhoomi-logo.jpeg"
+                alt="NextGen Devbhoomi Foundation logo"
+                width={44}
+                height={44}
+                className="rounded-full object-cover border border-white/10 shadow-md group-hover:shadow-xl transition-shadow"
+              />
+            </div>
+            <div className="leading-tight">
+              <p className="text-[15px] font-black text-white leading-none">NextGen</p>
+              <p className="text-[15px] font-black text-[#F97316] leading-none">Devbhoomi</p>
+              <p className="text-[13px] font-semibold text-white leading-tight">Foundation</p>
+            </div>
+          </Link>
+
+          {/* Center: Navigation Links */}
+          <div className="flex items-center gap-1">
+            {desktopLinks.map((link) =>
               link.dropdown ? (
                 <DesktopDropdown
                   key={link.label}
                   label={link.label}
                   href={link.href}
                   items={link.dropdown}
+                  isActive={isActive(link.href)}
                 />
               ) : (
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="px-3 py-2 text-sm font-medium text-primary-100 hover:text-accent-500 transition-colors duration-300 relative group"
+                  className={`relative px-3.5 py-2 text-[13.5px] font-medium transition-colors duration-200 group
+                    ${isActive(link.href) ? "text-white" : "text-slate-300 hover:text-white"}`}
                 >
-                  {getNavLinkTranslation(link.label, t)}
-                  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-accent group-hover:w-full transition-all duration-300" />
+                  {getLinkLabel(link.label, t)}
+                  <span
+                    className={`absolute bottom-0 left-3.5 right-3.5 h-[2px] rounded-full bg-[#F97316] transition-all duration-200
+                      ${isActive(link.href) ? "opacity-100" : "opacity-0 group-hover:opacity-100"}`}
+                  />
                 </Link>
               )
             )}
           </div>
 
-          {/* -------- Right: Language Switcher + CTA -------- */}
-          <div className="flex items-center gap-3">
+          {/* Right: Language + Auth buttons */}
+          <div className="flex items-center gap-3 shrink-0">
             <LanguageSwitcher />
 
-            {/* Login / Register – desktop only */}
-            <Link
-              href="/login"
-              className="hidden lg:inline-flex items-center bg-primary-900 hover:bg-[#1A5A7D] text-white text-sm font-semibold rounded-full px-5 py-2 transition-colors duration-300 shadow-md hover:shadow-lg"
-            >
-              {t("nav.loginRegister")}
-            </Link>
+            {LOGGED_IN ? (
+              <DesktopUserMenu name={USER_NAME} />
+            ) : (
+              <>
+                <Link
+                  href="/login"
+                  className="h-9 px-5 rounded-xl border border-[#F97316] text-[#F97316] text-[13px] font-bold hover:bg-[#F97316]/10 transition-all duration-200 flex items-center"
+                >
+                  Login
+                </Link>
+                <Link
+                  href="/login"
+                  className="h-9 px-5 rounded-xl bg-[#F97316] hover:bg-[#EA6B0C] text-white text-[13px] font-bold transition-all duration-200 flex items-center shadow-lg shadow-[#F97316]/20"
+                >
+                  Register
+                </Link>
+              </>
+            )}
           </div>
         </div>
-      </div>
+      </nav>
 
-      {/* Sliding Announcement Bar Ticker */}
-      <div className="w-full bg-slate-900 text-slate-300 border-t border-b border-slate-800/60 overflow-hidden py-1.5 select-none z-40 relative">
-        <div className="flex whitespace-nowrap animate-marquee">
-          <div className="flex shrink-0 items-center justify-around gap-12 text-[10px] sm:text-xs font-bold uppercase tracking-wider min-w-full">
-            <span>{t("ticker.admissions")}</span>
-            <span>{t("ticker.library")}</span>
-            <span>{t("ticker.volunteers")}</span>
-            <span>{t("ticker.taxBenefit")}</span>
-          </div>
-          <div className="flex shrink-0 items-center justify-around gap-12 text-[10px] sm:text-xs font-bold uppercase tracking-wider min-w-full">
-            <span>{t("ticker.admissions")}</span>
-            <span>{t("ticker.library")}</span>
-            <span>{t("ticker.volunteers")}</span>
-            <span>{t("ticker.taxBenefit")}</span>
-          </div>
-        </div>
-      </div>
-    </nav>
+      {/* ============================================================ */}
+      {/* MOBILE SLIDE-IN MENU                                          */}
+      {/* ============================================================ */}
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <>
+            {/* Backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="fixed inset-0 z-[60] bg-black/60 backdrop-blur-sm lg:hidden"
+              onClick={() => setMobileMenuOpen(false)}
+            />
+
+            {/* Slide-in panel from right */}
+            <motion.div
+              ref={mobileMenuRef}
+              initial={{ x: "100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "100%" }}
+              transition={{ type: "spring", damping: 28, stiffness: 280 }}
+              className="fixed top-0 right-0 bottom-0 z-[70] w-72 bg-[#0A1F2E] border-l border-white/10 shadow-2xl lg:hidden flex flex-col"
+            >
+              {/* Panel Header */}
+              <div className="flex items-center justify-between px-4 py-4 border-b border-white/10">
+                <div className="flex items-center gap-2.5">
+                  <Image
+                    src="/images/devbhoomi-logo.jpeg"
+                    alt="Logo"
+                    width={36}
+                    height={36}
+                    className="rounded-full border border-white/20"
+                  />
+                  <div className="leading-tight">
+                    <p className="text-[12px] font-black text-white leading-none">NextGen <span className="text-[#F97316]">Devbhoomi</span></p>
+                    <p className="text-[10px] text-slate-400">Foundation</p>
+                  </div>
+                </div>
+                <button
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="p-2 rounded-lg hover:bg-slate-800 text-slate-400 hover:text-white transition-colors cursor-pointer"
+                  aria-label="Close menu"
+                >
+                  <X className="h-5 w-5" />
+                </button>
+              </div>
+
+              {/* Panel Content */}
+              <div className="flex-1 overflow-y-auto py-2">
+                {mobileMenuType === "guest" ? (
+                  <MobileGuestMenu onClose={() => setMobileMenuOpen(false)} />
+                ) : (
+                  <MobileProfileMenu name={USER_NAME} onClose={() => setMobileMenuOpen(false)} />
+                )}
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
+    </>
   );
 }
