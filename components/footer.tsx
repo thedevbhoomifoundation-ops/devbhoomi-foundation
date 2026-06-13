@@ -5,6 +5,7 @@ import { foundationInfo, socialLinks } from "@/lib/constants";
 import Image from "next/image";
 import { Mail, Phone, MapPin, Heart, Clock } from "lucide-react";
 import { motion } from "framer-motion";
+import { useLanguage } from "@/providers/language-provider";
 import {
   LuFacebook,
   LuTwitter,
@@ -74,8 +75,48 @@ const socialIcons: Record<string, React.ReactNode> = {
 };
 
 export function Footer() {
+  const { t } = useLanguage();
+
+  const getFooterLinkLabel = (label: string) => {
+    switch (label) {
+      case "About Us": return t("nav.about");
+      case "Programs": return t("nav.programs");
+      case "Courses": return t("nav.courses");
+      case "Digital Library": return t("nav.digitalLibrary");
+      case "Interview Prep": return t("nav.interviewPrep");
+      case "DSA Problem Solver": return t("nav.dsaSolver");
+      case "Blog": return t("nav.blogs");
+      case "Contact Us": return t("nav.contact");
+      case "Gallery": return t({ en: "Gallery", hi: "गैलरी" });
+      case "Careers": return t({ en: "Careers", hi: "करियर" });
+      
+      case "Donate Now": return t("nav.donate");
+      case "Become a Volunteer": return t("nav.becomeVolunteer");
+      case "Partner With Us": return t("nav.partnerWithUs");
+      case "Fundraise": return t("nav.fundraise");
+      case "Events": return t("nav.events");
+      
+      case "FAQ": return t({ en: "FAQ", hi: "एफएक्यू" });
+      case "Privacy Policy": return t({ en: "Privacy Policy", hi: "गोपनीयता नीति" });
+      case "Terms & Conditions": return t({ en: "Terms & Conditions", hi: "नियम और शर्तें" });
+      case "Refund Policy": return t({ en: "Refund Policy", hi: "धनवापसी नीति" });
+      case "Sitemap": return t({ en: "Sitemap", hi: "साइटमैप" });
+      default: return label;
+    }
+  };
+
+  const getContactText = (text: string) => {
+    if (text.startsWith("123, Dev Bhoomi")) {
+      return t("contact.address");
+    }
+    if (text.startsWith("Mon - Sat")) {
+      return t("contact.hours");
+    }
+    return text;
+  };
+
   return (
-    <footer className="bg-gradient-dark text-white dark:bg-primary-950">
+    <footer className="bg-gradient-dark text-white border-t border-slate-800">
       {/* Row 1 — Main Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-10">
         <div className="grid grid-cols-2 lg:grid-cols-5 gap-10 lg:gap-8">
@@ -91,13 +132,14 @@ export function Footer() {
                 className="rounded-full object-cover shadow-lg group-hover:shadow-xl transition-shadow"
               />
               <div>
-                <p className="font-heading font-semibold text-lg text-white tracking-wide">NextGen Dev Bhoomi</p>
+                <p className="font-heading font-semibold text-lg text-white tracking-wide">
+                  {t({ en: "Nextgen Devbhoomi", hi: "नेक्स्टजेन देवभूमि" })}
+                </p>
               </div>
             </div>
 
             <p className="text-sm text-primary-300 leading-relaxed">
-              Building a resilient future through education, empowerment and
-              community development.
+              {t("brand.description")}
             </p>
 
             {/* Social Icons */}
@@ -122,7 +164,7 @@ export function Footer() {
           {/* ── Quick Links ── */}
           <div>
             <h4 className="text-base font-semibold text-white mb-4">
-              Quick Links
+              {t("footer.quickLinks")}
             </h4>
             <ul className="space-y-2.5">
               {quickLinks.map((link) => (
@@ -131,7 +173,7 @@ export function Footer() {
                     href={link.href}
                     className="text-primary-300 hover:text-accent-500 transition-colors duration-300 text-sm"
                   >
-                    {link.label}
+                    {getFooterLinkLabel(link.label)}
                   </Link>
                 </li>
               ))}
@@ -141,7 +183,7 @@ export function Footer() {
           {/* ── Get Involved ── */}
           <div>
             <h4 className="text-base font-semibold text-white mb-4">
-              Get Involved
+              {t("footer.getInvolved")}
             </h4>
             <ul className="space-y-2.5">
               {getInvolvedLinks.map((link) => (
@@ -150,7 +192,7 @@ export function Footer() {
                     href={link.href}
                     className="text-primary-300 hover:text-accent-500 transition-colors duration-300 text-sm"
                   >
-                    {link.label}
+                    {getFooterLinkLabel(link.label)}
                   </Link>
                 </li>
               ))}
@@ -159,7 +201,9 @@ export function Footer() {
 
           {/* ── Support ── */}
           <div>
-            <h4 className="text-base font-semibold text-white mb-4">Support</h4>
+            <h4 className="text-base font-semibold text-white mb-4">
+              {t("footer.support")}
+            </h4>
             <ul className="space-y-2.5">
               {supportLinks.map((link) => (
                 <li key={link.href}>
@@ -167,7 +211,7 @@ export function Footer() {
                     href={link.href}
                     className="text-primary-300 hover:text-accent-500 transition-colors duration-300 text-sm"
                   >
-                    {link.label}
+                    {getFooterLinkLabel(link.label)}
                   </Link>
                 </li>
               ))}
@@ -177,14 +221,14 @@ export function Footer() {
           {/* ── Contact Us ── */}
           <div>
             <h4 className="text-base font-semibold text-white mb-4">
-              Contact Us
+              {t("footer.contactUs")}
             </h4>
             <ul className="space-y-4">
               {contactDetails.map((item) => {
                 const Icon = item.icon;
                 const content = (
                   <span className="text-primary-300 text-sm leading-relaxed group-hover:text-accent-500 transition-colors duration-300">
-                    {item.text}
+                    {getContactText(item.text)}
                   </span>
                 );
 
@@ -207,13 +251,11 @@ export function Footer() {
       </div>
 
       {/* Row 2 — Bottom Bar */}
-      <div className="border-t border-slate-700">
+      <div className="border-t border-slate-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-primary-400">
-          <p>© 2026 Nextgen Devbhoomi Foundation. All Rights Reserved.</p>
+          <p>{t("footer.rights")}</p>
           <p className="flex items-center gap-1">
-            Designed with{" "}
-            <Heart className="h-4 w-4 text-accent-500 fill-accent-500" /> for a
-            better tomorrow
+            {t("footer.designedWith")}
           </p>
         </div>
       </div>

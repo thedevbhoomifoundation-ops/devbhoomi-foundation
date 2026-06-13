@@ -184,21 +184,21 @@
 
 /* CSS Variables */
 :root {
-  --background: #F8F5EF;
-  --foreground: #0B3C5D;
+  --background: #071826;
+  --foreground: #EAF2F8;
 
   --primary: #0B3C5D;
   --primary-foreground: #ffffff;
 
-  --accent: #E58A1F;
+  --accent: #F4A641;
   --accent-foreground: #ffffff;
 
-  --green: #3F7D3A;
+  --green: #4D9A46;
 
-  --card: #ffffff;
-  --border: #e5e7eb;
+  --card: #122B3D;
+  --border: #1E3A4C;
 
-  --muted: #f3f4f6;
+  --muted: #1A2C3A;
 }
 
 .dark {
@@ -225,7 +225,8 @@ html {
 }
 
 body {
-  @apply bg-white dark:bg-slate-900 text-primary-900 dark:text-white transition-colors duration-300;
+  background-color: var(--background);
+  color: var(--foreground);
   overflow-x: hidden;
 }
 

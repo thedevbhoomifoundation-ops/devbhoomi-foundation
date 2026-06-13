@@ -14,11 +14,11 @@ const buttonVariants = cva(
         accent:
           "bg-gradient-accent text-white hover:shadow-lg hover:scale-105 active:scale-95",
         secondary:
-          "bg-primary-100 dark:bg-slate-800 text-primary-900 dark:text-white hover:bg-primary-200 dark:hover:bg-slate-700",
+          "bg-slate-800 text-white hover:bg-slate-700",
         outline:
-          "border-2 border-primary-900 dark:border-white text-primary-900 dark:text-white hover:bg-gradient-soft dark:hover:bg-slate-800",
+          "border-2 border-slate-700 text-white hover:bg-slate-800",
         ghost:
-          "text-primary-900 dark:text-white hover:bg-gradient-soft dark:hover:bg-slate-800",
+          "text-white hover:bg-slate-800",
       },
       size: {
         sm: "px-3 py-2 text-sm",
@@ -82,7 +82,7 @@ export const Card = React.forwardRef<HTMLDivElement, CardProps>(
     return (
       <motion.div
         ref={ref}
-        className={`rounded-2xl bg-white dark:bg-slate-800/50 backdrop-blur-sm border border-primary-100 dark:border-slate-700 p-6 ${
+        className={`rounded-2xl bg-slate-800/50 backdrop-blur-sm border border-slate-700/80 p-6 ${
           hover ? "hover:shadow-xl transition-all duration-300 hover:border-accent-500" : ""
         } ${className}`}
         whileHover={hover ? { translateY: -4 } : {}}
@@ -102,11 +102,11 @@ interface BadgeProps extends React.HTMLAttributes<HTMLDivElement> {
 export const Badge = React.forwardRef<HTMLDivElement, BadgeProps>(
   ({ className = "", variant = "default", ...props }, ref) => {
     const variants: Record<string, string> = {
-      default: "bg-primary-100 dark:bg-slate-700 text-primary-900 dark:text-white",
-      success: "bg-green-100 dark:bg-green-900/20 text-green-900 dark:text-green-300",
-      warning: "bg-yellow-100 dark:bg-yellow-900/20 text-yellow-900 dark:text-yellow-300",
-      error: "bg-red-100 dark:bg-red-900/20 text-red-900 dark:text-red-300",
-      info: "bg-blue-100 dark:bg-blue-900/20 text-blue-900 dark:text-blue-300",
+      default: "bg-slate-700 text-white",
+      success: "bg-green-900/20 text-green-300",
+      warning: "bg-yellow-900/20 text-yellow-300",
+      error: "bg-red-900/20 text-red-300",
+      info: "bg-blue-900/20 text-blue-300",
     };
 
     return (
@@ -135,9 +135,9 @@ export const IconBox = React.forwardRef<HTMLDivElement, IconBoxProps>(
     };
 
     const variantClasses = {
-      primary: "bg-primary-100 dark:bg-primary-900/20 text-primary-900 dark:text-primary-300",
-      accent: "bg-accent-100 dark:bg-accent-900/20 text-accent-900 dark:text-accent-300",
-      secondary: "bg-secondary-green/10 dark:bg-secondary-green/20 text-secondary-green",
+      primary: "bg-primary-900/20 text-primary-300",
+      accent: "bg-accent-900/20 text-accent-300",
+      secondary: "bg-secondary-green/20 text-secondary-green",
     };
 
     return (
@@ -171,7 +171,7 @@ export const Section = React.forwardRef<HTMLDivElement, SectionProps>(
         <div className="text-center mb-12">
           {title && (
             <motion.h2
-              className="text-4xl md:text-5xl font-bold text-primary-900 dark:text-white mb-4"
+              className="text-4xl md:text-5xl font-bold text-white mb-4"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -182,7 +182,7 @@ export const Section = React.forwardRef<HTMLDivElement, SectionProps>(
           )}
           {subtitle && (
             <motion.p
-              className="text-lg text-primary-600 dark:text-primary-300 mx-auto"
+              className="text-lg text-primary-300 mx-auto"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}

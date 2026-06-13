@@ -1,6 +1,9 @@
+"use client";
+
 import { Section, Card, Badge } from "@/components/ui";
 import { Clock, Users, Star, Filter } from "lucide-react";
 import { Breadcrumbs } from "@/components/breadcrumbs";
+import { useLanguage } from "@/providers/language-provider";
 
 export default function Courses() {
   return (
@@ -12,23 +15,26 @@ export default function Courses() {
 }
 
 function HeroCourses() {
+  const { t } = useLanguage();
   return (
-    <section className="relative overflow-hidden bg-primary-900 text-white py-16 dark:bg-primary-950">
+    <section className="relative overflow-hidden bg-primary-950 text-white py-16">
       <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:16px_16px]" />
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <Breadcrumbs />
-        <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight mb-4 font-heading">Learn From the Best</h1>
+        <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight mb-4 font-heading">
+          {t({ en: "Learn From the Best", hi: "सर्वश्रेष्ठ से सीखें" })}
+        </h1>
         <p className="max-w-2xl mx-auto text-primary-200 text-base sm:text-lg mb-6">
-          Access world-class technical education curated by industry experts
+          {t({ en: "Access world-class technical education curated by industry experts", hi: "उद्योग विशेषज्ञों द्वारा तैयार की गई विश्व स्तरीय तकनीकी शिक्षा प्राप्त करें" })}
         </p>
         <div className="flex flex-col sm:flex-row gap-3 max-w-xl mx-auto">
           <input
             type="text"
-            placeholder="Search courses..."
+            placeholder={t({ en: "Search courses...", hi: "कोर्स खोजें..." })}
             className="px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-white placeholder-white/50 flex-1 focus:outline-none focus:ring-2 focus:ring-accent-500 text-sm"
           />
           <button className="px-6 py-3 rounded-lg bg-gradient-accent text-white font-semibold hover:shadow-lg transition-all text-sm whitespace-nowrap cursor-pointer">
-            Search
+            {t({ en: "Search", hi: "खोजें" })}
           </button>
         </div>
       </div>
@@ -37,94 +43,103 @@ function HeroCourses() {
 }
 
 function CoursesGrid() {
-  const categories = ["All", "Web Development", "Mobile", "AI/ML", "DevOps", "Data Science"];
+  const { t } = useLanguage();
+
+  const categories = [
+    t({ en: "All", hi: "सभी" }),
+    t({ en: "Web Development", hi: "वेब डेवलपमेंट" }),
+    t({ en: "Mobile", hi: "मोबाइल" }),
+    t({ en: "AI/ML", hi: "एआई/एमएल" }),
+    t({ en: "DevOps", hi: "डेवऑप्स" }),
+    t({ en: "Data Science", hi: "डेटा साइंस" })
+  ];
   
   const courses = [
     {
-      title: "Web Development Fundamentals",
-      category: "Web Development",
-      level: "Beginner",
+      title: t({ en: "Web Development Fundamentals", hi: "वेब डेवलपमेंट फंडामेंटल्स" }),
+      category: t({ en: "Web Development", hi: "वेब डेवलपमेंट" }),
+      level: t({ en: "Beginner", hi: "शुरुआती" }),
       students: 2400,
       rating: 4.9,
       price: "₹2999",
-      duration: "8 weeks",
-      instructor: "John Smith",
-      description: "Master HTML, CSS, JavaScript and build your first web projects",
+      duration: t({ en: "8 weeks", hi: "8 सप्ताह" }),
+      instructor: t({ en: "John Smith", hi: "जॉन स्मिथ" }),
+      description: t({ en: "Master HTML, CSS, JavaScript and build your first web projects", hi: "HTML, CSS, JavaScript में महारत हासिल करें और अपनी पहली वेब परियोजनाएं बनाएं" }),
     },
     {
-      title: "Advanced React & Next.js",
-      category: "Web Development",
-      level: "Advanced",
+      title: t({ en: "Advanced React & Next.js", hi: "उन्नत रिएक्ट और नेक्स्ट.जेएस" }),
+      category: t({ en: "Web Development", hi: "वेब डेवलपमेंट" }),
+      level: t({ en: "Advanced", hi: "उन्नत" }),
       students: 1200,
       rating: 4.8,
       price: "₹4999",
-      duration: "10 weeks",
-      instructor: "React Expert",
-      description: "Build scalable, production-ready applications with React and Next.js",
+      duration: t({ en: "10 weeks", hi: "10 सप्ताह" }),
+      instructor: t({ en: "React Expert", hi: "रिएक्ट एक्सपर्ट" }),
+      description: t({ en: "Build scalable, production-ready applications with React and Next.js", hi: "रिएक्ट और नेक्स्ट.जेएस के साथ स्केलेबल, प्रोडक्शन-रेडी एप्लिकेशन बनाएं" }),
     },
     {
-      title: "Full-Stack Development Bootcamp",
-      category: "Web Development",
-      level: "Intermediate",
+      title: t({ en: "Full-Stack Development Bootcamp", hi: "फुल-स्टैक डेवलपमेंट बूटकैंप" }),
+      category: t({ en: "Web Development", hi: "वेब डेवलपमेंट" }),
+      level: t({ en: "Intermediate", hi: "मध्यम" }),
       students: 1800,
       rating: 4.9,
       price: "₹5999",
-      duration: "12 weeks",
-      instructor: "Full Stack Pro",
-      description: "Complete journey from frontend to backend development",
+      duration: t({ en: "12 weeks", hi: "12 सप्ताह" }),
+      instructor: t({ en: "Full Stack Pro", hi: "फुल स्टैक प्रो" }),
+      description: t({ en: "Complete journey from frontend to backend development", hi: "फ्रंटएंड से बैकएंड डेवलपमेंट तक की पूरी यात्रा" }),
     },
     {
-      title: "Data Science & ML Mastery",
-      category: "AI/ML",
-      level: "Advanced",
+      title: t({ en: "Data Science & ML Mastery", hi: "डेटा साइंस और एमएल मास्टरी" }),
+      category: t({ en: "Data Science", hi: "डेटा साइंस" }),
+      level: t({ en: "Advanced", hi: "उन्नत" }),
       students: 950,
       rating: 4.8,
       price: "₹6999",
-      duration: "14 weeks",
-      instructor: "Dr. AI Expert",
-      description: "Learn machine learning, deep learning, and data analysis",
+      duration: t({ en: "14 weeks", hi: "14 सप्ताह" }),
+      instructor: t({ en: "Dr. AI Expert", hi: "डॉ एआई एक्सपर्ट" }),
+      description: t({ en: "Learn machine learning, deep learning, and data analysis", hi: "मशीन लर्निंग, डीप लर्निंग और डेटा विश्लेषण सीखें" }),
     },
     {
-      title: "Cloud & DevOps Essentials",
-      category: "DevOps",
-      level: "Intermediate",
+      title: t({ en: "Cloud & DevOps Essentials", hi: "क्लाउड और डेवऑप्स एसेंशियल" }),
+      category: t({ en: "DevOps", hi: "डेवऑप्स" }),
+      level: t({ en: "Intermediate", hi: "मध्यम" }),
       students: 1100,
       rating: 4.7,
       price: "₹3999",
-      duration: "8 weeks",
-      instructor: "Cloud Pro",
-      description: "Master AWS, Docker, Kubernetes, and modern deployment practices",
+      duration: t({ en: "8 weeks", hi: "8 सप्ताह" }),
+      instructor: t({ en: "Cloud Pro", hi: "क्लाउड प्रो" }),
+      description: t({ en: "Master AWS, Docker, Kubernetes, and modern deployment practices", hi: "AWS, डॉकर, कुबेरनेट्स और आधुनिक परिनियोजन प्रथाओं में महारत हासिल करें" }),
     },
     {
-      title: "Mobile App Development",
-      category: "Mobile",
-      level: "Intermediate",
+      title: t({ en: "Mobile App Development", hi: "मोबाइल ऐप डेवलपमेंट" }),
+      category: t({ en: "Mobile", hi: "मोबाइल" }),
+      level: t({ en: "Intermediate", hi: "मध्यम" }),
       students: 1550,
       rating: 4.9,
       price: "₹4999",
-      duration: "10 weeks",
-      instructor: "Mobile Expert",
-      description: "Build iOS and Android apps with React Native",
+      duration: t({ en: "10 weeks", hi: "10 सप्ताह" }),
+      instructor: t({ en: "Mobile Expert", hi: "मोबाइल एक्सपर्ट" }),
+      description: t({ en: "Build iOS and Android apps with React Native", hi: "रिएक्ट नेटिव के साथ iOS और एंड्रॉइड ऐप बनाएं" }),
     },
   ];
 
   return (
-    <Section className="bg-white dark:bg-slate-900">
+    <Section className="bg-slate-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Filter Section */}
         <div className="mb-12">
           <div className="flex items-center space-x-2 mb-4">
-            <Filter className="h-5 w-5 text-primary-900 dark:text-white" />
-            <span className="font-semibold">Filter by category</span>
+            <Filter className="h-5 w-5 text-white" />
+            <span className="font-semibold">{t({ en: "Filter by category", hi: "श्रेणी के अनुसार फ़िल्टर करें" })}</span>
           </div>
           <div className="flex flex-wrap gap-2">
-            {categories.map((cat) => (
+            {categories.map((cat, idx) => (
               <button
-                key={cat}
-                className={`px-4 py-2 rounded-full font-medium transition-all ${
-                  cat === "All"
+                key={idx}
+                className={`px-4 py-2 rounded-full font-medium transition-all cursor-pointer ${
+                  idx === 0
                     ? "bg-gradient-accent text-white"
-                    : "bg-primary-100 dark:bg-slate-800 text-primary-900 dark:text-white hover:bg-primary-200 dark:hover:bg-slate-700"
+                    : "bg-slate-800 text-white hover:bg-slate-700"
                 }`}
               >
                 {cat}
@@ -147,43 +162,43 @@ function CoursesGrid() {
                   <Badge variant="info">{course.level}</Badge>
                 </div>
 
-                <h3 className="text-lg font-semibold text-primary-900 dark:text-white mb-2">
+                <h3 className="text-lg font-semibold text-white mb-2">
                   {course.title}
                 </h3>
 
-                <p className="text-sm text-primary-600 dark:text-primary-300 mb-4">
+                <p className="text-sm text-primary-300 mb-4">
                   {course.description}
                 </p>
 
-                <div className="space-y-2 text-sm text-primary-600 dark:text-primary-300">
+                <div className="space-y-2 text-sm text-primary-300">
                   <div className="flex items-center">
                     <Clock className="h-4 w-4 mr-2" />
                     {course.duration}
                   </div>
                   <div className="flex items-center">
                     <Users className="h-4 w-4 mr-2" />
-                    {course.students} students
+                    {course.students} {t({ en: "students", hi: "छात्र" })}
                   </div>
                 </div>
               </div>
 
-              <div className="border-t border-primary-100 dark:border-slate-700 pt-4 mt-4">
+              <div className="border-t border-slate-700 pt-4 mt-4">
                 <div className="flex items-center justify-between mb-4">
                   <div>
-                    <div className="text-2xl font-bold text-primary-900 dark:text-white">
+                    <div className="text-2xl font-bold text-white">
                       {course.price}
                     </div>
-                    <div className="text-xs text-primary-500 dark:text-primary-400">
+                    <div className="text-xs text-primary-400">
                       {course.instructor}
                     </div>
                   </div>
                   <div className="flex items-center">
                     <Star className="h-5 w-5 text-yellow-500 fill-yellow-500" />
-                    <span className="ml-1 font-semibold">{course.rating}</span>
+                    <span className="ml-1 font-semibold text-white">{course.rating}</span>
                   </div>
                 </div>
-                <button className="w-full py-2 rounded-lg bg-gradient-accent text-white font-semibold hover:shadow-lg transition-all">
-                  Enroll Now
+                <button className="w-full py-2 rounded-lg bg-gradient-accent text-white font-semibold hover:shadow-lg transition-all cursor-pointer">
+                  {t({ en: "Enroll Now", hi: "अभी नामांकन करें" })}
                 </button>
               </div>
             </Card>

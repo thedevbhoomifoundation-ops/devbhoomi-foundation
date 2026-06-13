@@ -2,6 +2,8 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
+import Link from "next/link";
+import { useLanguage } from "@/providers/language-provider";
 
 /* ─── animation helpers ─── */
 const fadeUp = (delay = 0) => ({
@@ -59,8 +61,10 @@ const avatarColors = [
 
 /* ─── component ─── */
 export function HeroSection() {
+  const { t } = useLanguage();
+
   return (
-    <section className="relative w-full min-h-screen overflow-hidden bg-white dark:bg-slate-900 pt-20">
+    <section className="relative w-full min-h-screen overflow-hidden bg-[#071826] pt-20">
       {/* ── mountain background overlay ── */}
       <div className="absolute inset-0 z-0">
         <Image
@@ -68,9 +72,9 @@ export function HeroSection() {
           alt="Himalayan mountains"
           fill
           priority
-          className="object-cover object-center opacity-[0.06] dark:opacity-[0.08]"
+          className="object-cover object-center opacity-[0.08]"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-white/80 via-white/60 to-white dark:from-slate-900/80 dark:via-slate-900/60 dark:to-slate-900" />
+        <div className="absolute inset-0 bg-gradient-to-b from-[#071826]/80 via-[#071826]/60 to-[#071826]" />
       </div>
 
       {/* ── soft accent glow ── */}
@@ -84,10 +88,10 @@ export function HeroSection() {
           <motion.div className="space-y-7" {...fadeUp()}>
             {/* subtitle */}
             <motion.p
-              className="text-sm font-semibold tracking-widest uppercase text-accent-600 dark:text-accent-400"
+              className="text-sm font-semibold tracking-widest uppercase text-accent-400"
               {...fadeUp(0.1)}
             >
-              Together We Can
+              {t({ en: "Together We Can", hi: "एक साथ हम कर सकते हैं" })}
             </motion.p>
 
             {/* heading */}
@@ -95,23 +99,24 @@ export function HeroSection() {
               className="text-4xl sm:text-5xl md:text-6xl lg:text-5xl xl:text-6xl font-bold leading-tight"
               {...fadeUp(0.2)}
             >
-              <span className="text-primary-900 dark:text-white">
-                Build a Resilient
+              <span className="text-white">
+                {t({ en: "Build a Resilient", hi: "एक लचीले" })}
               </span>
               <br />
               <span className="font-accent italic bg-gradient-to-r from-accent-600 to-accent-400 bg-clip-text text-transparent">
-                Future
+                {t({ en: "Future", hi: "भविष्य का निर्माण" })}
               </span>
             </motion.h1>
 
             {/* description */}
             <motion.p
-              className="text-lg text-primary-700 dark:text-primary-200 leading-relaxed"
+              className="text-lg text-primary-200 leading-relaxed"
               {...fadeUp(0.3)}
             >
-              Nextgen Devbhoomi Foundation is dedicated to empowering individuals with
-              technical skills, fostering sustainable communities, and building a
-              stronger tomorrow.
+              {t({
+                en: "Nextgen Devbhoomi Foundation is dedicated to empowering individuals with technical skills, fostering sustainable communities, and building a stronger tomorrow.",
+                hi: "नेक्स्टजेन देवभूमि फाउंडेशन तकनीकी कौशल के साथ व्यक्तियों को सशक्त बनाने, टिकाऊ समुदायों को बढ़ावा देने और एक मजबूत कल के निर्माण के लिए समर्पित है।"
+              })}
             </motion.p>
 
             {/* CTA buttons */}
@@ -119,12 +124,12 @@ export function HeroSection() {
               className="flex flex-col sm:flex-row gap-4 pt-2"
               {...fadeUp(0.4)}
             >
-              <button className="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-accent-600 to-accent-400 px-8 py-3.5 text-base font-semibold text-white shadow-lg shadow-accent-500/25 hover:shadow-xl hover:shadow-accent-500/30 hover:scale-[1.03] active:scale-[0.97] transition-all duration-300">
-                Donate Now <span aria-hidden="true">❤️</span>
-              </button>
-              <button className="inline-flex items-center justify-center gap-2 rounded-full border-2 border-primary-900 dark:border-white px-8 py-3.5 text-base font-semibold text-primary-900 dark:text-white hover:bg-primary-900/5 dark:hover:bg-white/10 hover:scale-[1.03] active:scale-[0.97] transition-all duration-300">
-                Explore Programs <span aria-hidden="true">→</span>
-              </button>
+              <Link href="/donate" className="inline-flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-accent-600 to-accent-400 px-8 py-3.5 text-base font-semibold text-white shadow-lg shadow-accent-500/25 hover:shadow-xl hover:shadow-accent-500/30 hover:scale-[1.03] active:scale-[0.97] transition-all duration-300 cursor-pointer">
+                {t({ en: "Donate Now", hi: "अभी दान करें" })} <span aria-hidden="true">❤️</span>
+              </Link>
+              <Link href="/programs" className="inline-flex items-center justify-center gap-2 rounded-full border-2 border-white px-8 py-3.5 text-base font-semibold text-white hover:bg-white/10 hover:scale-[1.03] active:scale-[0.97] transition-all duration-300 cursor-pointer">
+                {t({ en: "Explore Programs", hi: "कार्यक्रम देखें" })} <span aria-hidden="true">→</span>
+              </Link>
             </motion.div>
 
             {/* avatar group + social proof */}
@@ -137,7 +142,7 @@ export function HeroSection() {
                 {avatarColors.map((bg, i) => (
                   <div
                     key={i}
-                    className={`w-10 h-10 rounded-full ${bg} ring-2 ring-white dark:ring-slate-900 flex items-center justify-center text-white text-xs font-bold`}
+                    className={`w-10 h-10 rounded-full ${bg} ring-2 ring-slate-900 flex items-center justify-center text-white text-xs font-bold`}
                   >
                     {["A", "R", "S", "M"][i]}
                   </div>
@@ -145,15 +150,15 @@ export function HeroSection() {
               </div>
 
               <div className="flex items-center gap-3">
-                <span className="inline-flex items-center justify-center rounded-full bg-accent-100 dark:bg-accent-900/30 px-3 py-1 text-sm font-bold text-accent-700 dark:text-accent-300">
+                <span className="inline-flex items-center justify-center rounded-full bg-accent-900/30 px-3 py-1 text-sm font-bold text-accent-300">
                   500+
                 </span>
                 <div>
-                  <p className="text-sm font-semibold text-primary-900 dark:text-white leading-tight">
-                    Volunteers &amp; Supporters
+                  <p className="text-sm font-semibold text-white leading-tight">
+                    {t({ en: "Volunteers & Supporters", hi: "स्वयंसेवक और समर्थक" })}
                   </p>
-                  <p className="text-xs text-primary-500 dark:text-primary-400">
-                    Join us in creating impact
+                  <p className="text-xs text-primary-400">
+                    {t({ en: "Join us in creating impact", hi: "प्रभाव पैदा करने में शामिल हों" })}
                   </p>
                 </div>
               </div>
@@ -178,7 +183,7 @@ export function HeroSection() {
 
             {/* mentor circle — overlapping bottom-left */}
             <motion.div
-              className="absolute -bottom-4 -left-2 sm:bottom-4 sm:-left-8 lg:-left-12 w-28 h-28 sm:w-40 sm:h-40 rounded-full overflow-hidden border-4 border-white dark:border-slate-900 shadow-xl z-20"
+              className="absolute -bottom-4 -left-2 sm:bottom-4 sm:-left-8 lg:-left-12 w-28 h-28 sm:w-40 sm:h-40 rounded-full overflow-hidden border-4 border-slate-900 shadow-xl z-20"
               initial={{ opacity: 0, scale: 0.6 }}
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.6, delay: 0.6 }}
@@ -193,19 +198,22 @@ export function HeroSection() {
 
             {/* circular badge / stamp — top-right */}
             <motion.div
-              className="absolute -top-4 -right-2 sm:-top-6 sm:-right-6 w-24 h-24 sm:w-32 sm:h-32 rounded-full bg-primary-900 dark:bg-accent-600 flex items-center justify-center shadow-xl z-20"
+              className="absolute -top-4 -right-2 sm:-top-6 sm:-right-6 w-24 h-24 sm:w-32 sm:h-32 rounded-full bg-accent-600 flex items-center justify-center shadow-xl z-20"
               initial={{ opacity: 0, rotate: -90, scale: 0.5 }}
               animate={{ opacity: 1, rotate: 0, scale: 1 }}
               transition={{ duration: 0.8, delay: 0.7, type: "spring" }}
             >
               <CircularText
-                text="THE NEXTGEN DEVBHOOMI FOUNDATION • BUILDING A RESILIENT FUTURE • "
+                text={t({
+                  en: "THE NEXTGEN DEVBHOOMI FOUNDATION • BUILDING A RESILIENT FUTURE • ",
+                  hi: "नेक्स्टजेन देवभूमि फाउंडेशन • एक लचीला भविष्य बनाना • "
+                })}
                 radius={60}
               />
               {/* centre icon */}
               <div className="absolute inset-0 flex items-center justify-center">
                 <svg
-                  className="w-8 h-8 text-accent-400 dark:text-white"
+                  className="w-8 h-8 text-white"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -244,8 +252,8 @@ export function HeroSection() {
         animate={{ y: [0, 10, 0] }}
         transition={{ duration: 2, repeat: Infinity }}
       >
-        <div className="w-6 h-10 border-2 border-primary-900/30 dark:border-white/30 rounded-full flex justify-center p-2">
-          <div className="w-1 h-2 bg-primary-900/40 dark:bg-white/40 rounded-full" />
+        <div className="w-6 h-10 border-2 border-white/30 rounded-full flex justify-center p-2">
+          <div className="w-1 h-2 bg-white/40 rounded-full" />
         </div>
       </motion.div>
     </section>
