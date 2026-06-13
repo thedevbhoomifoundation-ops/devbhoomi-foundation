@@ -1,9 +1,11 @@
 "use client";
 
+import React from "react";
 import { HeroSection } from "@/components/hero-section";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { Section, Card } from "@/components/ui";
+import { toast } from "sonner";
 import {
   GraduationCap,
   Heart,
@@ -21,9 +23,13 @@ export default function Home() {
     <>
       <HeroSection />
       <ImpactStatsBar />
+      <PartnersTicker />
       <ProgramsSection />
+      <ActionWidgetSection />
       <ImpactSection />
+      <TestimonialsSection />
       <TeamSection />
+      <FaqSection />
       <LatestBlogSection />
       <NewsletterSection />
     </>
@@ -727,6 +733,447 @@ function TeamSection() {
               </a>
             </Card>
           ))}
+        </div>
+      </div>
+    </Section>
+  );
+}
+
+/* ─────────────────────── Partners Ticker ─────────────────────── */
+
+function PartnersTicker() {
+  const partners = [
+    { name: "Graphic Era University", type: "Academic Partner" },
+    { name: "Uttarakhand Technical University", type: "Affiliation" },
+    { name: "Uttarakhand Open University", type: "Academic Partner" },
+    { name: "Microsoft for Startups", type: "Tech Supporter" },
+    { name: "Google Cloud", type: "Infrastructure" },
+    { name: "TCS", type: "Recruiting Partner" },
+    { name: "Infosys", type: "Recruiting Partner" },
+    { name: "Wipro", type: "Recruiting Partner" },
+  ];
+
+  return (
+    <section className="py-10 bg-primary-50/20 dark:bg-slate-900/50 border-t border-b border-primary-100 dark:border-slate-800/60 overflow-hidden">
+      <div className="max-w-7xl mx-auto px-4 mb-4 text-center">
+        <p className="text-xs font-semibold uppercase tracking-widest text-primary-400 dark:text-primary-500">
+          Trusted by &amp; Partnered with Leading Institutions
+        </p>
+      </div>
+      <div className="relative w-full overflow-hidden select-none">
+        <div className="flex whitespace-nowrap animate-marquee">
+          {/* First loop */}
+          <div className="flex shrink-0 items-center justify-around gap-16 min-w-full">
+            {partners.map((p, idx) => (
+              <div key={idx} className="flex items-center gap-2">
+                <span className="text-2xl">🏫</span>
+                <div>
+                  <p className="text-sm font-bold text-primary-900 dark:text-white">{p.name}</p>
+                  <p className="text-[10px] text-accent-500 font-semibold uppercase tracking-wider">{p.type}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+          {/* Second loop (mirror) */}
+          <div className="flex shrink-0 items-center justify-around gap-16 min-w-full">
+            {partners.map((p, idx) => (
+              <div key={idx} className="flex items-center gap-2">
+                <span className="text-2xl">🏫</span>
+                <div>
+                  <p className="text-sm font-bold text-primary-900 dark:text-white">{p.name}</p>
+                  <p className="text-[10px] text-accent-500 font-semibold uppercase tracking-wider">{p.type}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ─────────────────────── Action Widget Section ─────────────────────── */
+
+function ActionWidgetSection() {
+  const [donateAmount, setDonateAmount] = React.useState("1000");
+  const [donateName, setDonateName] = React.useState("");
+  const [donateEmail, setDonateEmail] = React.useState("");
+  const [volName, setVolName] = React.useState("");
+  const [volEmail, setVolEmail] = React.useState("");
+  const [volInterest, setVolInterest] = React.useState("mentor");
+
+  const handleDonate = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!donateName || !donateEmail || !donateAmount) {
+      toast.error("Please fill in all donation details.");
+      return;
+    }
+    const loadId = toast.loading("Simulating secure payment gateway connection...");
+    setTimeout(() => {
+      toast.dismiss(loadId);
+      toast.success(`Thank you, ${donateName}! Your simulated donation of ₹${donateAmount} was successful. (80G Receipt sent to ${donateEmail})`);
+      setDonateName("");
+      setDonateEmail("");
+    }, 2000);
+  };
+
+  const handleVolunteer = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!volName || !volEmail) {
+      toast.error("Please fill in your name and email.");
+      return;
+    }
+    const loadId = toast.loading("Submitting interest form...");
+    setTimeout(() => {
+      toast.dismiss(loadId);
+      toast.success(`Welcome aboard, ${volName}! We have received your application for '${volInterest}' and will reach out to ${volEmail} shortly.`);
+      setVolName("");
+      setVolEmail("");
+    }, 1500);
+  };
+
+  return (
+    <Section className="bg-primary-50/30 dark:bg-slate-900/50">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-stretch">
+        {/* Left: Quick Donation */}
+        <Card className="flex flex-col justify-between border-primary-200/60 dark:border-slate-700/80">
+          <form onSubmit={handleDonate} className="space-y-6">
+            <div>
+              <span className="text-xs font-bold uppercase tracking-wider text-accent-600 dark:text-accent-400">Make an Impact</span>
+              <h3 className="text-2xl font-bold text-primary-900 dark:text-white mt-1">Support Our Cause</h3>
+              <p className="text-sm text-primary-600 dark:text-primary-300 mt-2">
+                Your contribution directly sponsors student scholarships, internet labs, and coding materials.
+              </p>
+            </div>
+
+            {/* Preset Amount buttons */}
+            <div className="grid grid-cols-4 gap-2">
+              {["500", "1000", "2500", "5000"].map((amt) => (
+                <button
+                  key={amt}
+                  type="button"
+                  onClick={() => setDonateAmount(amt)}
+                  className={`py-2 px-3 text-xs font-extrabold rounded-lg transition-all border cursor-pointer ${
+                    donateAmount === amt
+                      ? "bg-accent-600 border-accent-600 text-white shadow-md"
+                      : "bg-white dark:bg-slate-800 border-primary-200 dark:border-slate-700 text-primary-800 dark:text-slate-200 hover:bg-primary-50 dark:hover:bg-slate-700/50"
+                  }`}
+                >
+                  ₹{amt}
+                </button>
+              ))}
+            </div>
+
+            {/* Inputs */}
+            <div className="space-y-3">
+              <div>
+                <label className="block text-xs font-bold text-primary-800 dark:text-slate-300 uppercase mb-1">Custom Amount (₹)</label>
+                <input
+                  type="number"
+                  value={donateAmount}
+                  onChange={(e) => setDonateAmount(e.target.value)}
+                  placeholder="Enter custom amount"
+                  className="w-full rounded-xl border border-primary-200 dark:border-slate-700 bg-white/70 dark:bg-slate-900/40 py-2.5 px-4 text-sm text-primary-900 dark:text-white outline-none focus:ring-2 focus:ring-accent-500"
+                  min="1"
+                />
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                  <label className="block text-xs font-bold text-primary-800 dark:text-slate-300 uppercase mb-1">Full Name</label>
+                  <input
+                    type="text"
+                    value={donateName}
+                    onChange={(e) => setDonateName(e.target.value)}
+                    placeholder="John Doe"
+                    className="w-full rounded-xl border border-primary-200 dark:border-slate-700 bg-white/70 dark:bg-slate-900/40 py-2.5 px-4 text-sm text-primary-900 dark:text-white outline-none focus:ring-2 focus:ring-accent-500"
+                    required
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-bold text-primary-800 dark:text-slate-300 uppercase mb-1">Email Address</label>
+                  <input
+                    type="email"
+                    value={donateEmail}
+                    onChange={(e) => setDonateEmail(e.target.value)}
+                    placeholder="john@example.com"
+                    className="w-full rounded-xl border border-primary-200 dark:border-slate-700 bg-white/70 dark:bg-slate-900/40 py-2.5 px-4 text-sm text-primary-900 dark:text-white outline-none focus:ring-2 focus:ring-accent-500"
+                    required
+                  />
+                </div>
+              </div>
+            </div>
+
+            <button
+              type="submit"
+              className="w-full py-3 rounded-xl bg-accent-600 hover:bg-accent-700 text-white font-bold text-sm transition-all shadow-lg hover:shadow-xl hover:scale-[1.01] active:scale-[0.99] cursor-pointer"
+            >
+              Donate ₹{donateAmount || "0"} Now
+            </button>
+          </form>
+        </Card>
+
+        {/* Right: Become a Volunteer */}
+        <Card className="flex flex-col justify-between border-primary-200/60 dark:border-slate-700/80">
+          <form onSubmit={handleVolunteer} className="space-y-6">
+            <div>
+              <span className="text-xs font-bold uppercase tracking-wider text-accent-600 dark:text-accent-400">Join the Movement</span>
+              <h3 className="text-2xl font-bold text-primary-900 dark:text-white mt-1">Become a Volunteer</h3>
+              <p className="text-sm text-primary-600 dark:text-primary-300 mt-2">
+                Share your time and skills as a mentor, designer, or coordinator to transform local developer talent.
+              </p>
+            </div>
+
+            <div className="space-y-3">
+              <div>
+                <label className="block text-xs font-bold text-primary-800 dark:text-slate-300 uppercase mb-1">Full Name</label>
+                <input
+                  type="text"
+                  value={volName}
+                  onChange={(e) => setVolName(e.target.value)}
+                  placeholder="Jane Doe"
+                  className="w-full rounded-xl border border-primary-200 dark:border-slate-700 bg-white/70 dark:bg-slate-900/40 py-2.5 px-4 text-sm text-primary-900 dark:text-white outline-none focus:ring-2 focus:ring-accent-500"
+                  required
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold text-primary-800 dark:text-slate-300 uppercase mb-1">Email Address</label>
+                <input
+                  type="email"
+                  value={volEmail}
+                  onChange={(e) => setVolEmail(e.target.value)}
+                  placeholder="jane@example.com"
+                  className="w-full rounded-xl border border-primary-200 dark:border-slate-700 bg-white/70 dark:bg-slate-900/40 py-2.5 px-4 text-sm text-primary-900 dark:text-white outline-none focus:ring-2 focus:ring-accent-500"
+                  required
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold text-primary-800 dark:text-slate-300 uppercase mb-1">Area of Interest</label>
+                <select
+                  value={volInterest}
+                  onChange={(e) => setVolInterest(e.target.value)}
+                  className="w-full rounded-xl border border-primary-200 dark:border-slate-700 bg-white dark:bg-slate-900 py-2.5 px-4 text-sm text-primary-900 dark:text-white outline-none focus:ring-2 focus:ring-accent-500"
+                >
+                  <option value="mentor">Technical Mentor &amp; Instructor</option>
+                  <option value="events">Event Coordinator</option>
+                  <option value="content">Content Writer / Social Media</option>
+                  <option value="admin">Operations &amp; Outreach Support</option>
+                </select>
+              </div>
+            </div>
+
+            <button
+              type="submit"
+              className="w-full py-3 rounded-xl bg-primary-900 dark:bg-slate-800 hover:bg-primary-800 dark:hover:bg-slate-700 text-white font-bold text-sm transition-all shadow-lg hover:shadow-xl hover:scale-[1.01] active:scale-[0.99] cursor-pointer"
+            >
+              Submit Volunteer Application
+            </button>
+          </form>
+        </Card>
+      </div>
+    </Section>
+  );
+}
+
+/* ─────────────────────── Testimonials Section ─────────────────────── */
+
+function TestimonialsSection() {
+  const testimonials = [
+    {
+      name: "Rohit Negi",
+      role: "Software Engineer @ Amazon",
+      text: "The Nextgen Devbhoomi program was the turning point of my college life. The instructors provided deep practical insights that are not taught in college classes. The DSA solver helped me crack product interviews.",
+      image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=120&h=120",
+    },
+    {
+      name: "Anjali Rawat",
+      role: "Frontend Engineer @ Razorpay",
+      text: "Coming from a tier-3 college in Uttarakhand, I lacked confidence and resources. Through the Devbhoomi scholarship program, I learned React, web architecture, and got mentored directly by industry experts. I landed my dream job!",
+      image: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=120&h=120",
+    },
+    {
+      name: "Deepak Bhatt",
+      role: "Fullstack Developer @ Zoho",
+      text: "The library and coding bootcamps are fully community-oriented. Working on open-source projects under a personal mentor gave me hands-on confidence. Highly recommend this foundation to all developers.",
+      image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=120&h=120",
+    },
+  ];
+
+  const [index, setIndex] = React.useState(0);
+
+  const handleNext = () => {
+    setIndex((prev) => (prev + 1) % testimonials.length);
+  };
+
+  const handlePrev = () => {
+    setIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length);
+  };
+
+  const active = testimonials[index];
+
+  return (
+    <Section className="bg-white dark:bg-slate-900">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 items-center">
+        {/* Left: Branding & Overview */}
+        <motion.div
+          initial={{ opacity: 0, x: -30 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="lg:col-span-1 space-y-6"
+        >
+          <div>
+            <p className="text-sm font-semibold uppercase tracking-widest text-accent-600 mb-3">
+              Alumni Success
+            </p>
+            <h2 className="text-3xl md:text-4xl font-bold text-primary-900 dark:text-white leading-tight">
+              Stories of <br />
+              <span className="font-accent italic text-accent-500 font-normal">Real Transformation</span>
+            </h2>
+          </div>
+          <p className="text-primary-600 dark:text-primary-300 leading-relaxed">
+            Our graduates have gone from learning basics in small villages to building production software at top global companies. Hear directly about their journeys.
+          </p>
+          <div className="bg-primary-50 dark:bg-slate-800/60 p-5 rounded-2xl border border-primary-100 dark:border-slate-700">
+            <h4 className="text-3xl font-extrabold text-accent-600 mb-1">94%</h4>
+            <p className="text-sm font-bold text-primary-900 dark:text-white">Job &amp; Internship Placement</p>
+            <p className="text-xs text-primary-500 dark:text-primary-400 mt-1">Rate achieved within 6 months of program graduation.</p>
+          </div>
+        </motion.div>
+
+        {/* Right: Interactive Testimonial Card */}
+        <motion.div
+          initial={{ opacity: 0, x: 30 }}
+          whileInView={{ opacity: 1, x: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.15 }}
+          className="lg:col-span-2 relative"
+        >
+          <Card className="p-8 md:p-10 border-primary-100 dark:border-slate-800 min-h-[300px] flex flex-col justify-between relative overflow-hidden bg-primary-50/10 dark:bg-slate-850/50">
+            {/* Quote watermark */}
+            <span className="absolute -top-10 -right-4 text-[120px] font-black text-primary-200/20 dark:text-slate-800/30 font-accent pointer-events-none select-none">
+              “
+            </span>
+
+            <p className="text-base md:text-lg text-primary-800 dark:text-primary-200 italic leading-relaxed z-10">
+              &ldquo;{active.text}&rdquo;
+            </p>
+
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mt-8 pt-6 border-t border-primary-100 dark:border-slate-700">
+              <div className="flex items-center gap-3">
+                <div className="relative w-12 h-12 rounded-full overflow-hidden shrink-0 shadow-md">
+                  <Image
+                    src={active.image}
+                    alt={active.name}
+                    fill
+                    className="object-cover"
+                    unoptimized
+                  />
+                </div>
+                <div>
+                  <h4 className="text-sm font-bold text-primary-900 dark:text-white leading-none mb-1">{active.name}</h4>
+                  <p className="text-xs text-accent-500 font-semibold uppercase tracking-wider">{active.role}</p>
+                </div>
+              </div>
+
+              {/* Slider Arrows */}
+              <div className="flex items-center gap-2">
+                <button
+                  onClick={handlePrev}
+                  className="w-10 h-10 rounded-full border border-primary-200 dark:border-slate-700 flex items-center justify-center text-primary-700 dark:text-primary-300 hover:bg-primary-50 dark:hover:bg-slate-800 hover:border-accent-500 hover:text-accent-600 transition-all cursor-pointer"
+                  aria-label="Previous testimonial"
+                >
+                  ←
+                </button>
+                <button
+                  onClick={handleNext}
+                  className="w-10 h-10 rounded-full border border-primary-200 dark:border-slate-700 flex items-center justify-center text-primary-700 dark:text-primary-300 hover:bg-primary-50 dark:hover:bg-slate-800 hover:border-accent-500 hover:text-accent-600 transition-all cursor-pointer"
+                  aria-label="Next testimonial"
+                >
+                  →
+                </button>
+              </div>
+            </div>
+          </Card>
+        </motion.div>
+      </div>
+    </Section>
+  );
+}
+
+/* ─────────────────────── FAQ Section ─────────────────────── */
+
+function FaqSection() {
+  const faqs = [
+    {
+      q: "Are donations to the Nextgen Devbhoomi Foundation tax-exempt?",
+      a: "Yes, Nextgen Devbhoomi Foundation is a registered NGO under the Societies Registration Act and holds 80G tax-exemption approval. All contributions qualify for a 50% tax deduction under Section 80G of the Income Tax Act.",
+    },
+    {
+      q: "Who is eligible to apply for the IT Internship Program?",
+      a: "The program is open to undergraduate and postgraduate technical students (B.Tech, BCA, MCA, BSc IT) as well as self-taught developers. We give special placement priority to students belonging to regional communities in the Himalayan foothills.",
+    },
+    {
+      q: "How does the Digital Library support student learning?",
+      a: "The Digital Library provides free access to curated engineering books, curriculum guides, interview reference sheets, and standard test prep materials. It is designed to save students from purchasing expensive academic resources.",
+    },
+    {
+      q: "Can I volunteer remotely or part-time?",
+      a: "Absolutely! We offer flexible remote mentoring roles where developers guide students over online portals. Local event support is also available for regional workshops and campus ambassador activities.",
+    },
+  ];
+
+  const [openIdx, setOpenIdx] = React.useState<number | null>(0);
+
+  const toggle = (i: number) => {
+    setOpenIdx((prev) => (prev === i ? null : i));
+  };
+
+  return (
+    <Section className="bg-primary-50/20 dark:bg-slate-900/40">
+      <div className="max-w-4xl mx-auto px-4">
+        {/* Header */}
+        <div className="text-center mb-14">
+          <p className="text-sm font-semibold uppercase tracking-widest text-accent-600 mb-3">
+            Got Questions?
+          </p>
+          <h2 className="text-3xl md:text-4xl font-bold text-primary-900 dark:text-white">
+            Frequently Asked Questions
+          </h2>
+        </div>
+
+        {/* FAQ List */}
+        <div className="space-y-4">
+          {faqs.map((faq, i) => {
+            const isOpen = openIdx === i;
+            return (
+              <div
+                key={i}
+                className="bg-white dark:bg-slate-800/40 border border-primary-100 dark:border-slate-700/60 rounded-2xl overflow-hidden shadow-xs hover:border-accent-500/30 transition-all duration-300"
+              >
+                <button
+                  onClick={() => toggle(i)}
+                  className="w-full py-5 px-6 flex items-center justify-between text-left font-bold text-primary-900 dark:text-white hover:text-accent-600 dark:hover:text-accent-400 transition-colors text-base cursor-pointer"
+                >
+                  <span>{faq.q}</span>
+                  <span className={`text-xl transition-transform duration-300 ${isOpen ? "rotate-45 text-accent-600" : "text-primary-400"}`}>
+                    +
+                  </span>
+                </button>
+                <motion.div
+                  initial={false}
+                  animate={{ height: isOpen ? "auto" : 0 }}
+                  className="overflow-hidden"
+                >
+                  <div className="pb-6 px-6 text-sm text-primary-600 dark:text-primary-300 leading-relaxed border-t border-primary-50/50 dark:border-slate-700/50 pt-4">
+                    {faq.a}
+                  </div>
+                </motion.div>
+              </div>
+            );
+          })}
         </div>
       </div>
     </Section>

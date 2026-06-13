@@ -4,6 +4,7 @@ import { ThemeProvider } from "@/providers/theme-provider";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import { BottomNavigation } from "@/components/bottom-navigation";
+import { Toaster } from "sonner";
 
 export const metadata: Metadata = {
   title: "Nextgen Devbhoomi Foundation - Technical Education & Community Empowerment",
@@ -31,6 +32,7 @@ export default function RootLayout({
             <main className="pb-16 md:pb-0">{children}</main>
             <BottomNavigation />
             <Footer />
+            <Toaster position="top-center" richColors />
           </div>
         </ThemeProvider>
       </body>
