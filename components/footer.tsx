@@ -17,23 +17,18 @@ import {
 
 const quickLinks = [
   { label: "About Us", href: "/about" },
-  { label: "Programs", href: "/programs" },
-  { label: "Courses", href: "/courses" },
-  { label: "Digital Library", href: "/library" },
-  { label: "Interview Prep", href: "/interview-prep" },
-  { label: "DSA Problem Solver", href: "/dsa-solver" },
-  { label: "Blog", href: "/blogs" },
+  // { label: "Blog", href: "/blogs" },
   { label: "Contact Us", href: "/contact" },
-  { label: "Gallery", href: "/gallery" },
-  { label: "Careers", href: "/careers" },
+  { label: "Fundraise", href: "/fundraise" },
+  { label: "Events", href: "/events" },
+  // { label: "Gallery", href: "/gallery" },
 ];
 
 const getInvolvedLinks = [
   { label: "Donate Now", href: "/donate" },
+  { label: "Internship", href: "/internship" },
   { label: "Become a Volunteer", href: "/volunteer" },
   { label: "Partner With Us", href: "/partner" },
-  { label: "Fundraise", href: "/fundraise" },
-  { label: "Events", href: "/events" },
 ];
 
 const supportLinks = [
@@ -41,29 +36,28 @@ const supportLinks = [
   { label: "Privacy Policy", href: "/privacy" },
   { label: "Terms & Conditions", href: "/terms" },
   { label: "Refund Policy", href: "/refund-policy" },
-  { label: "Sitemap", href: "/sitemap" },
 ];
 
 const contactDetails = [
   {
     icon: MapPin,
-    text: "123, Dev Bhoomi Marg, Rishikesh, Uttarakhand, India",
+    text: "Near Shiv Mandir, Dew, Aurangabad, Bihar - 824125, India",
     href: undefined,
   },
   {
     icon: Phone,
-    text: "+91 98765 43210",
-    href: "tel:+919876543210",
+    text: "+91-8092994855",
+    href: "tel:+918092994855",
   },
   {
     icon: Clock,
-    text: "Mon - Sat: 9:00 AM - 6:00 PM",
+    text: "Mon - Sun: 8:00 AM - 8:00 PM",
     href: undefined,
   },
   {
     icon: Mail,
-    text: "info@devbhoomifoundation.org",
-    href: "mailto:info@devbhoomifoundation.org",
+    text: "[EMAIL_ADDRESS]",
+    href: "mailto:[EMAIL_ADDRESS]",
   },
 ];
 
@@ -87,10 +81,9 @@ export function Footer() {
       case "Digital Library": return t("nav.digitalLibrary");
       case "Interview Prep": return t("nav.interviewPrep");
       case "DSA Problem Solver": return t("nav.dsaSolver");
-      case "Blog": return t("nav.blogs");
+      // case "Blog": return t("nav.blogs");
       case "Contact Us": return t("nav.contact");
       case "Gallery": return t('components.footer.gallery');
-      case "Careers": return t('components.footer.careers');
 
       case "Donate Now": return t("nav.donate");
       case "Become a Volunteer": return t("nav.becomeVolunteer");
@@ -102,16 +95,15 @@ export function Footer() {
       case "Privacy Policy": return t('components.footer.privacyPolicy');
       case "Terms & Conditions": return t('components.footer.termsConditions');
       case "Refund Policy": return t('components.footer.refundPolicy');
-      case "Sitemap": return t('components.footer.sitemap');
       default: return label;
     }
   };
 
   const getContactText = (text: string) => {
-    if (text.startsWith("123, Dev Bhoomi")) {
+    if (text.startsWith("Near Shiv Mandir")) {
       return t("contact.address");
     }
-    if (text.startsWith("Mon - Sat")) {
+    if (text.startsWith("Mon - Sun")) {
       return t("contact.hours");
     }
     return text;
@@ -201,6 +193,25 @@ export function Footer() {
             </ul>
           </div>
 
+          {/* ── Support ── */}
+          <div>
+            <h4 className="text-base font-semibold text-white mb-4">
+              {t("footer.support")}
+            </h4>
+            <ul className="space-y-2.5">
+              {supportLinks.map((link) => (
+                <li key={link.href}>
+                  <Link
+                    href={link.href}
+                    className="text-primary-300 hover:text-accent-500 transition-colors duration-300 text-sm"
+                  >
+                    {getFooterLinkLabel(link.label)}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
           {/* ── Contact Us ── */}
           <div>
             <h4 className="text-base font-semibold text-white mb-4">
@@ -230,25 +241,6 @@ export function Footer() {
               })}
             </ul>
           </div>
-          {/* ── Support ── */}
-          <div>
-            <h4 className="text-base font-semibold text-white mb-4">
-              {t("footer.support")}
-            </h4>
-            <ul className="space-y-2.5">
-              {supportLinks.map((link) => (
-                <li key={link.href}>
-                  <Link
-                    href={link.href}
-                    className="text-primary-300 hover:text-accent-500 transition-colors duration-300 text-sm"
-                  >
-                    {getFooterLinkLabel(link.label)}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-
 
         </div>
       </div>

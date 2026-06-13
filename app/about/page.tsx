@@ -2,7 +2,7 @@
 import { useTranslation } from "react-i18next";
 
 import { Section, Card } from "@/components/ui";
-import { Timeline } from "lucide-react";
+import { Timeline, GraduationCap, HeartPulse, Leaf, ShieldAlert } from "lucide-react";
 import Image from "next/image";
 import { Breadcrumbs } from "@/components/breadcrumbs";
 
@@ -11,7 +11,9 @@ export default function About() {
     <main className="pt-20">
       <HeroAbout />
       <MissionVisionSection />
+      <KeyInitiativesSection />
       <TimelineSection />
+      <OpportunitiesSection />
       <MembersSection />
     </main>
   );
@@ -66,6 +68,68 @@ function MissionVisionSection() {
   );
 }
 
+function KeyInitiativesSection() {
+  const { t } = useTranslation();
+
+  const initiatives = [
+    {
+      icon: GraduationCap,
+      titleKey: "app.about.page.initEducationTitle",
+      descKey: "app.about.page.initEducationDesc",
+      iconClass: "text-blue-400 bg-blue-500/10",
+    },
+    {
+      icon: HeartPulse,
+      titleKey: "app.about.page.initHealthcareTitle",
+      descKey: "app.about.page.initHealthcareDesc",
+      iconClass: "text-red-400 bg-red-500/10",
+    },
+    {
+      icon: Leaf,
+      titleKey: "app.about.page.initEnvTitle",
+      descKey: "app.about.page.initEnvDesc",
+      iconClass: "text-green-400 bg-green-500/10",
+    },
+    {
+      icon: ShieldAlert,
+      titleKey: "app.about.page.initReliefTitle",
+      descKey: "app.about.page.initReliefDesc",
+      iconClass: "text-amber-400 bg-amber-500/10",
+    },
+  ];
+
+  return (
+    <Section
+      title={t("app.about.page.keyInitiativesTitle")}
+      subtitle={t("app.about.page.keyInitiativesSubtitle")}
+      className="bg-slate-800/50"
+    >
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+          {initiatives.map((item, idx) => {
+            const Icon = item.icon;
+            return (
+              <Card key={idx} hover className="flex flex-col items-center text-center p-6 h-full justify-between">
+                <div className={`w-12 h-12 rounded-xl flex items-center justify-center mb-4 shrink-0 ${item.iconClass}`}>
+                  <Icon className="h-6 w-6" />
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold text-white mb-2">
+                    {t(item.titleKey)}
+                  </h3>
+                  <p className="text-sm text-primary-200 leading-relaxed">
+                    {t(item.descKey)}
+                  </p>
+                </div>
+              </Card>
+            );
+          })}
+        </div>
+      </div>
+    </Section>
+  );
+}
+
 function TimelineSection() {
   const { t } = useTranslation();
 
@@ -95,7 +159,7 @@ function TimelineSection() {
   return (
     <Section
       title={t('app.about.page.ourJourney')}
-      className="bg-slate-800/50"
+      className="bg-slate-900"
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="space-y-8">
@@ -119,6 +183,58 @@ function TimelineSection() {
             </div>
           ))}
         </div>
+      </div>
+    </Section>
+  );
+}
+
+function OpportunitiesSection() {
+  const { t } = useTranslation();
+
+  const domains = [
+    "app.about.page.domainWeb",
+    "app.about.page.domainAI",
+    "app.about.page.domainDS",
+    "app.about.page.domainDM"
+  ];
+
+  return (
+    <Section
+      title={t("app.about.page.opportunitiesTitle")}
+      subtitle={t("app.about.page.opportunitiesSubtitle")}
+      className="bg-slate-800/50"
+    >
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center">
+        <Card className="p-8 md:p-10 border border-accent-500/30 bg-slate-900/80 shadow-2xl relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-24 h-24 rounded-full bg-accent-500/5 blur-2xl pointer-events-none" />
+          <div className="relative z-10 space-y-6">
+            <p className="text-lg text-primary-200 leading-relaxed max-w-2xl mx-auto">
+              {t("app.about.page.opportunitiesDesc")}
+            </p>
+            
+            <div className="flex flex-wrap justify-center gap-3 py-2">
+              {domains.map((dom, idx) => (
+                <span
+                  key={idx}
+                  className="px-4 py-2 rounded-xl bg-slate-800 border border-slate-700/80 text-sm font-semibold text-accent-400 shadow-inner"
+                >
+                  {t(dom)}
+                </span>
+              ))}
+            </div>
+
+            <div className="pt-4">
+              <a
+                href="https://in.linkedin.com/jobs/view/internship-program-2026-at-nextgen-devbhoomi-foundation-4423621087"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl bg-gradient-accent hover:bg-accent-600 text-white font-bold text-base transition-all duration-300 shadow-md hover:shadow-lg hover:scale-105 active:scale-95 cursor-pointer"
+              >
+                {t("app.about.page.linkedinBtn")}
+              </a>
+            </div>
+          </div>
+        </Card>
       </div>
     </Section>
   );
@@ -201,7 +317,6 @@ function MembersSection() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6">
           {members.map((member, i) => {
-            // Get initials
             const initials = member.name
               .split(" ")
               .map((n) => n[0])
