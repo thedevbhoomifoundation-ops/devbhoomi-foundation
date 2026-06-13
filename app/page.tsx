@@ -384,12 +384,12 @@ function NewsletterSection() {
           transition={{ duration: 0.7 }}
         >
           {/* Left */}
-          <div className="flex items-start gap-4 max-w-md">
+          <div className="flex items-start gap-4">
             <div className="w-12 h-12 rounded-xl bg-accent-500/20 flex items-center justify-center flex-shrink-0 mt-1">
               <Send className="h-6 w-6 text-accent-400" />
             </div>
             <div>
-              <h3 className="text-2xl font-bold text-white mb-1" style={{width:"max-content"}}>
+              <h3 className="text-2xl font-bold text-white mb-1">
                 Stay Connected
               </h3>
               <p className="text-white/70 text-sm leading-relaxed">

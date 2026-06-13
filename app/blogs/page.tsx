@@ -1,5 +1,6 @@
 import { Section, Card, Badge } from "@/components/ui";
 import { Search, Calendar, User, ArrowRight } from "lucide-react";
+import { Breadcrumbs } from "@/components/breadcrumbs";
 
 export default function Blog() {
   return (
@@ -12,17 +13,16 @@ export default function Blog() {
 
 function HeroBlog() {
   return (
-    <Section
-      className="bg-gradient-to-br from-primary-900 to-primary-800 text-white min-h-[60vh] flex items-center"
-      fullWidth
-    >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 w-full">
-        <h1 className="text-6xl font-bold mb-4">Our Blog</h1>
-        <p className="text-2xl text-white/80 mb-8">
+    <section className="relative overflow-hidden bg-primary-900 text-white py-16 dark:bg-primary-950">
+      <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:16px_16px]" />
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <Breadcrumbs />
+        <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight mb-4 font-heading">Our Blog</h1>
+        <p className="max-w-2xl mx-auto text-primary-200 text-base sm:text-lg mb-8">
           Insights, stories, and lessons from the Dev Bhoomi community
         </p>
 
-        <div className="flex gap-3 mx-auto">
+        <div className="flex gap-3 max-w-xl mx-auto">
           <div className="flex-1 flex items-center gap-2 px-4 py-3 rounded-lg bg-white/10 border border-white/20">
             <Search className="h-5 w-5 text-white/60" />
             <input
@@ -31,12 +31,12 @@ function HeroBlog() {
               className="bg-transparent text-white placeholder-white/50 outline-none w-full"
             />
           </div>
-          <button className="px-6 py-3 rounded-lg bg-gradient-accent text-white font-semibold hover:shadow-lg transition-all">
+          <button className="px-6 py-3 rounded-lg bg-gradient-accent text-white font-semibold hover:shadow-lg transition-all cursor-pointer">
             Search
           </button>
         </div>
       </div>
-    </Section>
+    </section>
   );
 }
 

@@ -1,5 +1,6 @@
 import { Section, Card, Button } from "@/components/ui";
 import { Heart, Briefcase, Users, TrendingUp, CheckCircle } from "lucide-react";
+import { Breadcrumbs } from "@/components/breadcrumbs";
 
 export default function Volunteer() {
   return (
@@ -15,20 +16,21 @@ export default function Volunteer() {
 
 function HeroVolunteer() {
   return (
-    <Section
-      className="bg-gradient-to-br from-primary-900 to-primary-800 text-white min-h-[60vh] flex items-center"
-      fullWidth
-    >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-        <h1 className="text-6xl font-bold mb-4">Make a Real Impact</h1>
-        <p className="text-2xl text-white/80 mb-8">
+    <section className="relative overflow-hidden bg-primary-900 text-white py-16 dark:bg-primary-950">
+      <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:16px_16px]" />
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <Breadcrumbs />
+        <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight mb-4 font-heading">Make a Real Impact</h1>
+        <p className="max-w-2xl mx-auto text-primary-200 text-base sm:text-lg mb-6">
           Join our community of 2000+ passionate volunteers making a difference
         </p>
-        <Button size="lg" className="bg-white text-primary-900 hover:bg-white/90">
-          Apply to Volunteer
-        </Button>
+        <div className="flex justify-center">
+          <Button size="lg" className="bg-white text-primary-900 hover:bg-white/90 cursor-pointer">
+            Apply to Volunteer
+          </Button>
+        </div>
       </div>
-    </Section>
+    </section>
   );
 }
 
