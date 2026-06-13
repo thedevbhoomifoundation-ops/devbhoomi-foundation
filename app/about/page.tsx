@@ -16,17 +16,14 @@ export default function About() {
 
 function HeroAbout() {
   return (
-    <Section
-      className="bg-gradient-to-br from-primary-900 to-primary-800 text-white min-h-screen flex items-center"
-      fullWidth
-    >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-        <h1 className="text-6xl font-bold mb-4">About The Nextgen Devbhoomi Foundation</h1>
-        <p className="text-2xl text-white/80">
+    <section className="bg-gradient-to-br from-primary-900 to-primary-800 text-white py-16 md:py-24">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h1 className="text-4xl sm:text-5xl font-bold mb-4">About The Nextgen Devbhoomi Foundation</h1>
+        <p className="text-lg sm:text-xl text-white/80">
           Empowering communities through education, technology, and collective action since 2022.
         </p>
       </div>
-    </Section>
+    </section>
   );
 }
 

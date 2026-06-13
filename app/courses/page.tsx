@@ -12,27 +12,24 @@ export default function Courses() {
 
 function HeroCourses() {
   return (
-    <Section
-      className="bg-gradient-to-br from-primary-900 to-primary-800 text-white min-h-[60vh] flex items-center"
-      fullWidth
-    >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-        <h1 className="text-6xl font-bold mb-4">Learn From the Best</h1>
-        <p className="text-2xl text-white/80 mb-8">
+    <section className="bg-gradient-to-br from-primary-900 to-primary-800 text-white py-16 md:py-24">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h1 className="text-4xl sm:text-5xl font-bold mb-4">Learn From the Best</h1>
+        <p className="text-lg sm:text-xl text-white/80 mb-6">
           Access world-class technical education curated by industry experts
         </p>
-        <div className="flex flex-col sm:flex-row gap-3">
+        <div className="flex flex-col sm:flex-row gap-3 max-w-xl">
           <input
             type="text"
             placeholder="Search courses..."
-            className="px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-white placeholder-white/50 flex-1 focus:outline-none focus:ring-2 focus:ring-accent-500"
+            className="px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-white placeholder-white/50 flex-1 focus:outline-none focus:ring-2 focus:ring-accent-500 text-sm"
           />
-          <button className="px-6 py-3 rounded-lg bg-gradient-accent text-white font-semibold hover:shadow-lg transition-all">
+          <button className="px-6 py-3 rounded-lg bg-gradient-accent text-white font-semibold hover:shadow-lg transition-all text-sm whitespace-nowrap">
             Search
           </button>
         </div>
       </div>
-    </Section>
+    </section>
   );
 }
 

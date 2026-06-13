@@ -40,7 +40,16 @@ const displayLinks: {
   { label: "About Us", href: "/about" },
   { label: "Programs", href: "/programs", dropdown: programsSubItems },
   { label: "Get Involved", href: "#", dropdown: getInvolvedSubItems },
-  { label: "Courses", href: "/courses" },
+  {
+    label: "Courses",
+    href: "/courses",
+    dropdown: [
+      { label: "All Courses", href: "/courses" },
+      { label: "Digital Library", href: "/library" },
+      { label: "Interview Prep", href: "/interview-prep" },
+      { label: "DSA Problem Solver", href: "/dsa-solver" },
+    ],
+  },
   { label: "Blogs", href: "/blogs" },
   { label: "Contact Us", href: "/contact" },
 ];

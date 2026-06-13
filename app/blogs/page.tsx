@@ -12,17 +12,14 @@ export default function Blog() {
 
 function HeroBlog() {
   return (
-    <Section
-      className="bg-gradient-to-br from-primary-900 to-primary-800 text-white min-h-[60vh] flex items-center"
-      fullWidth
-    >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 w-full">
-        <h1 className="text-6xl font-bold mb-4">Our Blog</h1>
-        <p className="text-2xl text-white/80 mb-8">
+    <section className="bg-gradient-to-br from-primary-900 to-primary-800 text-white py-16 md:py-24">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h1 className="text-4xl sm:text-5xl font-bold mb-4">Our Blog</h1>
+        <p className="text-lg sm:text-xl text-white/80 mb-8">
           Insights, stories, and lessons from the Dev Bhoomi community
         </p>
 
-        <div className="flex gap-3 mx-auto">
+        <div className="flex gap-3 max-w-xl">
           <div className="flex-1 flex items-center gap-2 px-4 py-3 rounded-lg bg-white/10 border border-white/20">
             <Search className="h-5 w-5 text-white/60" />
             <input
@@ -36,7 +33,7 @@ function HeroBlog() {
           </button>
         </div>
       </div>
-    </Section>
+    </section>
   );
 }
 

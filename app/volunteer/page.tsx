@@ -15,20 +15,17 @@ export default function Volunteer() {
 
 function HeroVolunteer() {
   return (
-    <Section
-      className="bg-gradient-to-br from-primary-900 to-primary-800 text-white min-h-[60vh] flex items-center"
-      fullWidth
-    >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-        <h1 className="text-6xl font-bold mb-4">Make a Real Impact</h1>
-        <p className="text-2xl text-white/80 mb-8">
+    <section className="bg-gradient-to-br from-primary-900 to-primary-800 text-white py-16 md:py-24">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h1 className="text-4xl sm:text-5xl font-bold mb-4">Make a Real Impact</h1>
+        <p className="text-lg sm:text-xl text-white/80 mb-6">
           Join our community of 2000+ passionate volunteers making a difference
         </p>
         <Button size="lg" className="bg-white text-primary-900 hover:bg-white/90">
           Apply to Volunteer
         </Button>
       </div>
-    </Section>
+    </section>
   );
 }
 

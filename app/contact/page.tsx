@@ -12,17 +12,14 @@ export default function Contact() {
 
 function HeroContact() {
   return (
-    <Section
-      className="bg-gradient-to-br from-primary-900 to-primary-800 text-white min-h-[60vh] flex items-center"
-      fullWidth
-    >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-        <h1 className="text-6xl font-bold mb-4">Get in Touch</h1>
-        <p className="text-2xl text-white/80">
+    <section className="bg-gradient-to-br from-primary-900 to-primary-800 text-white py-16 md:py-24">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h1 className="text-4xl sm:text-5xl font-bold mb-4">Get in Touch</h1>
+        <p className="text-lg sm:text-xl text-white/80">
           Have questions? We'd love to hear from you. Reach out to us anytime.
         </p>
       </div>
-    </Section>
+    </section>
   );
 }
 
