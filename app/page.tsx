@@ -21,7 +21,6 @@ export default function Home() {
     <>
       <HeroSection />
       <ImpactStatsBar />
-      <WhoWeAreSection />
       <ProgramsSection />
       <ImpactSection />
       <TeamSection />
