@@ -1,4 +1,5 @@
 "use client";
+import { useTranslation } from "react-i18next";
 
 import { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -14,7 +15,6 @@ import {
 } from "lucide-react";
 import { toast } from "sonner";
 import { Breadcrumbs } from "@/components/breadcrumbs";
-import { useLanguage } from "@/providers/language-provider";
 
 interface TranslatedField {
   en: string;
@@ -35,97 +35,97 @@ interface DocumentResource {
 const resourcesData: DocumentResource[] = [
   {
     id: "1",
-    title: { en: "Introduction to Python Programming", hi: "पायथन प्रोग्रामिंग का परिचय" },
-    category: { en: "Computer Science", hi: "कंप्यूटर विज्ञान" },
+    title: "app.library.page.introductionToPythonProgram",
+    category: "app.library.page.computerScience",
     type: "PDF",
     size: "3.8 MB",
-    description: { en: "A beginner-friendly guide to coding, variables, loops, and functions in Python.", hi: "पायथन में कोडिंग, वेरिएबल, लूप और फ़ंक्शंस के लिए एक शुरुआती-अनुकूल मार्गदर्शिका।" },
+    description: "app.library.page.aBeginnerfriendlyGuideToCo",
     downloadUrl: "#",
-    author: { en: "Nextgen Tech Team", hi: "नेक्स्टजेन टेक टीम" },
+    author: "app.library.page.nextgenTechTeam",
   },
   {
     id: "2",
-    title: { en: "Class 10 Mathematics Study Guide", hi: "कक्षा 10 गणित अध्ययन मार्गदर्शिका" },
-    category: { en: "Mathematics", hi: "गणित" },
+    title: "app.library.page.class10MathematicsStudyGui",
+    category: "app.library.page.mathematics",
     type: "PDF",
     size: "5.4 MB",
-    description: { en: "Important formulas, theorems, and solved question sets for Class 10 Board preparation.", hi: "कक्षा 10 बोर्ड की तैयारी के लिए महत्वपूर्ण सूत्र, प्रमेय और हल किए गए प्रश्न सेट।" },
+    description: "app.library.page.importantFormulasTheoremsAn",
     downloadUrl: "#",
-    author: { en: "Ramesh Negi", hi: "रमेश नेगी" },
+    author: "app.library.page.rameshNegi",
   },
   {
     id: "3",
-    title: { en: "Introduction to HTML & CSS", hi: "HTML और CSS का परिचय" },
-    category: { en: "Computer Science", hi: "कंप्यूटर विज्ञान" },
+    title: "app.library.page.introductionToHtmlCss",
+    category: "app.library.page.computerScience",
     type: "PDF",
     size: "2.1 MB",
-    description: { en: "Master the building blocks of web development. Includes practical examples and cheatsheets.", hi: "वेब विकास के बुनियादी घटकों में महारत हासिल करें। व्यावहारिक उदाहरण और चीटशीट शामिल हैं।" },
+    description: "app.library.page.masterTheBuildingBlocksOf",
     downloadUrl: "#",
-    author: { en: "Nextgen Tech Team", hi: "नेक्स्टजेन टेक टीम" },
+    author: "app.library.page.nextgenTechTeam",
   },
   {
     id: "4",
-    title: { en: "General Science Question Bank", hi: "सामान्य विज्ञान प्रश्न बैंक" },
-    category: { en: "Science", hi: "विज्ञान" },
+    title: "app.library.page.generalScienceQuestionBank",
+    category: "app.library.page.science",
     type: "PDF",
     size: "4.7 MB",
-    description: { en: "Comprehensive physics, chemistry, and biology question bank for high school students.", hi: "हाई स्कूल के छात्रों के लिए व्यापक भौतिकी, रसायन विज्ञान और जीव विज्ञान प्रश्न बैंक।" },
+    description: "app.library.page.comprehensivePhysicsChemistr",
     downloadUrl: "#",
-    author: { en: "Nextgen Science Dept", hi: "नेक्स्टजेन विज्ञान विभाग" },
+    author: "app.library.page.nextgenScienceDept",
   },
   {
     id: "5",
-    title: { en: "English Grammar Handbook", hi: "अंग्रेजी व्याकरण हैंडबुक" },
-    category: { en: "Languages", hi: "भाषाएँ" },
+    title: "app.library.page.englishGrammarHandbook",
+    category: "app.library.page.languages",
     type: "PDF",
     size: "1.9 MB",
-    description: { en: "Essential grammar rules, usage conventions, and vocabulary building practice exercises.", hi: "आवश्यक व्याकरण नियम, उपयोग की परंपराएं और शब्दावली निर्माण अभ्यास कार्य।" },
+    description: "app.library.page.essentialGrammarRulesUsage",
     downloadUrl: "#",
-    author: { en: "Pooja Sharma", hi: "पूजा शर्मा" },
+    author: "app.library.page.poojaSharma",
   },
   {
     id: "6",
-    title: { en: "Web Development Roadmap 2026", hi: "वेब डेवलपमेंट रोडमैप 2026" },
-    category: { en: "Computer Science", hi: "कंप्यूटर विज्ञान" },
+    title: "app.library.page.webDevelopmentRoadmap2026",
+    category: "app.library.page.computerScience",
     type: "PDF",
     size: "1.2 MB",
-    description: { en: "An interactive pathway showing necessary milestones for frontend, backend, and fullstack engineering.", hi: "फ्रंटएंड, बैकएंड और फुलस्टैक इंजीनियरिंग के लिए आवश्यक मील के पत्थर दिखाने वाला एक इंटरैक्टिव मार्ग।" },
+    description: "app.library.page.anInteractivePathwayShowing",
     downloadUrl: "#",
-    author: { en: "Industry Advisory Council", hi: "उद्योग सलाहकार परिषद" },
+    author: "app.library.page.industryAdvisoryCouncil",
   },
   {
     id: "7",
-    title: { en: "Class 12 Physics Notes", hi: "कक्षा 12 भौतिकी नोट्स" },
-    category: { en: "Science", hi: "विज्ञान" },
+    title: "app.library.page.class12PhysicsNotes",
+    category: "app.library.page.science",
     type: "PDF",
     size: "6.2 MB",
-    description: { en: "Detailed syllabus notes covering electrostatics, electromagnetic induction, optics, and modern physics.", hi: "स्थिरवैद्युतिकी, विद्युत चुंबकीय प्रेरण, प्रकाशिकी और आधुनिक भौतिकी को कवर करने वाले विस्तृत पाठ्यक्रम नोट्स।" },
+    description: "app.library.page.detailedSyllabusNotesCoveri",
     downloadUrl: "#",
-    author: { en: "Dr. S. K. Bhatt", hi: "डॉ. एस. के. भट्ट" },
+    author: "app.library.page.drSKBhatt",
   },
   {
     id: "8",
-    title: { en: "Basic Digital Literacy Coursebook", hi: "बुनियादी डिजिटल साक्षरता पाठ्यक्रम पुस्तक" },
-    category: { en: "Digital Literacy", hi: "डिजिटल साक्षरता" },
+    title: "app.library.page.basicDigitalLiteracyCourseb",
+    category: "app.library.page.digitalLiteracy",
     type: "PDF",
     size: "3.1 MB",
-    description: { en: "Fundamental digital training: operating systems, web browsing, emailing, and online safety practices.", hi: "मौलिक डिजिटल प्रशिक्षण: ऑपरेटिंग सिस्टम, वेब ब्राउज़िंग, ईमेल और ऑनलाइन सुरक्षा प्रथाएं।" },
+    description: "app.library.page.fundamentalDigitalTrainingO",
     downloadUrl: "#",
-    author: { en: "Literacy Committee", hi: "साक्षरता समिति" },
+    author: "app.library.page.literacyCommittee",
   },
 ];
 
 const categories = [
-  { id: "All", label: { en: "All", hi: "सभी" } },
-  { id: "Computer Science", label: { en: "Computer Science", hi: "कंप्यूटर विज्ञान" } },
-  { id: "Mathematics", label: { en: "Mathematics", hi: "गणित" } },
-  { id: "Science", label: { en: "Science", hi: "विज्ञान" } },
-  { id: "Languages", label: { en: "Languages", hi: "भाषाएँ" } },
-  { id: "Digital Literacy", label: { en: "Digital Literacy", hi: "डिजिटल साक्षरता" } },
+  { id: "All", label: "app.library.page.all" },
+  { id: "Computer Science", label: "app.library.page.computerScience" },
+  { id: "Mathematics", label: "app.library.page.mathematics" },
+  { id: "Science", label: "app.library.page.science" },
+  { id: "Languages", label: "app.library.page.languages" },
+  { id: "Digital Literacy", label: "app.library.page.digitalLiteracy" },
 ];
 
 export default function LibraryPage() {
-  const { t } = useLanguage();
+  const { t } = useTranslation();
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [requestBookTitle, setRequestBookTitle] = useState("");
@@ -145,7 +145,7 @@ export default function LibraryPage() {
   }, [searchQuery, selectedCategory, t]);
 
   const handleDownload = (title: string) => {
-    toast.success(t({ en: `Starting download for: ${title}`, hi: `${title} के लिए डाउनलोड शुरू हो रहा है...` }));
+    toast.success(t('app.library.page.startingDownloadForTitle'));
   };
 
   const handleRequestSubmit = (e: React.FormEvent) => {
@@ -157,10 +157,7 @@ export default function LibraryPage() {
       setRequestBookTitle("");
       setRequestBookCategory("");
       toast.success(
-        t({
-          en: "Thank you! Your book/notes request has been logged. We'll look into adding it.",
-          hi: "धन्यवाद! आपकी पुस्तक/नोट्स का अनुरोध दर्ज कर लिया गया है। हम इसे जोड़ने पर विचार करेंगे।",
-        })
+        t('app.library.page.thankYouYourBooknotesReque')
       );
     }, 1200);
   };
@@ -173,13 +170,10 @@ export default function LibraryPage() {
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <Breadcrumbs />
           <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight mb-4 font-heading">
-            {t({ en: "Digital Library", hi: "डिजिटल लाइब्रेरी" })}
+            {t('app.library.page.digitalLibrary')}
           </h1>
           <p className="max-w-2xl mx-auto text-primary-200 text-base sm:text-lg">
-            {t({
-              en: "Free access to textbook solutions, notes, cheat sheets, and books prepared by volunteers and educators to support your educational journey.",
-              hi: "आपकी शैक्षिक यात्रा का समर्थन करने के लिए स्वयंसेवकों और शिक्षकों द्वारा तैयार की गई पाठ्यपुस्तक समाधानों, नोट्स, चीट शीट्स और पुस्तकों तक निःशुल्क पहुँच।",
-            })}
+            {t('app.library.page.freeAccessToTextbookSoluti')}
           </p>
         </div>
       </section>
@@ -190,7 +184,7 @@ export default function LibraryPage() {
           {/* Left Sidebar - Filters */}
           <aside className="bg-slate-800 rounded-2xl p-6 border border-slate-700/80 shadow-md">
             <h2 className="text-lg font-bold text-white flex items-center gap-2 mb-5">
-              <Filter className="h-5 w-5 text-accent-500" /> {t({ en: "Filter Resources", hi: "संसाधन फ़िल्टर करें" })}
+              <Filter className="h-5 w-5 text-accent-500" /> {t('app.library.page.filterResources')}
             </h2>
             <div className="space-y-1.5">
               {categories.map((category) => (
@@ -211,18 +205,15 @@ export default function LibraryPage() {
             {/* Request a Resource Box */}
             <div className="mt-8 pt-6 border-t border-slate-700">
               <h3 className="text-sm font-bold text-white flex items-center gap-1.5 mb-3">
-                <HelpCircle className="h-4 w-4 text-accent-500" /> {t({ en: "Can't find a book?", hi: "किताब नहीं मिल रही?" })}
+                <HelpCircle className="h-4 w-4 text-accent-500" /> {t('app.library.page.cantFindABook')}
               </h3>
               <p className="text-xs text-primary-400 leading-relaxed mb-4">
-                {t({
-                  en: "Let us know what notes or reference books you need, and our community will try to find it for you!",
-                  hi: "हमें बताएं कि आपको किन नोट्स या संदर्भ पुस्तकों की आवश्यकता है, और हमारा समुदाय उन्हें आपके लिए खोजने का प्रयास करेगा!",
-                })}
+                {t('app.library.page.letUsKnowWhatNotesOrRefe')}
               </p>
               <form onSubmit={handleRequestSubmit} className="space-y-3">
                 <input
                   type="text"
-                  placeholder={t({ en: "Book or topic title", hi: "पुस्तक या विषय का शीर्षक" })}
+                  placeholder={t('app.library.page.bookOrTopicTitle')}
                   required
                   value={requestBookTitle}
                   onChange={(e) => setRequestBookTitle(e.target.value)}
@@ -233,7 +224,7 @@ export default function LibraryPage() {
                   onChange={(e) => setRequestBookCategory(e.target.value)}
                   className="w-full px-3 py-2 text-xs rounded-lg bg-slate-900 border border-slate-700 text-white placeholder-primary-550 focus:outline-none focus:ring-2 focus:ring-accent-500 shadow-inner cursor-pointer"
                 >
-                  <option value="">{t({ en: "Select Category (Optional)", hi: "श्रेणी चुनें (वैकल्पिक)" })}</option>
+                  <option value="">{t('app.library.page.selectCategoryOptional')}</option>
                   {categories.slice(1).map((c) => (
                     <option key={c.id} value={c.id}>
                       {t(c.label)}
@@ -245,7 +236,7 @@ export default function LibraryPage() {
                   disabled={requestLoading}
                   className="w-full text-center bg-slate-750 hover:bg-slate-700 text-white font-semibold text-xs py-2 rounded-lg transition-colors cursor-pointer disabled:opacity-50"
                 >
-                  {requestLoading ? t({ en: "Submitting...", hi: "जमा किया जा रहा है..." }) : t({ en: "Request Document", hi: "दस्तावेज़ अनुरोध" })}
+                  {requestLoading ? t('app.library.page.submitting') : t('app.library.page.requestDocument')}
                 </button>
               </form>
             </div>
@@ -258,7 +249,7 @@ export default function LibraryPage() {
               <Search className="h-5 w-5 text-primary-400 shrink-0" />
               <input
                 type="text"
-                placeholder={t({ en: "Search resources by title, description, or author...", hi: "शीर्षक, विवरण या लेखक द्वारा संसाधनों की खोज करें..." })}
+                placeholder={t('app.library.page.searchResourcesByTitleDesc')}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-full bg-transparent text-white placeholder-primary-500 focus:outline-none text-sm"
@@ -268,7 +259,7 @@ export default function LibraryPage() {
                   onClick={() => setSearchQuery("")}
                   className="text-xs text-accent-400 hover:text-accent-300 font-semibold px-2 cursor-pointer"
                 >
-                  {t({ en: "Clear", hi: "साफ़ करें" })}
+                  {t('app.library.page.clear')}
                 </button>
               )}
             </div>
@@ -306,7 +297,7 @@ export default function LibraryPage() {
                           {t(item.title)}
                         </h3>
                         <p className="text-xs text-primary-400 mb-4">
-                          {t({ en: "Prepared by: ", hi: "तैयारकर्ता: " })}<span className="font-semibold">{t(item.author)}</span>
+                          {t('app.library.page.preparedBy')}<span className="font-semibold">{t(item.author)}</span>
                         </p>
 
                         {/* Description */}
@@ -318,13 +309,13 @@ export default function LibraryPage() {
                       {/* Download Section */}
                       <div className="mt-6 pt-4 border-t border-slate-700/50 flex items-center justify-between">
                         <span className="text-xs text-primary-400 font-medium">
-                          {t({ en: "Free License", hi: "निःशुल्क लाइसेंस" })}
+                          {t('app.library.page.freeLicense')}
                         </span>
                         <button
                           onClick={() => handleDownload(t(item.title))}
                           className="inline-flex items-center justify-center gap-2 px-4 py-2 text-xs font-bold bg-slate-700 text-white rounded-xl hover:bg-accent-500 dark:hover:bg-accent-600 transition-colors shadow cursor-pointer"
                         >
-                          {t({ en: "Download", hi: "डाउनलोड करें" })} <Download className="h-3.5 w-3.5" />
+                          {t('app.library.page.download')} <Download className="h-3.5 w-3.5" />
                         </button>
                       </div>
                     </motion.div>
@@ -339,13 +330,10 @@ export default function LibraryPage() {
                 >
                   <Inbox className="h-16 w-16 text-slate-600 mb-4" />
                   <h3 className="text-lg font-bold text-white mb-2">
-                    {t({ en: "No resources found", hi: "कोई संसाधन नहीं मिले" })}
+                    {t('app.library.page.noResourcesFound')}
                   </h3>
                   <p className="text-sm text-primary-450 max-w-sm mb-6">
-                    {t({
-                      en: `We couldn't find any documents matching "${searchQuery}" in the "${selectedCategory}" category.`,
-                      hi: `हमें "${selectedCategory}" श्रेणी में "${searchQuery}" से मेल खाने वाला कोई दस्तावेज़ नहीं मिला।`,
-                    })}
+                    {t('app.library.page.weCouldntFindAnyDocuments')}
                   </p>
                   <button
                     onClick={() => {
@@ -354,7 +342,7 @@ export default function LibraryPage() {
                     }}
                     className="px-5 py-2.5 rounded-xl bg-accent-500 hover:bg-accent-600 text-white font-semibold text-xs transition-colors cursor-pointer"
                   >
-                    {t({ en: "Reset filters", hi: "फ़िल्टर रीसेट करें" })}
+                    {t('app.library.page.resetFilters')}
                   </button>
                 </motion.div>
               )}

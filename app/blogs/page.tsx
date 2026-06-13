@@ -1,10 +1,10 @@
 "use client";
+import { useTranslation } from "react-i18next";
 
 import { useState, useMemo } from "react";
 import { Section, Card, Badge } from "@/components/ui";
 import { Search, Calendar, User, ArrowRight } from "lucide-react";
 import { Breadcrumbs } from "@/components/breadcrumbs";
-import { useLanguage } from "@/providers/language-provider";
 
 interface TranslatedField {
   en: string;
@@ -22,86 +22,68 @@ interface Article {
 }
 
 const categories = [
-  { id: "All", label: { en: "All", hi: "सभी" } },
-  { id: "Education", label: { en: "Education", hi: "शिक्षा" } },
-  { id: "Community", label: { en: "Community", hi: "समुदाय" } },
-  { id: "Technology", label: { en: "Technology", hi: "तकनीक" } },
-  { id: "Impact", label: { en: "Impact", hi: "प्रभाव" } },
-  { id: "Careers", label: { en: "Careers", hi: "करियर" } },
+  { id: "All", label: "app.blogs.page.all" },
+  { id: "Education", label: "app.blogs.page.education" },
+  { id: "Community", label: "app.blogs.page.community" },
+  { id: "Technology", label: "app.blogs.page.technology" },
+  { id: "Impact", label: "app.blogs.page.impact" },
+  { id: "Careers", label: "app.blogs.page.careers" },
 ];
 
 const articles: Article[] = [
   {
-    title: { en: "The Future of Technical Education in India", hi: "भारत में तकनीकी शिक्षा का भविष्य" },
-    excerpt: {
-      en: "Exploring how digital platforms are revolutionizing access to quality technical education in emerging markets.",
-      hi: "यह तलाशना कि डिजिटल प्लेटफॉर्म किस प्रकार उभरते बाजारों में गुणवत्तापूर्ण तकनीकी शिक्षा तक पहुंच में क्रांति ला रहे हैं।"
-    },
-    date: { en: "May 15, 2024", hi: "15 मई, 2024" },
-    author: { en: "Dr. Ravi Singh", hi: "डॉ. रवि सिंह" },
-    category: { en: "Education", hi: "शिक्षा" },
-    readTime: { en: "8 min read", hi: "8 मिनट का पठन" },
+    title: "app.blogs.page.theFutureOfTechnicalEducat",
+    excerpt: "app.blogs.page.exploringHowDigitalPlatform",
+    date: "app.blogs.page.may152024",
+    author: "app.blogs.page.drRaviSingh",
+    category: "app.blogs.page.education",
+    readTime: "app.blogs.page.8MinRead",
     featured: true,
   },
   {
-    title: { en: "Volunteer Spotlight: Making Impact Together", hi: "स्वयंसेवक स्पॉटलाइट: मिलकर प्रभाव डालना" },
-    excerpt: {
-      en: "Meet the passionate volunteers driving change in our communities and transforming lives daily.",
-      hi: "हमारे समुदायों में बदलाव लाने वाले और दैनिक जीवन को बदलने वाले स्वयंसेवकों से मिलें।"
-    },
-    date: { en: "May 10, 2024", hi: "10 मई, 2024" },
-    author: { en: "Sarah Johnson", hi: "सारा जॉनसन" },
-    category: { en: "Community", hi: "समुदाय" },
-    readTime: { en: "5 min read", hi: "5 मिनट का पठन" },
+    title: "app.blogs.page.volunteerSpotlightMakingImp",
+    excerpt: "app.blogs.page.meetThePassionateVolunteers",
+    date: "app.blogs.page.may102024",
+    author: "app.blogs.page.sarahJohnson",
+    category: "app.blogs.page.community",
+    readTime: "app.blogs.page.5MinRead",
   },
   {
-    title: { en: "Career Success: From Student to Tech Professional", hi: "करियर की सफलता: छात्र से तकनीकी पेशेवर तक" },
-    excerpt: {
-      en: "Real success stories from our graduates and their career journeys in the tech industry.",
-      hi: "हमारे स्नातक की वास्तविक सफलता की कहानियां और तकनीकी उद्योग में उनकी करियर यात्रा।"
-    },
-    date: { en: "May 5, 2024", hi: "5 मई, 2024" },
-    author: { en: "Amit Patel", hi: "अमित पटेल" },
-    category: { en: "Careers", hi: "करियर" },
-    readTime: { en: "6 min read", hi: "6 मिनट का पठन" },
+    title: "app.blogs.page.careerSuccessFromStudentTo",
+    excerpt: "app.blogs.page.realSuccessStoriesFromOur",
+    date: "app.blogs.page.may52024",
+    author: "app.blogs.page.amitPatel",
+    category: "app.blogs.page.careers",
+    readTime: "app.blogs.page.6MinRead",
   },
   {
-    title: { en: "Building Inclusive Learning Communities", hi: "समावेशी शिक्षण समुदायों का निर्माण" },
-    excerpt: {
-      en: "How we create welcoming spaces where every student feels valued and supported in their journey.",
-      hi: "हम कैसे स्वागत योग्य स्थान बनाते हैं जहाँ प्रत्येक छात्र अपनी यात्रा में मूल्यवान और समर्थित महसूस करता है।"
-    },
-    date: { en: "April 28, 2024", hi: "28 अप्रैल, 2024" },
-    author: { en: "Priya Sharma", hi: "प्रिया शर्मा" },
-    category: { en: "Community", hi: "समुदाय" },
-    readTime: { en: "7 min read", hi: "7 मिनट का पठन" },
+    title: "app.blogs.page.buildingInclusiveLearningCo",
+    excerpt: "app.blogs.page.howWeCreateWelcomingSpaces",
+    date: "app.blogs.page.april282024",
+    author: "app.blogs.page.priyaSharma",
+    category: "app.blogs.page.community",
+    readTime: "app.blogs.page.7MinRead",
   },
   {
-    title: { en: "Scaling Education Through Technology", hi: "प्रौद्योगिकी के माध्यम से शिक्षा का विस्तार" },
-    excerpt: {
-      en: "Insights into how we leverage modern tech stack to reach thousands of learners efficiently.",
-      hi: "इस बारे में अंतर्दृष्टि कि कैसे हम हजारों शिक्षार्थियों तक कुशलतापूर्वक पहुंचने के लिए आधुनिक तकनीकी स्टैक का लाभ उठाते हैं।"
-    },
-    date: { en: "April 20, 2024", hi: "20 अप्रैल, 2024" },
-    author: { en: "Tech Team", hi: "तकनीकी टीम" },
-    category: { en: "Technology", hi: "तकनीक" },
-    readTime: { en: "9 min read", hi: "9 मिनट का पठन" },
+    title: "app.blogs.page.scalingEducationThroughTech",
+    excerpt: "app.blogs.page.insightsIntoHowWeLeverage",
+    date: "app.blogs.page.april202024",
+    author: "app.blogs.page.techTeam",
+    category: "app.blogs.page.technology",
+    readTime: "app.blogs.page.9MinRead",
   },
   {
-    title: { en: "Measuring Impact: Our 2024 Report", hi: "प्रभाव का मापन: हमारी 2024 की रिपोर्ट" },
-    excerpt: {
-      en: "Comprehensive overview of our achievements, challenges, and goals for the coming year.",
-      hi: "आने वाले वर्ष के लिए हमारी उपलब्धियों, चुनौतियों और लक्ष्यों का व्यापक अवलोकन।"
-    },
-    date: { en: "April 15, 2024", hi: "15 अप्रैल, 2024" },
-    author: { en: "Foundation", hi: "फाउंडेशन" },
-    category: { en: "Impact", hi: "प्रभाव" },
-    readTime: { en: "10 min read", hi: "10 मिनट का पठन" },
+    title: "app.blogs.page.measuringImpactOur2024Repo",
+    excerpt: "app.blogs.page.comprehensiveOverviewOfOur",
+    date: "app.blogs.page.april152024",
+    author: "app.blogs.page.foundation",
+    category: "app.blogs.page.impact",
+    readTime: "app.blogs.page.10MinRead",
   },
 ];
 
 export default function Blog() {
-  const { t } = useLanguage();
+  const { t } = useTranslation();
   const [searchQuery, setSearchQuery] = useState("");
   const [activeCategory, setActiveCategory] = useState("All");
 
@@ -145,20 +127,17 @@ function HeroBlog({
   searchQuery: string;
   setSearchQuery: (val: string) => void;
 }) {
-  const { t } = useLanguage();
+  const { t } = useTranslation();
   return (
     <section className="relative overflow-hidden bg-primary-950 text-white py-16">
       <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:16px_16px]" />
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <Breadcrumbs />
         <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight mb-4 font-heading">
-          {t({ en: "Our Blog", hi: "हमारा ब्लॉग" })}
+          {t('app.blogs.page.ourBlog')}
         </h1>
         <p className="max-w-2xl mx-auto text-primary-200 text-base sm:text-lg mb-8">
-          {t({
-            en: "Insights, stories, and lessons from the Dev Bhoomi community",
-            hi: "देवभूमि समुदाय से अंतर्दृष्टि, कहानियां और सबक",
-          })}
+          {t('app.blogs.page.insightsStoriesAndLessonsF')}
         </p>
 
         <div className="flex gap-3 max-w-xl mx-auto">
@@ -168,12 +147,12 @@ function HeroBlog({
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder={t({ en: "Search articles...", hi: "लेख खोजें..." })}
+              placeholder={t('app.blogs.page.searchArticles')}
               className="bg-transparent text-white placeholder-white/50 outline-none w-full text-sm"
             />
           </div>
           <button className="px-6 py-3 rounded-lg bg-gradient-accent text-white font-semibold hover:shadow-lg transition-all cursor-pointer text-sm">
-            {t({ en: "Search", hi: "खोजें" })}
+            {t('app.blogs.page.search')}
           </button>
         </div>
       </div>
@@ -192,7 +171,7 @@ function BlogGrid({
   featuredArticle?: Article;
   otherArticles: Article[];
 }) {
-  const { t } = useLanguage();
+  const { t } = useTranslation();
 
   return (
     <Section className="bg-slate-900">
@@ -243,7 +222,7 @@ function BlogGrid({
                   </span>
                 </div>
                 <button className="flex items-center space-x-2 text-accent-400 font-semibold hover:text-accent-300 transition-colors group cursor-pointer text-sm">
-                  <span>{t({ en: "Read Article", hi: "लेख पढ़ें" })}</span>
+                  <span>{t('app.blogs.page.readArticle')}</span>
                   <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
                 </button>
               </div>
@@ -273,7 +252,7 @@ function BlogGrid({
                   <span>{t(article.readTime)}</span>
                 </div>
                 <button className="text-sm font-semibold text-accent-400 hover:text-accent-300 transition-colors group flex items-center cursor-pointer">
-                  <span>{t({ en: "Read More", hi: "और पढ़ें" })}</span>
+                  <span>{t('app.blogs.page.readMore')}</span>
                   <ArrowRight className="h-3 w-3 ml-1 group-hover:translate-x-0.5 transition-transform" />
                 </button>
               </div>
@@ -284,7 +263,7 @@ function BlogGrid({
         {/* Pagination */}
         <div className="mt-12 flex justify-center items-center space-x-2">
           <button className="px-4 py-2 rounded-lg border border-slate-700 hover:bg-slate-800 transition-all text-sm cursor-pointer">
-            {t({ en: "Previous", hi: "पिछला" })}
+            {t('app.blogs.page.previous')}
           </button>
           {[1, 2, 3].map((i) => (
             <button
@@ -299,7 +278,7 @@ function BlogGrid({
             </button>
           ))}
           <button className="px-4 py-2 rounded-lg border border-slate-700 hover:bg-slate-800 transition-all text-sm cursor-pointer">
-            {t({ en: "Next", hi: "अगला" })}
+            {t('app.blogs.page.next')}
           </button>
         </div>
       </div>

@@ -1,4 +1,5 @@
 "use client";
+import { useTranslation } from "react-i18next";
 
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
@@ -6,7 +7,6 @@ import { Menu, X, ChevronDown, ArrowLeft } from "lucide-react";
 import Image from "next/image";
 import { navLinks } from "@/lib/constants";
 import { LanguageSwitcher } from "./language-switcher";
-import { useLanguage } from "@/providers/language-provider";
 import { motion, AnimatePresence } from "framer-motion";
 import { usePathname, useRouter } from "next/navigation";
 
@@ -88,7 +88,7 @@ function DesktopDropdown({
   items: { label: string; href: string }[];
   href: string;
 }) {
-  const { t } = useLanguage();
+  const { t } = useTranslation();
   const [open, setOpen] = useState(false);
   const timeout = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -161,7 +161,7 @@ function MobileAccordion({
   items: { label: string; href: string }[];
   onNavigate: () => void;
 }) {
-  const { t } = useLanguage();
+  const { t } = useTranslation();
   const [open, setOpen] = useState(false);
 
   return (
@@ -231,11 +231,11 @@ const getMobileTitle = (path: string, t: any) => {
     case "/programs":
       return t("nav.programs");
     case "/gallery":
-      return t({ en: "Gallery", hi: "गैलरी" });
+      return t('components.navbar.gallery');
     case "/careers":
-      return t({ en: "Careers", hi: "करियर" });
+      return t('components.navbar.careers');
     case "/login":
-      return t({ en: "Account Access", hi: "खाता पहुंच" });
+      return t('components.navbar.accountAccess');
     default:
       const lastSegment = path.split("/").pop();
       if (!lastSegment) return "Nextgen";
@@ -244,7 +244,7 @@ const getMobileTitle = (path: string, t: any) => {
 };
 
 export function Navbar() {
-  const { t } = useLanguage();
+  const { t } = useTranslation();
   const [isScrolled, setIsScrolled] = useState(false);
   const pathname = usePathname();
   const router = useRouter();

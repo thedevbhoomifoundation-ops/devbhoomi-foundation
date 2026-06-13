@@ -1,10 +1,10 @@
 "use client";
+import { useTranslation } from "react-i18next";
 
 import React from "react";
 import { Section, Card } from "@/components/ui";
 import { BookOpen, Users, Heart, TrendingUp } from "lucide-react";
 import { Breadcrumbs } from "@/components/breadcrumbs";
-import { useLanguage } from "@/providers/language-provider";
 
 export default function Programs() {
   return (
@@ -16,7 +16,7 @@ export default function Programs() {
 }
 
 function HeroPrograms() {
-  const { t } = useLanguage();
+  const { t } = useTranslation();
 
   return (
     <section className="relative overflow-hidden bg-slate-900 text-white py-16">
@@ -24,13 +24,10 @@ function HeroPrograms() {
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <Breadcrumbs />
         <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight mb-4 font-heading">
-          {t({ en: "Our Programs", hi: "हमारे कार्यक्रम" })}
+          {t('app.programs.page.ourPrograms')}
         </h1>
         <p className="max-w-2xl mx-auto text-primary-200 text-base sm:text-lg">
-          {t({
-            en: "Comprehensive learning pathways designed to empower individuals and communities",
-            hi: "व्यक्तियों और समुदायों को सशक्त बनाने के लिए डिज़ाइन किए गए व्यापक शिक्षण मार्ग",
-          })}
+          {t('app.programs.page.comprehensiveLearningPathway')}
         </p>
       </div>
     </section>
@@ -38,68 +35,56 @@ function HeroPrograms() {
 }
 
 function ProgramsGrid() {
-  const { t } = useLanguage();
+  const { t } = useTranslation();
 
   const programs = [
     {
-      title: { en: "Technical Education Program", hi: "तकनीकी शिक्षा कार्यक्रम" },
+      title: "app.programs.page.technicalEducationProgram",
       icon: BookOpen,
-      description: {
-        en: "Comprehensive courses in web development, mobile development, data science, and cloud computing.",
-        hi: "वेब डेवलपमेंट, मोबाइल डेवलपमेंट, डेटा साइंस और क्लाउड कंप्यूटिंग में व्यापक पाठ्यक्रम।",
-      },
+      description: "app.programs.page.comprehensiveCoursesInWebD",
       features: [
-        { en: "Expert instructors", hi: "विशेषज्ञ शिक्षक" },
-        { en: "Hands-on projects", hi: "व्यावहारिक परियोजनाएं" },
-        { en: "Industry-relevant", hi: "उद्योग-प्रासंगिक" },
-        { en: "Certificates", hi: "प्रमाण पत्र" },
+        "app.programs.page.expertInstructors",
+        "app.programs.page.handsonProjects",
+        "app.programs.page.industryrelevant",
+        "app.programs.page.certificates",
       ],
-      participants: { en: "8000+ participants", hi: "8000+ प्रतिभागी" },
+      participants: "app.programs.page.8000Participants",
     },
     {
-      title: { en: "Mentorship Program", hi: "मेंटरशिप कार्यक्रम" },
+      title: "app.programs.page.mentorshipProgram",
       icon: Users,
-      description: {
-        en: "One-on-one guidance from industry professionals to help students navigate their career.",
-        hi: "छात्रों को उनके करियर में मार्गदर्शन करने के लिए उद्योग पेशेवरों से व्यक्तिगत मार्गदर्शन।",
-      },
+      description: "app.programs.page.oneononeGuidanceFromIndustr",
       features: [
-        { en: "Personal mentors", hi: "व्यक्तिगत मेंटर्स" },
-        { en: "Career guidance", hi: "करियर मार्गदर्शन" },
-        { en: "Networking", hi: "नेटवर्किंग" },
-        { en: "Monthly sessions", hi: "मासिक सत्र" },
+        "app.programs.page.personalMentors",
+        "app.programs.page.careerGuidance",
+        "app.programs.page.networking",
+        "app.programs.page.monthlySessions",
       ],
-      participants: { en: "1200+ participants", hi: "1200+ प्रतिभागी" },
+      participants: "app.programs.page.1200Participants",
     },
     {
-      title: { en: "Volunteer Community", hi: "स्वयंसेवक समुदाय" },
+      title: "app.programs.page.volunteerCommunity",
       icon: Heart,
-      description: {
-        en: "Join our community of change-makers and make a real impact in education and society.",
-        hi: "बदलाव लाने वालों के हमारे समुदाय में शामिल हों और शिक्षा और समाज में वास्तविक प्रभाव डालें।",
-      },
+      description: "app.programs.page.joinOurCommunityOfChangema",
       features: [
-        { en: "Multiple roles", hi: "कई भूमिकाएँ" },
-        { en: "Flexible schedule", hi: "लचीला कार्यक्रम" },
-        { en: "Recognition", hi: "मान्यता" },
-        { en: "Growth opportunities", hi: "विकास के अवसर" },
+        "app.programs.page.multipleRoles",
+        "app.programs.page.flexibleSchedule",
+        "app.programs.page.recognition",
+        "app.programs.page.growthOpportunities",
       ],
-      participants: { en: "2000+ participants", hi: "2000+ प्रतिभागी" },
+      participants: "app.programs.page.2000Participants",
     },
     {
-      title: { en: "Scholarship Initiative", hi: "छात्रवृत्ति पहल" },
+      title: "app.programs.page.scholarshipInitiative",
       icon: TrendingUp,
-      description: {
-        en: "Providing financial support to deserving students who lack resources for quality education.",
-        hi: "उन योग्य छात्रों को वित्तीय सहायता प्रदान करना जिनके पास गुणवत्तापूर्ण शिक्षा के लिए संसाधनों की कमी है।",
-      },
+      description: "app.programs.page.providingFinancialSupportTo",
       features: [
-        { en: "Full scholarships", hi: "पूर्ण छात्रवृत्ति" },
-        { en: "Partial support", hi: "आंशिक सहायता" },
-        { en: "Merit-based", hi: "योग्यता-आधारित" },
-        { en: "Need-based", hi: "आवश्यकता-आधारित" },
+        "app.programs.page.fullScholarships",
+        "app.programs.page.partialSupport",
+        "app.programs.page.meritbased",
+        "app.programs.page.needbased",
       ],
-      participants: { en: "3500+ participants", hi: "3500+ प्रतिभागी" },
+      participants: "app.programs.page.3500Participants",
     },
   ];
 
@@ -124,7 +109,7 @@ function ProgramsGrid() {
                     </p>
                     <div className="mb-4">
                       <p className="text-sm font-medium text-white mb-2">
-                        {t({ en: "Features:", hi: "विशेषताएँ:" })}
+                        {t('app.programs.page.features')}
                       </p>
                       <div className="flex flex-wrap gap-2">
                         {program.features.map((feature, j) => (
@@ -143,7 +128,7 @@ function ProgramsGrid() {
                   </div>
                 </div>
                 <button className="mt-4 w-full py-2 rounded-lg bg-gradient-accent text-white font-semibold hover:shadow-lg transition-all cursor-pointer">
-                  {t({ en: "Learn More", hi: "अधिक जानें" })}
+                  {t('app.programs.page.learnMore')}
                 </button>
               </Card>
             );

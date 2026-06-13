@@ -1,9 +1,9 @@
 "use client";
+import { useTranslation } from "react-i18next";
 
 import { Section, Card, Badge } from "@/components/ui";
 import { Clock, Users, Star, Filter } from "lucide-react";
 import { Breadcrumbs } from "@/components/breadcrumbs";
-import { useLanguage } from "@/providers/language-provider";
 
 export default function Courses() {
   return (
@@ -15,26 +15,26 @@ export default function Courses() {
 }
 
 function HeroCourses() {
-  const { t } = useLanguage();
+  const { t } = useTranslation();
   return (
     <section className="relative overflow-hidden bg-primary-950 text-white py-16">
       <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:16px_16px]" />
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <Breadcrumbs />
         <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight mb-4 font-heading">
-          {t({ en: "Learn From the Best", hi: "सर्वश्रेष्ठ से सीखें" })}
+          {t('app.courses.page.learnFromTheBest')}
         </h1>
         <p className="max-w-2xl mx-auto text-primary-200 text-base sm:text-lg mb-6">
-          {t({ en: "Access world-class technical education curated by industry experts", hi: "उद्योग विशेषज्ञों द्वारा तैयार की गई विश्व स्तरीय तकनीकी शिक्षा प्राप्त करें" })}
+          {t('app.courses.page.accessWorldclassTechnicalEd')}
         </p>
         <div className="flex flex-col sm:flex-row gap-3 max-w-xl mx-auto">
           <input
             type="text"
-            placeholder={t({ en: "Search courses...", hi: "कोर्स खोजें..." })}
+            placeholder={t('app.courses.page.searchCourses')}
             className="px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-white placeholder-white/50 flex-1 focus:outline-none focus:ring-2 focus:ring-accent-500 text-sm"
           />
           <button className="px-6 py-3 rounded-lg bg-gradient-accent text-white font-semibold hover:shadow-lg transition-all text-sm whitespace-nowrap cursor-pointer">
-            {t({ en: "Search", hi: "खोजें" })}
+            {t('app.courses.page.search')}
           </button>
         </div>
       </div>
@@ -43,83 +43,83 @@ function HeroCourses() {
 }
 
 function CoursesGrid() {
-  const { t } = useLanguage();
+  const { t } = useTranslation();
 
   const categories = [
-    t({ en: "All", hi: "सभी" }),
-    t({ en: "Web Development", hi: "वेब डेवलपमेंट" }),
-    t({ en: "Mobile", hi: "मोबाइल" }),
-    t({ en: "AI/ML", hi: "एआई/एमएल" }),
-    t({ en: "DevOps", hi: "डेवऑप्स" }),
-    t({ en: "Data Science", hi: "डेटा साइंस" })
+    t('app.courses.page.all'),
+    t('app.courses.page.webDevelopment'),
+    t('app.courses.page.mobile'),
+    t('app.courses.page.aiml'),
+    t('app.courses.page.devops'),
+    t('app.courses.page.dataScience')
   ];
   
   const courses = [
     {
-      title: t({ en: "Web Development Fundamentals", hi: "वेब डेवलपमेंट फंडामेंटल्स" }),
-      category: t({ en: "Web Development", hi: "वेब डेवलपमेंट" }),
-      level: t({ en: "Beginner", hi: "शुरुआती" }),
+      title: t('app.courses.page.webDevelopmentFundamentals'),
+      category: t('app.courses.page.webDevelopment'),
+      level: t('app.courses.page.beginner'),
       students: 2400,
       rating: 4.9,
       price: "₹2999",
-      duration: t({ en: "8 weeks", hi: "8 सप्ताह" }),
-      instructor: t({ en: "John Smith", hi: "जॉन स्मिथ" }),
-      description: t({ en: "Master HTML, CSS, JavaScript and build your first web projects", hi: "HTML, CSS, JavaScript में महारत हासिल करें और अपनी पहली वेब परियोजनाएं बनाएं" }),
+      duration: t('app.courses.page.8Weeks'),
+      instructor: t('app.courses.page.johnSmith'),
+      description: t('app.courses.page.masterHtmlCssJavascriptAnd'),
     },
     {
-      title: t({ en: "Advanced React & Next.js", hi: "उन्नत रिएक्ट और नेक्स्ट.जेएस" }),
-      category: t({ en: "Web Development", hi: "वेब डेवलपमेंट" }),
-      level: t({ en: "Advanced", hi: "उन्नत" }),
+      title: t('app.courses.page.advancedReactNextjs'),
+      category: t('app.courses.page.webDevelopment'),
+      level: t('app.courses.page.advanced'),
       students: 1200,
       rating: 4.8,
       price: "₹4999",
-      duration: t({ en: "10 weeks", hi: "10 सप्ताह" }),
-      instructor: t({ en: "React Expert", hi: "रिएक्ट एक्सपर्ट" }),
-      description: t({ en: "Build scalable, production-ready applications with React and Next.js", hi: "रिएक्ट और नेक्स्ट.जेएस के साथ स्केलेबल, प्रोडक्शन-रेडी एप्लिकेशन बनाएं" }),
+      duration: t('app.courses.page.10Weeks'),
+      instructor: t('app.courses.page.reactExpert'),
+      description: t('app.courses.page.buildScalableProductionready'),
     },
     {
-      title: t({ en: "Full-Stack Development Bootcamp", hi: "फुल-स्टैक डेवलपमेंट बूटकैंप" }),
-      category: t({ en: "Web Development", hi: "वेब डेवलपमेंट" }),
-      level: t({ en: "Intermediate", hi: "मध्यम" }),
+      title: t('app.courses.page.fullstackDevelopmentBootcamp'),
+      category: t('app.courses.page.webDevelopment'),
+      level: t('app.courses.page.intermediate'),
       students: 1800,
       rating: 4.9,
       price: "₹5999",
-      duration: t({ en: "12 weeks", hi: "12 सप्ताह" }),
-      instructor: t({ en: "Full Stack Pro", hi: "फुल स्टैक प्रो" }),
-      description: t({ en: "Complete journey from frontend to backend development", hi: "फ्रंटएंड से बैकएंड डेवलपमेंट तक की पूरी यात्रा" }),
+      duration: t('app.courses.page.12Weeks'),
+      instructor: t('app.courses.page.fullStackPro'),
+      description: t('app.courses.page.completeJourneyFromFrontend'),
     },
     {
-      title: t({ en: "Data Science & ML Mastery", hi: "डेटा साइंस और एमएल मास्टरी" }),
-      category: t({ en: "Data Science", hi: "डेटा साइंस" }),
-      level: t({ en: "Advanced", hi: "उन्नत" }),
+      title: t('app.courses.page.dataScienceMlMastery'),
+      category: t('app.courses.page.dataScience'),
+      level: t('app.courses.page.advanced'),
       students: 950,
       rating: 4.8,
       price: "₹6999",
-      duration: t({ en: "14 weeks", hi: "14 सप्ताह" }),
-      instructor: t({ en: "Dr. AI Expert", hi: "डॉ एआई एक्सपर्ट" }),
-      description: t({ en: "Learn machine learning, deep learning, and data analysis", hi: "मशीन लर्निंग, डीप लर्निंग और डेटा विश्लेषण सीखें" }),
+      duration: t('app.courses.page.14Weeks'),
+      instructor: t('app.courses.page.drAiExpert'),
+      description: t('app.courses.page.learnMachineLearningDeepLe'),
     },
     {
-      title: t({ en: "Cloud & DevOps Essentials", hi: "क्लाउड और डेवऑप्स एसेंशियल" }),
-      category: t({ en: "DevOps", hi: "डेवऑप्स" }),
-      level: t({ en: "Intermediate", hi: "मध्यम" }),
+      title: t('app.courses.page.cloudDevopsEssentials'),
+      category: t('app.courses.page.devops'),
+      level: t('app.courses.page.intermediate'),
       students: 1100,
       rating: 4.7,
       price: "₹3999",
-      duration: t({ en: "8 weeks", hi: "8 सप्ताह" }),
-      instructor: t({ en: "Cloud Pro", hi: "क्लाउड प्रो" }),
-      description: t({ en: "Master AWS, Docker, Kubernetes, and modern deployment practices", hi: "AWS, डॉकर, कुबेरनेट्स और आधुनिक परिनियोजन प्रथाओं में महारत हासिल करें" }),
+      duration: t('app.courses.page.8Weeks'),
+      instructor: t('app.courses.page.cloudPro'),
+      description: t('app.courses.page.masterAwsDockerKubernetesA'),
     },
     {
-      title: t({ en: "Mobile App Development", hi: "मोबाइल ऐप डेवलपमेंट" }),
-      category: t({ en: "Mobile", hi: "मोबाइल" }),
-      level: t({ en: "Intermediate", hi: "मध्यम" }),
+      title: t('app.courses.page.mobileAppDevelopment'),
+      category: t('app.courses.page.mobile'),
+      level: t('app.courses.page.intermediate'),
       students: 1550,
       rating: 4.9,
       price: "₹4999",
-      duration: t({ en: "10 weeks", hi: "10 सप्ताह" }),
-      instructor: t({ en: "Mobile Expert", hi: "मोबाइल एक्सपर्ट" }),
-      description: t({ en: "Build iOS and Android apps with React Native", hi: "रिएक्ट नेटिव के साथ iOS और एंड्रॉइड ऐप बनाएं" }),
+      duration: t('app.courses.page.10Weeks'),
+      instructor: t('app.courses.page.mobileExpert'),
+      description: t('app.courses.page.buildIosAndAndroidAppsWit'),
     },
   ];
 
@@ -130,7 +130,7 @@ function CoursesGrid() {
         <div className="mb-12">
           <div className="flex items-center space-x-2 mb-4">
             <Filter className="h-5 w-5 text-white" />
-            <span className="font-semibold">{t({ en: "Filter by category", hi: "श्रेणी के अनुसार फ़िल्टर करें" })}</span>
+            <span className="font-semibold">{t('app.courses.page.filterByCategory')}</span>
           </div>
           <div className="flex flex-wrap gap-2">
             {categories.map((cat, idx) => (
@@ -177,7 +177,7 @@ function CoursesGrid() {
                   </div>
                   <div className="flex items-center">
                     <Users className="h-4 w-4 mr-2" />
-                    {course.students} {t({ en: "students", hi: "छात्र" })}
+                    {course.students} {t('app.courses.page.students')}
                   </div>
                 </div>
               </div>
@@ -198,7 +198,7 @@ function CoursesGrid() {
                   </div>
                 </div>
                 <button className="w-full py-2 rounded-lg bg-gradient-accent text-white font-semibold hover:shadow-lg transition-all cursor-pointer">
-                  {t({ en: "Enroll Now", hi: "अभी नामांकन करें" })}
+                  {t('app.courses.page.enrollNow')}
                 </button>
               </div>
             </Card>
