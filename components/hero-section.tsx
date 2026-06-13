@@ -28,8 +28,9 @@ function CircularText({ text, radius }: { text: string; radius: number }) {
       {chars.map((char, i) => {
         const angle = degreesPerChar * i - 90;
         const rad = (angle * Math.PI) / 180;
-        const x = radius + (radius - 10) * Math.cos(rad);
-        const y = radius + (radius - 10) * Math.sin(rad);
+        const x = parseFloat((radius + (radius - 10) * Math.cos(rad)).toFixed(4));
+        const y = parseFloat((radius + (radius - 10) * Math.sin(rad)).toFixed(4));
+        const rotation = parseFloat((angle + 90).toFixed(4));
         return (
           <text
             key={i}
@@ -37,7 +38,7 @@ function CircularText({ text, radius }: { text: string; radius: number }) {
             y={y}
             textAnchor="middle"
             dominantBaseline="central"
-            transform={`rotate(${angle + 90}, ${x}, ${y})`}
+            transform={`rotate(${rotation}, ${x}, ${y})`}
             className="fill-white text-[6.5px] font-bold tracking-widest uppercase"
           >
             {char}

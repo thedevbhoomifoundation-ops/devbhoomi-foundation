@@ -74,9 +74,9 @@ export function Footer() {
     <footer className="bg-gradient-dark text-white dark:bg-primary-950">
       {/* Row 1 — Main Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-10">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-10 lg:gap-8">
+        <div className="grid grid-cols-2 lg:grid-cols-5 gap-10 lg:gap-8">
           {/* ── Brand Column ── */}
-          <div className="sm:col-span-2 lg:col-span-1 space-y-5">
+          <div className="col-span-2 lg:col-span-1 space-y-5">
             {/* Logo + Title */}
             <div className="flex items-center gap-3">
               <Image
@@ -87,7 +87,7 @@ export function Footer() {
                 className="rounded-full object-cover shadow-lg group-hover:shadow-xl transition-shadow"
               />
               <div>
-                <p>NextGen Dev Bhoomi</p>
+                <p className="font-heading font-semibold text-lg text-white tracking-wide">NextGen Dev Bhoomi</p>
               </div>
             </div>
 
@@ -117,9 +117,9 @@ export function Footer() {
 
           {/* ── Quick Links ── */}
           <div>
-            <h3 className="font-semibold text-white text-lg mb-4">
+            <h4 className="text-base font-semibold text-white mb-4">
               Quick Links
-            </h3>
+            </h4>
             <ul className="space-y-2.5">
               {quickLinks.map((link) => (
                 <li key={link.href}>
@@ -136,9 +136,9 @@ export function Footer() {
 
           {/* ── Get Involved ── */}
           <div>
-            <h3 className="font-semibold text-white text-lg mb-4">
+            <h4 className="text-base font-semibold text-white mb-4">
               Get Involved
-            </h3>
+            </h4>
             <ul className="space-y-2.5">
               {getInvolvedLinks.map((link) => (
                 <li key={link.href}>
@@ -155,7 +155,7 @@ export function Footer() {
 
           {/* ── Support ── */}
           <div>
-            <h3 className="font-semibold text-white text-lg mb-4">Support</h3>
+            <h4 className="text-base font-semibold text-white mb-4">Support</h4>
             <ul className="space-y-2.5">
               {supportLinks.map((link) => (
                 <li key={link.href}>
@@ -172,9 +172,9 @@ export function Footer() {
 
           {/* ── Contact Us ── */}
           <div>
-            <h3 className="font-semibold text-white text-lg mb-4">
+            <h4 className="text-base font-semibold text-white mb-4">
               Contact Us
-            </h3>
+            </h4>
             <ul className="space-y-4">
               {contactDetails.map((item) => {
                 const Icon = item.icon;
