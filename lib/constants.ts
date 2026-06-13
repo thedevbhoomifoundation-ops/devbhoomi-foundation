@@ -152,8 +152,8 @@ export const navLinks = [
 export const socialLinks = [
   { icon: "facebook", url: "https://facebook.com/devbhoomi", label: "Facebook" },
   { icon: "twitter", url: "https://twitter.com/devbhoomi", label: "Twitter" },
-  { icon: "linkedin", url: "https://linkedin.com/company/devbhoomi", label: "LinkedIn" },
-  { icon: "instagram", url: "https://instagram.com/devbhoomi", label: "Instagram" },
+  { icon: "linkedin", url: "https://www.linkedin.com/company/nextgen-devbhoomi-foundation/", label: "LinkedIn" },
+  { icon: "instagram", url: "https://www.instagram.com/nextgendevbhoomi/", label: "Instagram" },
   { icon: "youtube", url: "https://youtube.com/@devbhoomi", label: "YouTube" },
 ];
 
