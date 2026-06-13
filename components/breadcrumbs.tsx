@@ -19,6 +19,18 @@ export function Breadcrumbs() {
       case "/about":
         items.push({ label: "components.breadcrumbs.aboutUs", href: "/about" });
         break;
+      case "/faqs":
+        items.push({ label: "components.breadcrumbs.faq", href: "/faqs" });
+        break;
+      case "/privacy":
+        items.push({ label: "components.breadcrumbs.privacy", href: "/privacy" });
+        break;
+      case "/terms":
+        items.push({ label: "components.breadcrumbs.terms", href: "/terms" });
+        break;
+      case "/refund-policy":
+        items.push({ label: "components.breadcrumbs.refundPolicy", href: "/refund-policy" });
+        break;
       case "/blogs":
         items.push({ label: "components.breadcrumbs.blogs", href: "/blogs" });
         break;
