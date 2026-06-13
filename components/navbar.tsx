@@ -2,11 +2,12 @@
 
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
-import { Menu, X, ChevronDown } from "lucide-react";
+import { Menu, X, ChevronDown, ArrowLeft } from "lucide-react";
 import Image from "next/image";
 import { navLinks } from "@/lib/constants";
 import { ThemeToggle } from "./theme-toggle";
 import { motion, AnimatePresence } from "framer-motion";
+import { usePathname, useRouter } from "next/navigation";
 
 /* ------------------------------------------------------------------ */
 /*  Derive sub-items from the flat navLinks constant                   */
@@ -184,9 +185,46 @@ function MobileAccordion({
 /*  Navbar                                                             */
 /* ------------------------------------------------------------------ */
 
+const getMobileTitle = (path: string) => {
+  switch (path) {
+    case "/about":
+      return "About Us";
+    case "/blogs":
+      return "Our Blog";
+    case "/contact":
+      return "Contact Us";
+    case "/courses":
+      return "Courses";
+    case "/library":
+      return "Digital Library";
+    case "/digital-library":
+      return "Digital Library";
+    case "/interview-prep":
+      return "Interview Prep";
+    case "/dsa-solver":
+      return "DSA Solver";
+    case "/donate":
+      return "Donate";
+    case "/volunteer":
+      return "Volunteer";
+    case "/programs":
+      return "Our Programs";
+    case "/gallery":
+      return "Gallery";
+    case "/login":
+      return "Account Access";
+    default:
+      const lastSegment = path.split("/").pop();
+      if (!lastSegment) return "Nextgen";
+      return lastSegment.charAt(0).toUpperCase() + lastSegment.slice(1).replace(/-/g, " ");
+  }
+};
+
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const pathname = usePathname();
+  const router = useRouter();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -199,20 +237,49 @@ export function Navbar() {
 
   const toggleMenu = () => setIsOpen(!isOpen);
 
+  const isSubpage = pathname !== "/";
+
   return (
     <nav
-      className={`fixed top-0 w-full z-50 transition-all duration-500 ${
-        isScrolled
+      className={`fixed top-0 w-full z-50 transition-all duration-300 ${
+        isSubpage
+          ? "bg-white/95 dark:bg-slate-900/95 backdrop-blur-md shadow-sm border-b border-slate-100 dark:border-slate-800/60 h-16"
+          : isScrolled
           ? "bg-white/90 dark:bg-slate-900/90 backdrop-blur-md shadow-lg h-16"
           : "bg-transparent h-20"
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full">
-        <div className="flex justify-between items-center h-full">
+        {/* Mobile Subpage App Bar Mode (visible only on mobile and when on subpage) */}
+        {isSubpage ? (
+          <div className="flex lg:hidden items-center justify-between h-full w-full">
+            {/* Left: Native Back Button */}
+            <button
+              onClick={() => router.back()}
+              className="p-2 -ml-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-200 transition-colors cursor-pointer"
+              aria-label="Go back"
+            >
+              <ArrowLeft className="h-5 w-5" />
+            </button>
+
+            {/* Center: Screen Title */}
+            <span className="text-base font-bold text-slate-900 dark:text-white truncate max-w-[60vw]">
+              {getMobileTitle(pathname)}
+            </span>
+
+            {/* Right: Theme Toggle */}
+            <div className="flex items-center">
+              <ThemeToggle />
+            </div>
+          </div>
+        ) : null}
+
+        {/* Standard Navbar Inner (hidden on mobile subpage views, but visible on desktop subpages AND all homepage views) */}
+        <div className={`justify-between items-center h-full ${isSubpage ? "hidden lg:flex" : "flex"}`}>
           {/* -------- Left: Logo -------- */}
           <Link href="/" className="flex-shrink-0">
             <div className="flex items-center gap-3 group cursor-pointer">
-              {/* Logo image (place your image at /public/images/devbhoomi-logo.png) */}
+              {/* Logo image */}
               <div className="relative w-10 h-10 flex items-center justify-center">
                 <Image
                   src="/images/devbhoomi-logo.jpeg"
@@ -273,7 +340,7 @@ export function Navbar() {
             {/* Mobile menu button */}
             <button
               onClick={toggleMenu}
-              className="lg:hidden p-2 rounded-lg hover:bg-primary-50 dark:hover:bg-slate-800 transition-all duration-300"
+              className="lg:hidden p-2 rounded-lg hover:bg-primary-50 dark:hover:bg-slate-800 transition-all duration-300 cursor-pointer"
               aria-label="Toggle navigation menu"
             >
               {isOpen ? (
@@ -287,7 +354,7 @@ export function Navbar() {
 
         {/* -------- Mobile Menu -------- */}
         <AnimatePresence>
-          {isOpen && (
+          {isOpen && !isSubpage && (
             <motion.div
               initial={{ opacity: 0, height: 0 }}
               animate={{ opacity: 1, height: "auto" }}

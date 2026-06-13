@@ -1,5 +1,6 @@
 import { Section, Card } from "@/components/ui";
 import { Mail, Phone, MapPin, Clock } from "lucide-react";
+import { Breadcrumbs } from "@/components/breadcrumbs";
 
 export default function Contact() {
   return (
@@ -12,10 +13,12 @@ export default function Contact() {
 
 function HeroContact() {
   return (
-    <section className="bg-gradient-to-br from-primary-900 to-primary-800 text-white py-16 md:py-24">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h1 className="text-4xl sm:text-5xl font-bold mb-4">Get in Touch</h1>
-        <p className="text-lg sm:text-xl text-white/80">
+    <section className="relative overflow-hidden bg-primary-900 text-white py-16 dark:bg-primary-950">
+      <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:16px_16px]" />
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <Breadcrumbs />
+        <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight mb-4 font-heading">Get in Touch</h1>
+        <p className="max-w-2xl mx-auto text-primary-200 text-base sm:text-lg">
           Have questions? We'd love to hear from you. Reach out to us anytime.
         </p>
       </div>

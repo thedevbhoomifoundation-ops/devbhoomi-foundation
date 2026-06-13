@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import { ThemeProvider } from "@/providers/theme-provider";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
+import { BottomNavigation } from "@/components/bottom-navigation";
 
 export const metadata: Metadata = {
   title: "Nextgen Devbhoomi Foundation - Technical Education & Community Empowerment",
@@ -27,7 +28,8 @@ export default function RootLayout({
         >
           <div className="min-h-screen overflow-x-hidden bg-white dark:bg-slate-900 text-primary-900 dark:text-white transition-colors duration-300">
             <Navbar />
-            <main>{children}</main>
+            <main className="pb-16 md:pb-0">{children}</main>
+            <BottomNavigation />
             <Footer />
           </div>
         </ThemeProvider>

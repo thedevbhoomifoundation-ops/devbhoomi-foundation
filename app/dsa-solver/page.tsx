@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { toast } from "sonner";
+import { Breadcrumbs } from "@/components/breadcrumbs";
 
 interface DSAProblem {
   id: string;
@@ -288,24 +289,17 @@ export default function DSASolverPage() {
   return (
     <div className="bg-slate-50 dark:bg-slate-900/60 min-h-screen pb-20 pt-24">
       {/* Header */}
-      <section className="relative overflow-hidden bg-primary-900 text-white py-10 dark:bg-primary-950">
+      <section className="relative overflow-hidden bg-primary-900 text-white py-16 dark:bg-primary-950">
         <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:16px_16px]" />
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-4">
-          <div>
-            <Link
-              href="/"
-              className="inline-flex items-center gap-1 text-accent-400 hover:text-accent-300 text-sm font-semibold mb-2 transition-colors"
-            >
-              <ArrowLeft className="h-4 w-4" /> Back to home
-            </Link>
-            <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight font-heading">
-              DSA Problem Solver
-            </h1>
-            <p className="text-primary-200 text-sm max-w-xl mt-1">
-              Practice core programming problems, learn algorithm patterns, and run solutions inside our interactive environment.
-            </p>
-          </div>
-          <div className="flex items-center gap-2 bg-white/10 backdrop-blur-md px-4 py-2 rounded-2xl border border-white/20">
+        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center flex flex-col items-center">
+          <Breadcrumbs />
+          <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight mb-4 font-heading">
+            DSA Problem Solver
+          </h1>
+          <p className="max-w-2xl mx-auto text-primary-200 text-base sm:text-lg mb-6">
+            Practice core programming problems, learn algorithm patterns, and run solutions inside our interactive environment.
+          </p>
+          <div className="flex items-center gap-2 bg-white/10 backdrop-blur-md px-4 py-2 rounded-2xl border border-white/20 w-fit">
             <Sparkles className="h-5 w-5 text-accent-400" />
             <span className="text-xs font-semibold">Workspace Live Sandbox</span>
           </div>

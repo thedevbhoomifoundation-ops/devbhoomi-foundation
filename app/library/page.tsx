@@ -15,6 +15,7 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { toast } from "sonner";
+import { Breadcrumbs } from "@/components/breadcrumbs";
 
 // Mock Data
 interface DocumentResource {
@@ -154,12 +155,7 @@ export default function LibraryPage() {
       <section className="relative overflow-hidden bg-primary-900 text-white py-16 dark:bg-primary-950">
         <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:16px_16px]" />
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <Link
-            href="/"
-            className="inline-flex items-center gap-1 text-accent-400 hover:text-accent-300 text-sm font-semibold mb-4 transition-colors"
-          >
-            <ArrowLeft className="h-4 w-4" /> Back to home
-          </Link>
+          <Breadcrumbs />
           <h1 className="text-4xl sm:text-5xl font-extrabold tracking-tight mb-4 font-heading">
             Digital Library
           </h1>
