@@ -9,7 +9,6 @@ export default function About() {
       <HeroAbout />
       <MissionVisionSection />
       <TimelineSection />
-      {/* <TeamSection /> */}
       <MembersSection />
     </main>
   );
@@ -93,38 +92,6 @@ function TimelineSection() {
                 <p className="text-primary-600 dark:text-primary-300">{item.description}</p>
               </div>
             </div>
-          ))}
-        </div>
-      </div>
-    </Section>
-  );
-}
-
-function TeamSection() {
-  const team = [
-    { name: "Dr. Rajesh Sharma", role: "Founder & CEO", bio: "PhD in Computer Science, 15+ years in education" },
-    { name: "Priya Verma", role: "Head of Programs", bio: "Education specialist with grassroots impact experience" },
-    { name: "Amit Singh", role: "CTO", bio: "Full-stack developer passionate about tech education" },
-    { name: "Sarah Williams", role: "Community Lead", bio: "Social entrepreneur building resilient communities" },
-  ];
-
-  return (
-    <Section
-      title="Our Leadership Team"
-      subtitle="Meet the people driving our mission"
-      className="bg-white dark:bg-slate-900"
-    >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {team.map((member, i) => (
-            <Card key={i} hover className="text-center">
-              <div className="w-20 h-20 rounded-full bg-gradient-primary mx-auto mb-4" />
-              <h3 className="text-lg font-semibold text-primary-900 dark:text-white mb-1">
-                {member.name}
-              </h3>
-              <p className="text-accent-600 font-medium mb-3">{member.role}</p>
-              <p className="text-sm text-primary-600 dark:text-primary-300">{member.bio}</p>
-            </Card>
           ))}
         </div>
       </div>
