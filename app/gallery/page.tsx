@@ -10,8 +10,8 @@ interface TranslatedField {
 }
 
 interface GalleryImage {
-  title: TranslatedField;
-  category: TranslatedField;
+  title: string;
+  category: string;
   aspect: "square" | "rect-h" | "rect-w";
 }
 

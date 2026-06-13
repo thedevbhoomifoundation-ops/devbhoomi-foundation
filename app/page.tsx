@@ -825,9 +825,10 @@ function ActionWidgetSection() {
     setTimeout(() => {
       toast.dismiss(loadId);
       toast.success(
-        t({
-          en: `Thank you, ${donateName}! Your simulated donation of ₹${donateAmount} was successful. (80G Receipt sent to ${donateEmail})`,
-          hi: `धन्यवाद, ${donateName}! आपका ₹${donateAmount} का अनुकरणीय दान सफल रहा। (80G रसीद ${donateEmail} पर भेजी गई है)`,
+        t('app.page.simulatedDonationSuccess', {
+          name: donateName,
+          amount: donateAmount,
+          email: donateEmail,
         })
       );
       setDonateName("");
@@ -844,8 +845,21 @@ function ActionWidgetSection() {
     const loadId = toast.loading(t('app.page.submittingInterestForm'));
     setTimeout(() => {
       toast.dismiss(loadId);
+      const getInterestLabel = (interest: string) => {
+        switch (interest) {
+          case "mentor": return t('app.page.technicalMentorInstructor');
+          case "events": return t('app.page.eventCoordinator');
+          case "content": return t('app.page.contentWriterSocialMedia');
+          case "admin": return t('app.page.operationsOutreachSupport');
+          default: return interest;
+        }
+      };
       toast.success(
-        t('app.page.welcomeAboardVolnameWeHave')
+        t('app.page.welcomeAboardVolunteerSuccess', {
+          name: volName,
+          interest: getInterestLabel(volInterest),
+          email: volEmail,
+        })
       );
       setVolName("");
       setVolEmail("");

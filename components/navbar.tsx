@@ -1,5 +1,6 @@
 "use client";
 import { useTranslation } from "react-i18next";
+import { useLanguage } from "@/providers/language-provider";
 
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
@@ -245,6 +246,7 @@ const getMobileTitle = (path: string, t: any) => {
 
 export function Navbar() {
   const { t } = useTranslation();
+  const { language } = useLanguage();
   const [isScrolled, setIsScrolled] = useState(false);
   const pathname = usePathname();
   const router = useRouter();

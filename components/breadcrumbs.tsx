@@ -67,7 +67,7 @@ export function Breadcrumbs() {
         segments.forEach((segment, idx) => {
           const href = "/" + segments.slice(0, idx + 1).join("/");
           const labelText = segment.charAt(0).toUpperCase() + segment.slice(1).replace(/-/g, " ");
-          items.push({ label: { en: labelText, hi: labelText }, href });
+          items.push({ label: labelText, href });
         });
     }
     return items;

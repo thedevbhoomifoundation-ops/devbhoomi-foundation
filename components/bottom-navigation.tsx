@@ -1,5 +1,6 @@
 "use client";
 import { useTranslation } from "react-i18next";
+import { useLanguage } from "@/providers/language-provider";
 
 import { useState } from "react";
 import Link from "next/link";
@@ -25,6 +26,7 @@ export function BottomNavigation() {
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { t } = useTranslation();
+  const { language } = useLanguage();
 
   const tabs = [
     { label: "Home", href: "/", icon: Home },

@@ -23,13 +23,13 @@ interface TranslatedField {
 
 interface DocumentResource {
   id: string;
-  title: TranslatedField;
-  category: TranslatedField;
+  title: string;
+  category: string;
   type: string;
   size: string;
-  description: TranslatedField;
+  description: string;
   downloadUrl: string;
-  author: TranslatedField;
+  author: string;
 }
 
 const resourcesData: DocumentResource[] = [
@@ -139,7 +139,8 @@ export default function LibraryPage() {
         t(item.title).toLowerCase().includes(searchQuery.toLowerCase()) ||
         t(item.description).toLowerCase().includes(searchQuery.toLowerCase()) ||
         t(item.author).toLowerCase().includes(searchQuery.toLowerCase());
-      const matchesCategory = selectedCategory === "All" || item.category.en === selectedCategory;
+      const categoryObj = categories.find((c) => c.id === selectedCategory);
+      const matchesCategory = selectedCategory === "All" || item.category === categoryObj?.label;
       return matchesSearch && matchesCategory;
     });
   }, [searchQuery, selectedCategory, t]);

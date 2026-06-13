@@ -22,10 +22,10 @@ interface TranslatedField {
 
 interface DSAProblem {
   id: string;
-  title: TranslatedField;
-  difficulty: { en: string; hi: string };
-  category: TranslatedField;
-  description: TranslatedField;
+  title: string;
+  difficulty: string;
+  category: string;
+  description: string;
   inputFormat: string;
   outputFormat: string;
   exampleInput: string;
@@ -335,7 +335,7 @@ export default function DSASolverPage() {
                     <span>{t(p.title)}</span>
                     <span
                       className={`text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded ${
-                        p.difficulty.en === "Easy"
+                        p.difficulty === "app.dsa-solver.page.easy"
                           ? activeProblem.id === p.id
                             ? "bg-white/20 text-white"
                             : "bg-emerald-950/20 text-emerald-400"
@@ -359,7 +359,7 @@ export default function DSASolverPage() {
                 </span>
                 <span
                   className={`text-[10px] font-bold tracking-wide uppercase px-2 py-0.5 rounded ${
-                    activeProblem.difficulty.en === "Easy"
+                    activeProblem.difficulty === "app.dsa-solver.page.easy"
                       ? "bg-emerald-950/20 text-emerald-400"
                       : "bg-amber-950/20 text-amber-400"
                   }`}

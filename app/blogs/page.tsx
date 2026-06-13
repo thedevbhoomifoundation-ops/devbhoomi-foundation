@@ -12,12 +12,12 @@ interface TranslatedField {
 }
 
 interface Article {
-  title: TranslatedField;
-  excerpt: TranslatedField;
-  date: TranslatedField;
-  author: TranslatedField;
-  category: TranslatedField;
-  readTime: TranslatedField;
+  title: string;
+  excerpt: string;
+  date: string;
+  author: string;
+  category: string;
+  readTime: string;
   featured?: boolean;
 }
 
@@ -89,7 +89,8 @@ export default function Blog() {
 
   const filteredArticles = useMemo(() => {
     return articles.filter((article) => {
-      const matchesCategory = activeCategory === "All" || article.category.en === activeCategory;
+      const categoryObj = categories.find((c) => c.id === activeCategory);
+      const matchesCategory = activeCategory === "All" || article.category === categoryObj?.label;
       const query = searchQuery.toLowerCase();
       const matchesSearch =
         t(article.title).toLowerCase().includes(query) ||

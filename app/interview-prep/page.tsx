@@ -23,10 +23,10 @@ interface TranslatedField {
 
 interface InterviewQuestion {
   id: string;
-  question: TranslatedField;
+  question: string;
   category: "frontend" | "backend" | "dsa" | "behavioral";
-  difficulty: { en: string; hi: string };
-  answer: TranslatedField;
+  difficulty: string;
+  answer: string;
   codeSnippet?: string;
 }
 
@@ -246,9 +246,9 @@ export default function InterviewPrepPage() {
                       <div className="space-y-1">
                         <span
                           className={`text-[9px] font-extrabold tracking-wider uppercase px-2 py-0.5 rounded-md ${
-                            q.difficulty.en === "Easy"
+                            q.difficulty === "app.interview-prep.page.easy"
                               ? "bg-emerald-950/20 text-emerald-400"
-                              : q.difficulty.en === "Medium"
+                              : q.difficulty === "app.interview-prep.page.medium"
                               ? "bg-amber-950/20 text-amber-400"
                               : "bg-rose-950/20 text-rose-400"
                           }`}

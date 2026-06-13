@@ -27,13 +27,13 @@ interface TranslatedField {
 
 interface Position {
   id: string;
-  title: TranslatedField;
-  department: TranslatedField;
-  location: TranslatedField;
-  type: TranslatedField;
-  description: TranslatedField;
-  requirements: TranslatedField[];
-  responsibilities: TranslatedField[];
+  title: string;
+  department: string;
+  location: string;
+  type: string;
+  description: string;
+  requirements: string[];
+  responsibilities: string[];
 }
 
 const positionsData: Position[] = [
@@ -162,7 +162,7 @@ export default function CareersPage() {
       setSubmitLoading(false);
       toast.dismiss();
       toast.success(
-        t('app.careers.page.applicationForSelectedroleS')
+        t('app.careers.page.applicationSuccess', { role: t(selectedRole) })
       );
       setFormInputs({
         name: "",
@@ -332,7 +332,7 @@ export default function CareersPage() {
                         {/* Quick Apply button */}
                         <div className="pt-4 border-t border-slate-800 flex justify-end">
                           <button
-                            onClick={() => handleApplyClick(position.title.en)}
+                            onClick={() => handleApplyClick(position.title)}
                             className="px-5 py-2.5 rounded-xl bg-gradient-accent hover:shadow-lg text-white font-bold text-xs transition-all cursor-pointer"
                           >
                             {t('app.careers.page.applyForThisRole')}
@@ -426,7 +426,7 @@ export default function CareersPage() {
                 >
                   <option value="">{t('app.careers.page.selectAPosition')}</option>
                   {positionsData.map((p) => (
-                    <option key={p.id} value={p.title.en}>
+                    <option key={p.id} value={p.title}>
                       {t(p.title)}
                     </option>
                   ))}

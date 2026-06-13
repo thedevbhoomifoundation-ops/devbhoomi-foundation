@@ -14,7 +14,7 @@ interface ComingSoonProps {
 
 const pageTranslations: Record<
   string,
-  { title: { en: string; hi: string }; description: { en: string; hi: string } }
+  { title: string; description: string }
 > = {
   "Upcoming Events": {
     title: "components.coming-soon.upcomingEvents",
@@ -61,10 +61,10 @@ export function ComingSoon({ title, description }: ComingSoonProps) {
 
   const translation = pageTranslations[title];
   const translatedTitle = translation ? t(translation.title) : title;
-  const translatedDescription = description
-    ? t({ en: description, hi: description })
-    : translation
+  const translatedDescription = translation
     ? t(translation.description)
+    : description
+    ? t(description)
     : "";
 
   const handleSubmit = (e: React.FormEvent) => {
