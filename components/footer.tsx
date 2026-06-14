@@ -56,8 +56,8 @@ const contactDetails = [
   },
   {
     icon: Mail,
-    text: "[EMAIL_ADDRESS]",
-    href: "mailto:[EMAIL_ADDRESS]",
+    text: "nextgendevbhoomi@gmail.com",
+    href: "mailto:nextgendevbhoomi@gmail.com",
   },
 ];
 

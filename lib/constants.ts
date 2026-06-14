@@ -163,8 +163,8 @@ export const foundationInfo = {
   tagline: "Empowering through Education, Community, and Technology",
   mission: "To provide accessible, world-class technical education and create a community of empowered developers and social innovators.",
   vision: "A world where every aspiring individual has access to quality education and opportunity to make a positive impact.",
-  email: "hello@devbhoomi.org",
-  phone: "+91 (XXX) XXX-XXXX",
+  email: "nextgendevbhoomi@gmail.com",
+  phone: "+91 (XXX) XX",
   address: "Bihar, India",
   founded: 2022,
 };
