@@ -1,7 +1,6 @@
 "use client";
 import { useTranslation } from "react-i18next";
 import { useLanguage } from "@/providers/language-provider";
-
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
 import { ChevronDown, X, User, BookOpen, FileText, Heart, Settings, LogOut, HelpCircle, Phone, Info, UserPlus } from "lucide-react";
@@ -9,6 +8,8 @@ import Image from "next/image";
 import { LanguageSwitcher } from "./language-switcher";
 import { motion, AnimatePresence } from "framer-motion";
 import { usePathname } from "next/navigation";
+import { useUser, useClerk } from "@clerk/nextjs";
+
 
 /* ------------------------------------------------------------------ */
 /*  Nav structure matching the design exactly                          */
@@ -45,6 +46,7 @@ const getLinkLabel = (label: string, t: ReturnType<typeof useTranslation>["t"]) 
     "Home": t("nav.home"),
     "About Us": t("nav.about"),
     "Programs": t("nav.programs"),
+    "Internship": t("nav.internship"),
     "All Programs": t("nav.allPrograms"),
     "Get Involved": t("nav.getInvolved"),
     "Volunteer": t("nav.volunteer"),
@@ -59,6 +61,7 @@ const getLinkLabel = (label: string, t: ReturnType<typeof useTranslation>["t"]) 
   };
   return map[label] ?? label;
 };
+
 
 /* ------------------------------------------------------------------ */
 /*  Desktop Dropdown                                                   */
@@ -133,6 +136,7 @@ function DesktopUserMenu({ name }: { name: string }) {
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
+  const { signOut } = useClerk();
 
   useEffect(() => {
     const handler = (e: MouseEvent) => {
@@ -189,7 +193,10 @@ function DesktopUserMenu({ name }: { name: string }) {
               ))}
               <div className="h-px bg-slate-700/50 mx-2 my-1" />
               <button
-                onClick={() => setOpen(false)}
+                onClick={() => {
+                  setOpen(false);
+                  signOut();
+                }}
                 className="flex w-full items-center gap-3 px-3.5 py-2.5 rounded-lg text-sm text-[#F97316] hover:bg-[#F97316]/10 transition-colors duration-150 cursor-pointer"
               >
                 <LogOut className="h-4 w-4 shrink-0" />
@@ -238,6 +245,7 @@ function MobileGuestMenu({ onClose }: { onClose: () => void }) {
 /* ------------------------------------------------------------------ */
 
 function MobileProfileMenu({ name, onClose }: { name: string; onClose: () => void }) {
+  const { signOut } = useClerk();
   const profileItems = [
     { icon: User, label: "My Profile", href: "/dashboard" },
     { icon: BookOpen, label: "My Courses", href: "/dashboard" },
@@ -261,7 +269,10 @@ function MobileProfileMenu({ name, onClose }: { name: string; onClose: () => voi
       ))}
       <div className="h-px bg-slate-700/50 mx-2 my-1" />
       <button
-        onClick={onClose}
+        onClick={() => {
+          onClose();
+          signOut();
+        }}
         className="flex w-full items-center gap-3 px-4 py-3 rounded-xl text-[14px] text-[#F97316] hover:bg-[#F97316]/10 transition-colors duration-150 cursor-pointer"
       >
         <LogOut className="h-4 w-4 shrink-0" />
@@ -275,18 +286,21 @@ function MobileProfileMenu({ name, onClose }: { name: string; onClose: () => voi
 /*  Main Navbar                                                         */
 /* ------------------------------------------------------------------ */
 
-// Toggle this to simulate logged-in state
-const LOGGED_IN = false;
-const USER_NAME = "Aashish";
-
 export function Navbar() {
+  const pathname = usePathname();
+  if (pathname.startsWith("/admin")) return null;
+
   const { t } = useTranslation();
   const { language } = useLanguage();
-  const pathname = usePathname();
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [mobileMenuType, setMobileMenuType] = useState<"guest" | "profile">("guest");
   const mobileMenuRef = useRef<HTMLDivElement>(null);
+
+  const { isLoaded, isSignedIn, user } = useUser();
+  const { signOut } = useClerk();
+  const userName = user?.firstName || user?.fullName || "User";
+
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -347,7 +361,7 @@ export function Navbar() {
           <div className="flex items-center gap-2 shrink-0">
             <LanguageSwitcher />
 
-            {LOGGED_IN ? (
+            {isLoaded && isSignedIn ? (
               /* Logged-in avatar button */
               <button
                 onClick={() => openMobileMenu("profile")}
@@ -355,21 +369,22 @@ export function Navbar() {
                 aria-label="Open profile menu"
               >
                 <span className="w-7 h-7 rounded-full bg-[#F97316] flex items-center justify-center text-white text-[12px] font-bold">
-                  {USER_NAME.charAt(0)}
+                  {userName.charAt(0)}
                 </span>
                 <ChevronDown className="h-3.5 w-3.5 text-slate-400" />
               </button>
             ) : (
               /* Not logged in: Login button */
-              <button
-                onClick={() => openMobileMenu("guest")}
-                className="h-9 px-4 rounded-xl border border-[#F97316] text-[#F97316] text-[13px] font-bold hover:bg-[#F97316]/10 transition-all duration-200 cursor-pointer"
+              <Link
+                href="/login"
+                className="h-9 px-4 rounded-xl border border-[#F97316] text-[#F97316] text-[13px] font-bold hover:bg-[#F97316]/10 transition-all duration-200 flex items-center justify-center"
               >
                 {t("nav.loginRegister").split("/")[0].trim()}
-              </button>
+              </Link>
             )}
           </div>
         </div>
+
 
         {/* Announcement ticker – full width below mobile header */}
         <div className="w-full bg-accent-500 text-black overflow-hidden py-2 md:py-4 select-none">
@@ -443,8 +458,8 @@ export function Navbar() {
           <div className="flex items-center gap-3 shrink-0">
             <LanguageSwitcher />
 
-            {LOGGED_IN ? (
-              <DesktopUserMenu name={USER_NAME} />
+            {isLoaded && isSignedIn ? (
+              <DesktopUserMenu name={userName} />
             ) : (
               <>
                 <Link
@@ -463,6 +478,7 @@ export function Navbar() {
             )}
           </div>
         </div>
+
       </nav>
 
       {/* ============================================================ */}
@@ -519,7 +535,7 @@ export function Navbar() {
                 {mobileMenuType === "guest" ? (
                   <MobileGuestMenu onClose={() => setMobileMenuOpen(false)} />
                 ) : (
-                  <MobileProfileMenu name={USER_NAME} onClose={() => setMobileMenuOpen(false)} />
+                  <MobileProfileMenu name={userName} onClose={() => setMobileMenuOpen(false)} />
                 )}
               </div>
             </motion.div>
@@ -529,3 +545,4 @@ export function Navbar() {
     </>
   );
 }
+

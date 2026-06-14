@@ -4,6 +4,8 @@ import { useTranslation } from "react-i18next";
 import { Section, Card, Button } from "@/components/ui";
 import { Heart, Briefcase, Users, TrendingUp, CheckCircle } from "lucide-react";
 import { Breadcrumbs } from "@/components/breadcrumbs";
+import Link from "next/link";
+
 
 export default function Volunteer() {
   return (
@@ -31,10 +33,11 @@ function HeroVolunteer() {
           {t('app.volunteer.page.joinOurCommunityOf2000Pas')}
         </p>
         <div className="flex justify-center">
-          <Button size="lg" className="bg-white text-primary-900 hover:bg-white/90 cursor-pointer">
+          <Link href="/volunteer/register" className="inline-block px-8 py-3 bg-white text-primary-900 font-semibold rounded-lg hover:bg-white/90 cursor-pointer shadow-lg">
             {t('app.volunteer.page.applyToVolunteer')}
-          </Button>
+          </Link>
         </div>
+
       </div>
     </section>
   );
@@ -163,9 +166,10 @@ function VolunteerRolesSection() {
                 </p>
               </div>
               <p className="text-primary-200 mb-4">{role.description}</p>
-              <button className="w-full py-2 rounded-lg bg-gradient-accent text-white font-semibold hover:shadow-lg transition-all text-sm cursor-pointer">
+              <Link href="/volunteer/register" className="block text-center w-full py-2 rounded-lg bg-gradient-accent text-white font-semibold hover:shadow-lg transition-all text-sm cursor-pointer">
                 {t('app.volunteer.page.applyNow')}
-              </button>
+              </Link>
+
             </Card>
           ))}
         </div>
@@ -219,9 +223,10 @@ function ApplicationSection() {
         <p className="text-xl text-white/80 mb-8">
           {t('app.volunteer.page.joinUsInOurMissionToTran')}
         </p>
-        <button className="px-8 py-3 rounded-lg bg-white text-primary-900 font-semibold hover:shadow-lg transition-all cursor-pointer">
+        <Link href="/volunteer/register" className="inline-block px-8 py-3 rounded-lg bg-white text-primary-900 font-semibold hover:shadow-lg transition-all cursor-pointer">
           {t('app.volunteer.page.applyToVolunteerToday')}
-        </button>
+        </Link>
+
       </div>
     </Section>
   );

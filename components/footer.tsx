@@ -1,12 +1,14 @@
 "use client";
 import { useTranslation } from "react-i18next";
 import { useLanguage } from "@/providers/language-provider";
+import { usePathname } from "next/navigation";
 
 import Link from "next/link";
 import { foundationInfo, socialLinks } from "@/lib/constants";
 import Image from "next/image";
 import { Mail, Phone, MapPin, Heart, Clock } from "lucide-react";
 import { motion } from "framer-motion";
+
 import {
   LuFacebook,
   LuTwitter,
@@ -70,6 +72,9 @@ const socialIcons: Record<string, React.ReactNode> = {
 };
 
 export function Footer() {
+  const pathname = usePathname();
+  if (pathname.startsWith("/admin")) return null;
+
   const { t } = useTranslation();
   const { language } = useLanguage();
 

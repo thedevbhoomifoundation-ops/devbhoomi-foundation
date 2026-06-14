@@ -24,6 +24,8 @@ import {
 
 export function BottomNavigation() {
   const pathname = usePathname();
+  if (pathname.startsWith("/admin")) return null;
+
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { t } = useTranslation();
   const { language } = useLanguage();
