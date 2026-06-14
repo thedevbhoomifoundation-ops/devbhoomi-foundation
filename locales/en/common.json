@@ -776,7 +776,7 @@
   "app.privacy.sections.changes.title": "8. Changes to this Policy",
   "app.privacy.sections.changes.content": "We may update this Privacy Policy from time to time. Any changes will be posted on this page with an updated \"Effective Date.\" Your continued use of our services after updates constitute acceptance of the revised policy.",
   "app.privacy.sections.contact.title": "9. Contact Us",
-  "app.privacy.sections.contact.content": "If you have any questions or concerns about this Privacy Policy, please contact us at privacy@devbhoomifoundation.org or at our office Near Shiv Mandir, Dew, Aurangabad, Bihar - 824125, India.",
+  "app.privacy.sections.contact.content": "If you have any questions or concerns about this Privacy Policy, please contact us at nextgendevbhoomi@gmail.com or at our office Near Shiv Mandir, Dew, Aurangabad, Bihar - 824125, India.",
 
   "app.terms.page.title": "Terms & Conditions",
   "app.terms.page.subtitle": "Please read these Terms & Conditions carefully before using our platform or participating in our programs.",
@@ -801,7 +801,7 @@
   "app.terms.sections.modifications.title": "9. Modifications to Services",
   "app.terms.sections.modifications.content": "We reserve the right to modify, suspend, or discontinue any course, program, or feature on our platform at any time without prior notice. We shall not be liable to you or any third party for any such modifications or service suspensions.",
   "app.terms.sections.contact.title": "10. Legal Contact Information",
-  "app.terms.sections.contact.content": "For any legal inquiries or clarifications regarding these Terms & Conditions, please contact us at legal@devbhoomifoundation.org.",
+  "app.terms.sections.contact.content": "For any legal inquiries or clarifications regarding these Terms & Conditions, please contact us at nextgendevbhoomi@gmail.com.",
 
   "app.refund.page.title": "Refund Policy",
   "app.refund.page.subtitle": "Learn about our donation refund practices, program cancellation processes, and timeline guidelines.",
@@ -817,7 +817,7 @@
   "app.refund.page.statTimelineVal": "5 - 7 Days",
   "app.refund.page.statTimelineDesc": "Credited back to original source payment mode",
   "app.refund.page.statSupportTitle": "Support Email",
-  "app.refund.page.statSupportVal": "refunds@devbhoomi.org",
+  "app.refund.page.statSupportVal": "nextgendevbhoomi@gmail.com",
   "app.refund.page.statSupportDesc": "Send transaction details for resolution",
   "app.refund.sections.intro.title": "1. Overview & Purpose",
   "app.refund.sections.intro.content": "Nextgen Devbhoomi Foundation is committed to transparency. This Refund Policy outlines the terms under which contributions, program sponsorships, and course fees (where applicable) are managed. As a registered NGO, we handle funds with maximum accountability.",
@@ -828,7 +828,7 @@
   "app.refund.sections.events.title": "4. Event Ticket Cancellations",
   "app.refund.sections.events.content": "For paid tickets to our workshops, networking sessions, or hackathons, a full refund will be issued if the cancellation request is submitted at least 48 hours prior to the scheduled start time of the event. Requests made within 48 hours of the event are non-refundable.",
   "app.refund.sections.request.title": "5. How to Request a Refund",
-  "app.refund.sections.request.content": "To request a refund, please send an email to refunds@devbhoomi.org. You must include the following details in your email: Full Name, Registered Email, Contact Number, Transaction ID, Payment Date, and the reason for requesting a refund. Our support team will review and reply within 48 hours.",
+  "app.refund.sections.request.content": "To request a refund, please send an email to nextgendevbhoomi@gmail.com. You must include the following details in your email: Full Name, Registered Email, Contact Number, Transaction ID, Payment Date, and the reason for requesting a refund. Our support team will review and reply within 48 hours.",
   "app.refund.sections.processing.title": "6. Processing & Payout Timeline",
   "app.refund.sections.processing.content": "Approved refunds will be processed back to the original source payment method (UPI, Debit/Credit Card, or Net Banking) within 5 to 7 business days from the date of approval. We are not responsible for any delay caused by banking systems or intermediary processors."
 }

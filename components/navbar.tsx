@@ -14,7 +14,11 @@ import { usePathname } from "next/navigation";
 /*  Nav structure matching the design exactly                          */
 /* ------------------------------------------------------------------ */
 
-const desktopLinks = [
+const desktopLinks: {
+  label: string;
+  href: string;
+  dropdown?: { label: string; href: string }[];
+}[] = [
   { label: "Home", href: "/" },
   {
     label: "Internship",

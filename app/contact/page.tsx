@@ -39,7 +39,7 @@ function ContactSection() {
     {
       icon: Mail,
       title: t('app.contact.page.email'),
-      details: "hello@devbhoomi.org",
+      details: "nextgendevbhoomi@gmail.com",
       subtitle: t('app.contact.page.wellRespondWithin24Hours'),
     },
     {
