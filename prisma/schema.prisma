@@ -1,0 +1,191 @@
+datasource db {
+  provider = "postgresql"
+}
+
+generator client {
+  provider = "prisma-client"
+  output   = "../generated"
+}
+
+enum Role {
+  STUDENT
+  VOLUNTEER
+  ADMIN
+}
+
+enum ApplicationStatus {
+  PENDING
+  UNDER_REVIEW
+  SHORTLISTED
+  SELECTED
+  REJECTED
+  INTERNSHIP_ACTIVE
+  COMPLETED
+  CERTIFIED
+}
+
+model User {
+  id                    String                 @id // Clerk User ID (e.g. user_...)
+  email                 String                 @unique
+  name                  String?
+  roles                 Role[]                 @default([STUDENT])
+  createdAt             DateTime               @default(now())
+  updatedAt             DateTime               @updatedAt
+  internshipApplications InternshipApplication[]
+  volunteerApplications VolunteerApplication[]
+  adminNotes            AdminNote[]
+}
+
+model InternshipProgram {
+  id           String                  @id @default(uuid())
+  title        String
+  description  String
+  startDate    DateTime?
+  endDate      DateTime?
+  duration     String                  // e.g. "8 Weeks"
+  status       String                  @default("ACTIVE") // ACTIVE, INACTIVE
+  createdAt    DateTime                @default(now())
+  updatedAt    DateTime                @updatedAt
+  applications InternshipApplication[]
+}
+
+model InternshipApplication {
+  id                  String                     @id // Unique ID (e.g. IMS-YYYY-XXXXX)
+  userId              String
+  user                User                       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  programId           String?
+  program             InternshipProgram?         @relation(fields: [programId], references: [id], onDelete: SetNull)
+  status              ApplicationStatus          @default(PENDING)
+  domain              String                     // Web Development, Mobile Development, UI/UX, Data Science, AI/ML, Digital Marketing, Other
+  appliedDate         DateTime                   @default(now())
+  updatedAt           DateTime                   @updatedAt
+
+  // Step 1: Personal Info
+  fullName            String
+  email               String
+  mobile              String
+  gender              String
+  dateOfBirth         DateTime
+  address             String
+  city                String
+  state               String
+  pincode             String
+
+  // Step 2: Educational Info
+  collegeName         String
+  university          String
+  degree              String
+  branch              String
+  currentYearSem      String
+  graduationYear      Int
+  cgpa                String
+
+  // Step 3: Technical Skills
+  skills              String[]
+  programmingLanguages String[]
+  projects            String
+  portfolioUrl        String?
+  githubUrl           String?
+  linkedinUrl         String?
+
+  // Step 4: Preferences
+  availableHours      Int
+  whyJoin             String
+
+  // Relations
+  documents           UploadedDocument[]
+  statusHistory       ApplicationStatusHistory[]
+  adminNotes          AdminNote[]
+  idCard              GeneratedIDCard?
+  certificate         GeneratedCertificate?
+
+  @@index([userId])
+  @@index([status])
+  @@index([domain])
+}
+
+model VolunteerApplication {
+  id             String            @id @default(uuid())
+  userId         String
+  user           User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  fullName       String
+  email          String
+  mobile         String
+  skills         String[]
+  areaOfInterest String
+  availability   String
+  experience     String
+  status         String            @default("PENDING") // PENDING, APPROVED, REJECTED
+  appliedDate    DateTime          @default(now())
+  updatedAt      DateTime          @updatedAt
+
+  @@index([userId])
+  @@index([status])
+}
+
+model ApplicationStatusHistory {
+  id            String                @id @default(uuid())
+  applicationId String
+  application   InternshipApplication @relation(fields: [applicationId], references: [id], onDelete: Cascade)
+  status        ApplicationStatus
+  changedBy     String                // Clerk User ID or "SYSTEM"
+  changedAt     DateTime              @default(now())
+  comment       String?
+
+  @@index([applicationId])
+}
+
+model UploadedDocument {
+  id            String                 @id @default(uuid())
+  applicationId String?
+  application   InternshipApplication? @relation(fields: [applicationId], references: [id], onDelete: Cascade)
+  type          String                 // "RESUME", "PHOTO", "COLLEGE_ID"
+  url           String                 // Cloudinary URL
+  fileName      String
+  uploadedAt    DateTime               @default(now())
+
+  @@index([applicationId])
+}
+
+model AdminNote {
+  id            String                @id @default(uuid())
+  applicationId String
+  application   InternshipApplication @relation(fields: [applicationId], references: [id], onDelete: Cascade)
+  authorId      String
+  author        User                  @relation(fields: [authorId], references: [id], onDelete: Cascade)
+  note          String
+  createdAt     DateTime              @default(now())
+
+  @@index([applicationId])
+  @@index([authorId])
+}
+
+model GeneratedIDCard {
+  id            String                @id @default(uuid())
+  applicationId String                @unique
+  application   InternshipApplication @relation(fields: [applicationId], references: [id], onDelete: Cascade)
+  internId      String                @unique // e.g. IMS-INTERN-XXXXX
+  pdfUrl        String                // Stored PDF URL (Cloudinary)
+  qrCodeUrl     String?               // Generated QR Code image URL or base64 string
+  generatedAt   DateTime              @default(now())
+}
+
+model GeneratedCertificate {
+  id                String                @id @default(uuid())
+  applicationId     String                @unique
+  application       InternshipApplication @relation(fields: [applicationId], references: [id], onDelete: Cascade)
+  certificateNumber String                @unique // e.g. IMS-CERT-XXXXX
+  pdfUrl            String                // Stored PDF URL (Cloudinary)
+  verificationCode  String                @unique
+  issuedAt          DateTime              @default(now())
+}
+
+model EmailLog {
+  id        String   @id @default(uuid())
+  to        String
+  subject   String
+  type      String   // "SUBMITTED", "SHORTLISTED", "SELECTED", "REJECTED", "COMPLETED"
+  sentAt    DateTime @default(now())
+  status    String   // "SUCCESS", "FAILED"
+  error     String?
+}
