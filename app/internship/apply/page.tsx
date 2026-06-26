@@ -436,7 +436,7 @@ export default function InternshipApplicationForm() {
                         value={formData.state}
                         onChange={handleChange}
                         className="w-full h-10 px-3.5 bg-slate-950 border border-[#1E3A4C] rounded-lg text-sm text-white focus:border-[#F97316] focus:ring-1 focus:ring-[#F97316] outline-none"
-                        placeholder="Uttarakhand"
+                        placeholder="Bihar"
                         required
                       />
                     </div>

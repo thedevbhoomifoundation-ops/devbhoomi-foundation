@@ -756,8 +756,8 @@ function PartnersTicker() {
 
   const partners = useMemo(() => [
     { name: "Graphic Era University", type: "app.page.academicPartner" },
-    { name: "Uttarakhand Technical University", type: "app.page.affiliation" },
-    { name: "Uttarakhand Open University", type: "app.page.academicPartner" },
+    { name: "Aryabhatta Knowledge University", type: "app.page.affiliation" },
+    { name: "Nilamber-Pitamber University", type: "app.page.academicPartner" },
     { name: "Microsoft for Startups", type: "app.page.techSupporter" },
     { name: "Google Cloud", type: "app.page.infrastructure" },
     { name: "TCS", type: "app.page.recruitingPartner" },

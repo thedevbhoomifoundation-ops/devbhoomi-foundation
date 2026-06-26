@@ -28,7 +28,7 @@
 
 ## 📖 Overview
 
-**NextGen Devbhoomi Foundation** is a full-stack, bilingual (English / हिंदी) NGO + EdTech web platform built to bring world-class technical education and community empowerment to the Himalayan region of Uttarakhand, India.
+**NextGen Devbhoomi Foundation** is a full-stack, bilingual (English / हिंदी) NGO + EdTech web platform built to bring world-class technical education and community empowerment to the Himalayan region of Bihar, India.
 
 The platform serves **five distinct user roles** — Students, Volunteers, Donors, Instructors, and Admins — each with a personalized dashboard and access to role-specific workflows.
 
@@ -377,5 +377,5 @@ This project is licensed under the **MIT License** — see the [LICENSE](./LICEN
 ---
 
 <div align="center">
-  <sub>Built with ❤️ by the NextGen Devbhoomi Foundation team · Uttarakhand, India 🇮🇳</sub>
+  <sub>Built with ❤️ by the NextGen Devbhoomi Foundation team · Bihar, India 🇮🇳</sub>
 </div>

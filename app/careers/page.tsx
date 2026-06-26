@@ -41,7 +41,7 @@ const positionsData: Position[] = [
     id: "1",
     title: "app.careers.page.technicalInstructorFullstack",
     department: "app.careers.page.education",
-    location: "app.careers.page.rishikeshUttarakhandHybrid",
+    location: "app.careers.page.patnaBiharHybrid",
     type: "app.careers.page.fulltime",
     description: "app.careers.page.teachAndMentorYoungStudent",
     requirements: [
@@ -81,7 +81,7 @@ const positionsData: Position[] = [
     id: "3",
     title: "app.careers.page.programCoordinator",
     department: "app.careers.page.operations",
-    location: "app.careers.page.rishikeshUttarakhandOnsite",
+    location: "app.careers.page.patnaBiharOnsite",
     type: "app.careers.page.fulltime",
     description: "app.careers.page.overseeOperationsAtOurLoca",
     requirements: [
@@ -101,7 +101,7 @@ const positionsData: Position[] = [
     id: "4",
     title: "app.careers.page.communityOutreachLead",
     department: "app.careers.page.outreachGrowth",
-    location: "app.careers.page.rishikeshUttarakhandHybrid",
+    location: "app.careers.page.patnaBiharHybrid",
     type: "app.careers.page.fulltimePartner",
     description: "app.careers.page.driveCorporateSponsorshipPa",
     requirements: [
