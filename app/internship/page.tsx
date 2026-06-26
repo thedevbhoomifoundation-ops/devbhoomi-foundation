@@ -106,7 +106,7 @@ const faqs = [
   },
   {
     q: "Is this a remote or onsite internship?",
-    a: "We offer both hybrid (in Uttarakhand regional centers) and fully remote tracks depending on your choice during the application flow."
+    a: "We offer both hybrid (in Bihar regional centers) and fully remote tracks depending on your choice during the application flow."
   },
   {
     q: "Are there any application fees or charges?",
@@ -307,7 +307,7 @@ export default function InternshipProgramPage() {
               <div className="flex items-start gap-3">
                 <CheckCircle className="h-5 w-5 text-[#F97316] shrink-0 mt-0.5" />
                 <p className="text-sm text-slate-300 leading-relaxed">
-                  <strong>Special Priority:</strong> Students residing in regional regions of Uttarakhand or Bihar receive priority slots.
+                  <strong>Special Priority:</strong> Students residing in regional regions of Bihar receive priority slots.
                 </p>
               </div>
             </div>
