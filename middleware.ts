@@ -4,6 +4,9 @@ import { NextResponse } from 'next/server'
 const isProtectedRoute = createRouteMatcher([
   '/dashboard(.*)',
   '/internship/apply(.*)',
+  '/profile(.*)',
+  '/volunteer/activities(.*)',
+  '/volunteer/achievements(.*)',
 ])
 
 const isAdminRoute = createRouteMatcher([

@@ -19,7 +19,8 @@ import {
   Clock,
   CheckCircle,
   HelpCircle,
-  AlertCircle
+  AlertCircle,
+  BookOpen
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useTranslation } from "react-i18next";
@@ -62,13 +63,12 @@ interface Application {
   certificate?: { id: string; pdfUrl: string; certificateNumber: string } | null;
 }
 
-export function StudentDashboard() {
+export function StudentDashboard({ activeTab = "applications" }: { activeTab?: "applications" | "learning" | "certificates" | "profile" | "updates" }) {
   const { t } = useTranslation();
   const { language } = useLanguage();
   const { user, isLoaded: userLoaded } = useUser();
   const { signOut } = useClerk();
   
-  const [activeTab, setActiveTab] = useState<"dashboard" | "applications" | "certificates" | "settings">("dashboard");
   const [applications, setApplications] = useState<Application[]>([]);
   const [loading, setLoading] = useState(true);
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -155,32 +155,55 @@ export function StudentDashboard() {
 
         {/* Nav list */}
         <nav className="p-4 space-y-1">
-          <button
-            onClick={() => { setActiveTab("dashboard"); setSidebarOpen(false); }}
-            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-bold transition-all text-left cursor-pointer
-              ${activeTab === "dashboard" ? "bg-[#1E3A4C] text-[#F97316] border-l-2 border-[#F97316]" : "text-slate-300 hover:bg-[#1A3347] hover:text-white"}`}
-          >
-            <LayoutDashboard className="h-4 w-4 shrink-0" />
-            Dashboard Home
-          </button>
-
-          <button
-            onClick={() => { setActiveTab("applications"); setSidebarOpen(false); }}
+          <Link
+            href="/dashboard/applications"
+            onClick={() => setSidebarOpen(false)}
             className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-bold transition-all text-left cursor-pointer
               ${activeTab === "applications" ? "bg-[#1E3A4C] text-[#F97316] border-l-2 border-[#F97316]" : "text-slate-300 hover:bg-[#1A3347] hover:text-white"}`}
           >
             <FileText className="h-4 w-4 shrink-0" />
             My Applications
-          </button>
+          </Link>
 
-          <button
-            onClick={() => { setActiveTab("certificates"); setSidebarOpen(false); }}
+          <Link
+            href="/dashboard/learning"
+            onClick={() => setSidebarOpen(false)}
+            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-bold transition-all text-left cursor-pointer
+              ${activeTab === "learning" ? "bg-[#1E3A4C] text-[#F97316] border-l-2 border-[#F97316]" : "text-slate-300 hover:bg-[#1A3347] hover:text-white"}`}
+          >
+            <BookOpen className="h-4 w-4 shrink-0" />
+            Learning Hub
+          </Link>
+
+          <Link
+            href="/dashboard/certificates"
+            onClick={() => setSidebarOpen(false)}
             className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-bold transition-all text-left cursor-pointer
               ${activeTab === "certificates" ? "bg-[#1E3A4C] text-[#F97316] border-l-2 border-[#F97316]" : "text-slate-300 hover:bg-[#1A3347] hover:text-white"}`}
           >
             <Award className="h-4 w-4 shrink-0" />
-            My Certificates
-          </button>
+            Certificates & IDs
+          </Link>
+
+          <Link
+            href="/dashboard/updates"
+            onClick={() => setSidebarOpen(false)}
+            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-bold transition-all text-left cursor-pointer
+              ${activeTab === "updates" ? "bg-[#1E3A4C] text-[#F97316] border-l-2 border-[#F97316]" : "text-slate-300 hover:bg-[#1A3347] hover:text-white"}`}
+          >
+            <Bell className="h-4 w-4 shrink-0" />
+            Updates & Alerts
+          </Link>
+
+          <Link
+            href="/dashboard/profile"
+            onClick={() => setSidebarOpen(false)}
+            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl text-xs font-bold transition-all text-left cursor-pointer
+              ${activeTab === "profile" ? "bg-[#1E3A4C] text-[#F97316] border-l-2 border-[#F97316]" : "text-slate-300 hover:bg-[#1A3347] hover:text-white"}`}
+          >
+            <User className="h-4 w-4 shrink-0" />
+            My Profile
+          </Link>
         </nav>
 
         {/* Bottom Actions */}
@@ -219,20 +242,28 @@ export function StudentDashboard() {
             </div>
           ) : (
             <AnimatePresence mode="wait">
-              {/* TAB 1: DASHBOARD OVERVIEW */}
-              {activeTab === "dashboard" && (
+              {/* TAB: APPLICATIONS */}
+              {activeTab === "applications" && (
                 <motion.div
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0 }}
                   className="space-y-6"
                 >
-                  <div>
-                    <h1 className="text-2xl md:text-3xl font-extrabold text-white">Welcome, {user?.firstName}!</h1>
-                    <p className="text-xs text-slate-400 mt-1">Track your internship records, certificate codes, and project logs.</p>
+                  <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+                    <div>
+                      <h1 className="text-2xl md:text-3xl font-extrabold text-white">Welcome, {user?.firstName}!</h1>
+                      <p className="text-xs text-slate-400 mt-1">Track your internship records, certificate codes, and project logs.</p>
+                    </div>
+                    <Link
+                      href="/internship/apply"
+                      className="px-4 py-2.5 bg-[#F97316] hover:bg-[#EA6B0C] text-xs font-bold text-white rounded-lg transition-colors cursor-pointer text-center md:text-left shadow-lg shadow-[#F97316]/20"
+                    >
+                      New Application
+                    </Link>
                   </div>
 
-                  {/* Summary grid */}
+                  {/* Summary Grid */}
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
                     <div className="p-5 bg-[#0F2233] border border-[#1E3A4C] rounded-2xl flex items-center justify-between shadow-xl">
                       <div>
@@ -269,82 +300,14 @@ export function StudentDashboard() {
                     </div>
                   </div>
 
-                  {/* Recent Applications card */}
+                  {/* Applications List */}
                   <div className="p-6 bg-[#0F2233] border border-[#1E3A4C] rounded-2xl shadow-xl">
-                    <div className="flex items-center justify-between mb-4 pb-2 border-b border-slate-800">
-                      <h3 className="text-sm font-extrabold text-white">Recent Application Status</h3>
-                      <button onClick={() => setActiveTab("applications")} className="text-xs font-bold text-[#F97316] hover:underline cursor-pointer">
-                        View All
-                      </button>
-                    </div>
-
+                    <h3 className="text-sm font-extrabold text-white mb-4 pb-2 border-b border-slate-800">Submitted Applications</h3>
+                    
                     {applications.length === 0 ? (
                       <div className="text-center py-10 space-y-4">
                         <AlertCircle className="h-8 w-8 text-slate-500 mx-auto" />
                         <p className="text-xs text-slate-400">You haven't submitted any internship applications yet.</p>
-                        <Link
-                          href="/internship"
-                          className="inline-block px-5 py-2.5 bg-[#F97316] hover:bg-[#EA6B0C] text-xs font-bold text-white rounded-lg transition-colors cursor-pointer"
-                        >
-                          Explore Programs
-                        </Link>
-                      </div>
-                    ) : (
-                      <div className="space-y-4">
-                        {applications.slice(0, 3).map((app) => (
-                          <div
-                            key={app.id}
-                            className="p-4 rounded-xl border border-slate-800 bg-slate-950/30 flex flex-col md:flex-row md:items-center justify-between gap-4"
-                          >
-                            <div className="min-w-0">
-                              <h4 className="text-xs font-bold text-white truncate">{app.domain} Internship</h4>
-                              <p className="text-[10px] text-slate-400 mt-1">ID: <span className="font-semibold">{app.id}</span> • Applied: {new Date(app.appliedDate).toLocaleDateString()}</p>
-                            </div>
-                            <div className="flex items-center gap-3 shrink-0">
-                              <span className={`px-2.5 py-1 rounded-full text-[10px] border font-bold ${getStatusColor(app.status)}`}>
-                                {getStatusLabel(app.status)}
-                              </span>
-                              <button
-                                onClick={() => setSelectedApp(app)}
-                                className="px-3 py-1.5 bg-[#1E3A4C] hover:bg-[#254960] text-[10px] font-bold text-white rounded-md transition-colors cursor-pointer"
-                              >
-                                View Details
-                              </button>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    )}
-                  </div>
-                </motion.div>
-              )}
-
-              {/* TAB 2: MY APPLICATIONS LIST & LOGS */}
-              {activeTab === "applications" && (
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0 }}
-                  className="space-y-6"
-                >
-                  <div className="flex justify-between items-center">
-                    <div>
-                      <h1 className="text-2xl md:text-3xl font-extrabold text-white">My Applications</h1>
-                      <p className="text-xs text-slate-400 mt-1">Monitor the state of your application submissions.</p>
-                    </div>
-                    <Link
-                      href="/internship"
-                      className="px-4 py-2 bg-[#F97316] hover:bg-[#EA6B0C] text-xs font-bold text-white rounded-lg transition-colors cursor-pointer"
-                    >
-                      New Application
-                    </Link>
-                  </div>
-
-                  <div className="bg-[#0F2233] border border-[#1E3A4C] rounded-2xl shadow-xl overflow-hidden">
-                    {applications.length === 0 ? (
-                      <div className="text-center py-20">
-                        <AlertCircle className="h-10 w-10 text-slate-500 mx-auto mb-3" />
-                        <p className="text-sm text-slate-400">No applications found.</p>
                       </div>
                     ) : (
                       <div className="overflow-x-auto">
@@ -352,7 +315,7 @@ export function StudentDashboard() {
                           <thead>
                             <tr className="border-b border-[#1E3A4C] bg-slate-950/50 text-slate-300 font-bold uppercase tracking-wider">
                               <th className="p-4">Application ID</th>
-                              <th className="p-4">Program / Domain</th>
+                              <th className="p-4">Domain</th>
                               <th className="p-4">Applied Date</th>
                               <th className="p-4">Status</th>
                               <th className="p-4 text-right">Actions</th>
@@ -372,9 +335,9 @@ export function StudentDashboard() {
                                 <td className="p-4 text-right">
                                   <button
                                     onClick={() => setSelectedApp(app)}
-                                    className="px-3.5 py-1.5 bg-[#1E3A4C] hover:bg-[#254960] text-[10px] font-bold text-white rounded-lg transition-all cursor-pointer"
+                                    className="px-3 py-1.5 bg-[#1E3A4C] hover:bg-[#254960] text-[10px] font-bold text-white rounded-md transition-colors cursor-pointer"
                                   >
-                                    View
+                                    View Details
                                   </button>
                                 </td>
                               </tr>
@@ -387,7 +350,121 @@ export function StudentDashboard() {
                 </motion.div>
               )}
 
-              {/* TAB 3: CERTIFICATES & ID CARDS */}
+              {/* TAB: LEARNING HUB */}
+              {activeTab === "learning" && (
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0 }}
+                  className="space-y-6"
+                >
+                  <div>
+                    <h1 className="text-2xl md:text-3xl font-extrabold text-white">Learning Hub</h1>
+                    <p className="text-xs text-slate-400 mt-1">Access your assigned courses, learning resources, and active internship tasks.</p>
+                  </div>
+
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    {/* Courses & Tasks */}
+                    <div className="space-y-6">
+                      <div className="p-6 bg-[#0F2233] border border-[#1E3A4C] rounded-2xl shadow-xl">
+                        <h3 className="text-sm font-extrabold text-white mb-4 pb-2 border-b border-slate-800">Assigned Courses</h3>
+                        <div className="space-y-4">
+                          <div className="p-4 rounded-xl border border-slate-800 bg-slate-950/20">
+                            <div className="flex justify-between items-start mb-2">
+                              <div>
+                                <h4 className="text-xs font-bold text-white">Advanced React & Next.js 16</h4>
+                                <p className="text-[10px] text-slate-400 mt-0.5">Assigned by Mentor • 8 Weeks</p>
+                              </div>
+                              <span className="px-2 py-0.5 bg-accent-500/10 border border-accent-500/20 text-accent-400 rounded-full text-[9px] font-bold">In Progress</span>
+                            </div>
+                            <div className="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden mt-3">
+                              <div className="bg-[#F97316] h-full rounded-full" style={{ width: "65%" }} />
+                            </div>
+                            <div className="flex justify-between items-center text-[9px] text-slate-500 mt-1.5">
+                              <span>65% Completed</span>
+                              <span>12/18 Lessons</span>
+                            </div>
+                          </div>
+
+                          <div className="p-4 rounded-xl border border-slate-800 bg-slate-950/20">
+                            <div className="flex justify-between items-start mb-2">
+                              <div>
+                                <h4 className="text-xs font-bold text-white">PostgreSQL & Prisma Integration</h4>
+                                <p className="text-[10px] text-slate-400 mt-0.5">Assigned by Mentor • 4 Weeks</p>
+                              </div>
+                              <span className="px-2 py-0.5 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 rounded-full text-[9px] font-bold">Completed</span>
+                            </div>
+                            <div className="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden mt-3">
+                              <div className="bg-emerald-500 h-full rounded-full" style={{ width: "100%" }} />
+                            </div>
+                            <div className="flex justify-between items-center text-[9px] text-slate-500 mt-1.5">
+                              <span>100% Completed</span>
+                              <span>8/8 Lessons</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="p-6 bg-[#0F2233] border border-[#1E3A4C] rounded-2xl shadow-xl">
+                        <h3 className="text-sm font-extrabold text-white mb-4 pb-2 border-b border-slate-800">Internship Tasks</h3>
+                        <div className="space-y-3">
+                          <label className="flex items-start gap-3 p-3 rounded-xl border border-slate-800 bg-slate-950/10 hover:bg-slate-950/30 cursor-pointer">
+                            <input type="checkbox" defaultChecked className="mt-0.5 border-slate-700 bg-slate-900 rounded text-[#F97316] focus:ring-[#F97316] focus:ring-offset-0 focus:outline-none" />
+                            <div>
+                              <p className="text-xs font-bold text-white line-through decoration-slate-600">Phase 1: Environment Setup & Prisma Integration</p>
+                              <p className="text-[9px] text-slate-500 mt-0.5">Completed: Jun 14, 2026</p>
+                            </div>
+                          </label>
+                          <label className="flex items-start gap-3 p-3 rounded-xl border border-slate-800 bg-slate-950/10 hover:bg-slate-950/30 cursor-pointer">
+                            <input type="checkbox" defaultChecked className="mt-0.5 border-slate-700 bg-slate-900 rounded text-[#F97316] focus:ring-[#F97316] focus:ring-offset-0 focus:outline-none" />
+                            <div>
+                              <p className="text-xs font-bold text-white line-through decoration-slate-600">Phase 2: Refactor PDF API JSX handlers</p>
+                              <p className="text-[9px] text-slate-500 mt-0.5">Completed: Jun 14, 2026</p>
+                            </div>
+                          </label>
+                          <label className="flex items-start gap-3 p-3 rounded-xl border border-slate-800 bg-slate-950/10 hover:bg-slate-950/30 cursor-pointer">
+                            <input type="checkbox" className="mt-0.5 border-slate-700 bg-slate-900 rounded text-[#F97316] focus:ring-[#F97316] focus:ring-offset-0 focus:outline-none" />
+                            <div>
+                              <p className="text-xs font-bold text-white">Phase 3: Design & Implement Role-Based Bottom Navigation Bar</p>
+                              <p className="text-[9px] text-slate-400 mt-0.5">Due date: In Progress</p>
+                            </div>
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Resources */}
+                    <div className="p-6 bg-[#0F2233] border border-[#1E3A4C] rounded-2xl shadow-xl h-fit">
+                      <h3 className="text-sm font-extrabold text-white mb-4 pb-2 border-b border-slate-800">Learning Resources</h3>
+                      <div className="space-y-3">
+                        <a href="https://nextjs.org/docs" target="_blank" rel="noreferrer" className="flex items-center justify-between p-3.5 rounded-xl border border-slate-800 hover:border-slate-700 hover:bg-slate-950/20 transition-all group">
+                          <div>
+                            <p className="text-xs font-bold text-white group-hover:text-[#F97316] transition-colors">Next.js 16 Documentation</p>
+                            <p className="text-[9px] text-slate-500 mt-0.5">Official framework routing & rendering guides</p>
+                          </div>
+                          <ExternalLink className="h-4 w-4 text-slate-500 group-hover:text-[#F97316] transition-colors" />
+                        </a>
+                        <a href="https://tailwindcss.com/docs" target="_blank" rel="noreferrer" className="flex items-center justify-between p-3.5 rounded-xl border border-slate-800 hover:border-slate-700 hover:bg-slate-950/20 transition-all group">
+                          <div>
+                            <p className="text-xs font-bold text-white group-hover:text-[#F97316] transition-colors">Tailwind CSS v4 Quick Reference</p>
+                            <p className="text-[9px] text-slate-500 mt-0.5">Responsive UI style system classes & variables</p>
+                          </div>
+                          <ExternalLink className="h-4 w-4 text-slate-500 group-hover:text-[#F97316] transition-colors" />
+                        </a>
+                        <a href="https://www.prisma.io/docs" target="_blank" rel="noreferrer" className="flex items-center justify-between p-3.5 rounded-xl border border-slate-800 hover:border-slate-700 hover:bg-slate-950/20 transition-all group">
+                          <div>
+                            <p className="text-xs font-bold text-white group-hover:text-[#F97316] transition-colors">Prisma ORM Cheat Sheet</p>
+                            <p className="text-[9px] text-slate-500 mt-0.5">Query builders, models, schema definitions</p>
+                          </div>
+                          <ExternalLink className="h-4 w-4 text-slate-500 group-hover:text-[#F97316] transition-colors" />
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+
+              {/* TAB: CREDENTIALS & ID CARDS */}
               {activeTab === "certificates" && (
                 <motion.div
                   initial={{ opacity: 0, y: 10 }}
@@ -416,15 +493,15 @@ export function StudentDashboard() {
                             .filter((a) => a.idCard)
                             .map((app) => (
                               <div key={app.id} className="p-4 rounded-xl border border-slate-800 bg-slate-950/20 flex items-center justify-between gap-3">
-                                <div>
-                                  <h4 className="text-xs font-bold text-white">{app.domain}</h4>
+                                <div className="min-w-0">
+                                  <h4 className="text-xs font-bold text-white truncate">{app.domain}</h4>
                                   <p className="text-[10px] text-slate-400 mt-0.5">ID: {app.idCard?.internId}</p>
                                 </div>
                                 <a
                                   href={app.idCard?.pdfUrl}
                                   target="_blank"
                                   rel="noopener noreferrer"
-                                  className="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-[10px] font-bold text-white rounded-md transition-colors cursor-pointer inline-flex items-center gap-1"
+                                  className="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-[10px] font-bold text-white rounded-md transition-colors cursor-pointer inline-flex items-center gap-1 shrink-0"
                                 >
                                   <Download className="h-3 w-3" />
                                   Download
@@ -450,15 +527,15 @@ export function StudentDashboard() {
                             .filter((a) => a.certificate)
                             .map((app) => (
                               <div key={app.id} className="p-4 rounded-xl border border-slate-800 bg-slate-950/20 flex items-center justify-between gap-3">
-                                <div>
-                                  <h4 className="text-xs font-bold text-white">{app.domain}</h4>
+                                <div className="min-w-0">
+                                  <h4 className="text-xs font-bold text-white truncate">{app.domain}</h4>
                                   <p className="text-[10px] text-slate-400 mt-0.5">Code: {app.certificate?.certificateNumber}</p>
                                 </div>
                                 <a
                                   href={app.certificate?.pdfUrl}
                                   target="_blank"
                                   rel="noopener noreferrer"
-                                  className="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-[10px] font-bold text-white rounded-md transition-colors cursor-pointer inline-flex items-center gap-1"
+                                  className="px-3 py-1.5 bg-[#F97316] hover:bg-[#EA6B0C] text-[10px] font-bold text-white rounded-md transition-colors cursor-pointer inline-flex items-center gap-1 shrink-0"
                                 >
                                   <Download className="h-3 w-3" />
                                   Download
@@ -467,6 +544,162 @@ export function StudentDashboard() {
                             ))}
                         </div>
                       )}
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+
+              {/* TAB: UPDATES & ALERTS */}
+              {activeTab === "updates" && (
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0 }}
+                  className="space-y-6"
+                >
+                  <div>
+                    <h1 className="text-2xl md:text-3xl font-extrabold text-white">Updates & Announcements</h1>
+                    <p className="text-xs text-slate-400 mt-1">Stay informed about critical announcements, platform developments, and internship operations.</p>
+                  </div>
+
+                  <div className="p-6 bg-[#0F2233] border border-[#1E3A4C] rounded-2xl shadow-xl">
+                    <div className="divide-y divide-slate-850">
+                      <div className="py-4 first:pt-0 last:pb-0">
+                        <div className="flex justify-between items-start gap-4">
+                          <h4 className="text-xs font-bold text-white hover:text-[#F97316] transition-colors">Role-Based Bottom Navigation System Live</h4>
+                          <span className="text-[9px] text-slate-500 bg-[#1A3347] px-2 py-0.5 rounded-full shrink-0">Today</span>
+                        </div>
+                        <p className="text-[11px] text-slate-400 mt-1.5 leading-relaxed">
+                          We have rolled out a dedicated role-based bottom navigation layout for all mobile users, including integrated dashboard redirects, stats, and real-time updates.
+                        </p>
+                      </div>
+
+                      <div className="py-4 first:pt-0 last:pb-0">
+                        <div className="flex justify-between items-start gap-4">
+                          <h4 className="text-xs font-bold text-white">NextGen Foundation community drive and workshop</h4>
+                          <span className="text-[9px] text-slate-500 bg-[#1A3347] px-2 py-0.5 rounded-full shrink-0">3 days ago</span>
+                        </div>
+                        <p className="text-[11px] text-slate-400 mt-1.5 leading-relaxed">
+                          An community drive event has been scheduled for next Saturday. All active volunteers and students are encouraged to register and participate in the technical literacy drive.
+                        </p>
+                      </div>
+
+                      <div className="py-4 first:pt-0 last:pb-0">
+                        <div className="flex justify-between items-start gap-4">
+                          <h4 className="text-xs font-bold text-white">IT Internship Certification generation enabled</h4>
+                          <span className="text-[9px] text-slate-500 bg-[#1A3347] px-2 py-0.5 rounded-full shrink-0">1 week ago</span>
+                        </div>
+                        <p className="text-[11px] text-slate-400 mt-1.5 leading-relaxed">
+                          Automatic PDF Certificate generation is now configured for completed internship applications. Download your certificates directly from the Certificates and IDs tab.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+
+              {/* TAB: PROFILE & SETTINGS */}
+              {activeTab === "profile" && (
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0 }}
+                  className="space-y-6"
+                >
+                  <div>
+                    <h1 className="text-2xl md:text-3xl font-extrabold text-white">My Profile</h1>
+                    <p className="text-xs text-slate-400 mt-1">Manage your identity details, access resumes, and view account roles.</p>
+                  </div>
+
+                  <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    {/* User Card */}
+                    <div className="p-6 bg-[#0F2233] border border-[#1E3A4C] rounded-2xl shadow-xl flex flex-col items-center text-center h-fit">
+                      <div className="w-20 h-20 rounded-full bg-gradient-to-tr from-[#F97316] to-[#EA6B0C] flex items-center justify-center text-white text-3xl font-bold shadow-xl mb-4">
+                        {initials}
+                      </div>
+                      <h2 className="text-base font-extrabold text-white leading-snug">{user?.fullName}</h2>
+                      <p className="text-xs text-slate-450 mt-1">{user?.primaryEmailAddress?.emailAddress}</p>
+                      
+                      <div className="flex flex-wrap gap-2 justify-center mt-4">
+                        {userRoles.map((role) => (
+                          <span key={role} className="px-2.5 py-1 bg-accent-950/30 border border-accent-800/40 text-accent-400 rounded-full text-[9px] font-bold tracking-wider uppercase">
+                            {role}
+                          </span>
+                        ))}
+                      </div>
+
+                      <div className="h-px bg-slate-800 w-full my-6" />
+
+                      <button
+                        onClick={() => signOut()}
+                        className="w-full py-2.5 bg-red-500/10 hover:bg-red-500/20 text-red-400 text-xs font-bold rounded-xl transition-all cursor-pointer inline-flex items-center justify-center gap-2"
+                      >
+                        <LogOut className="h-4 w-4" />
+                        Logout from Account
+                      </button>
+                    </div>
+
+                    {/* Information Grid */}
+                    <div className="lg:col-span-2 space-y-6">
+                      <div className="p-6 bg-[#0F2233] border border-[#1E3A4C] rounded-2xl shadow-xl">
+                        <h3 className="text-sm font-extrabold text-white mb-4 pb-2 border-b border-slate-800">Registration Information</h3>
+                        {applications.length > 0 ? (
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 text-xs text-slate-300">
+                            <div>
+                              <span className="text-slate-500 font-semibold">Full Name</span>
+                              <p className="text-white font-medium mt-0.5">{applications[0].fullName}</p>
+                            </div>
+                            <div>
+                              <span className="text-slate-500 font-semibold">Mobile Number</span>
+                              <p className="text-white font-medium mt-0.5">{applications[0].mobile}</p>
+                            </div>
+                            <div>
+                              <span className="text-slate-500 font-semibold">Gender</span>
+                              <p className="text-white font-medium mt-0.5">{applications[0].gender}</p>
+                            </div>
+                            <div>
+                              <span className="text-slate-500 font-semibold">Birthdate</span>
+                              <p className="text-white font-medium mt-0.5">{new Date(applications[0].dateOfBirth).toLocaleDateString()}</p>
+                            </div>
+                            <div>
+                              <span className="text-slate-500 font-semibold">Address</span>
+                              <p className="text-white font-medium mt-0.5 leading-snug">{applications[0].address}</p>
+                            </div>
+                            <div>
+                              <span className="text-slate-500 font-semibold">City, State</span>
+                              <p className="text-white font-medium mt-0.5">{applications[0].city}, {applications[0].state} - {applications[0].pincode}</p>
+                            </div>
+                          </div>
+                        ) : (
+                          <p className="text-xs text-slate-400">Complete an internship application to populate your verified profile data.</p>
+                        )}
+                      </div>
+
+                      <div className="p-6 bg-[#0F2233] border border-[#1E3A4C] rounded-2xl shadow-xl">
+                        <h3 className="text-sm font-extrabold text-white mb-4 pb-2 border-b border-slate-800">Academic Credentials</h3>
+                        {applications.length > 0 ? (
+                          <div className="grid grid-cols-1 sm:grid-cols-2 gap-5 text-xs text-slate-300">
+                            <div>
+                              <span className="text-slate-500 font-semibold">College / Institute</span>
+                              <p className="text-white font-medium mt-0.5 leading-snug">{applications[0].collegeName}</p>
+                            </div>
+                            <div>
+                              <span className="text-slate-500 font-semibold">Affiliated University</span>
+                              <p className="text-white font-medium mt-0.5 leading-snug">{applications[0].university}</p>
+                            </div>
+                            <div>
+                              <span className="text-slate-500 font-semibold">Degree & Major</span>
+                              <p className="text-white font-medium mt-0.5">{applications[0].degree} ({applications[0].branch})</p>
+                            </div>
+                            <div>
+                              <span className="text-slate-500 font-semibold">Current Semester & CGPA</span>
+                              <p className="text-white font-medium mt-0.5">{applications[0].currentYearSem} • {applications[0].cgpa} CGPA</p>
+                            </div>
+                          </div>
+                        ) : (
+                          <p className="text-xs text-slate-400">No academic data linked yet.</p>
+                        )}
+                      </div>
                     </div>
                   </div>
                 </motion.div>
@@ -541,7 +774,7 @@ export function StudentDashboard() {
                       </div>
                     )}
                     {selectedApp.certificate && (
-                      <div className="p-4 rounded-xl border-teal-500/20 bg-teal-500/5 text-center">
+                      <div className="p-4 rounded-xl border border-teal-500/20 bg-teal-500/5 text-center">
                         <p className="text-[10px] font-bold text-teal-400">Certificate Issued</p>
                         <a
                           href={selectedApp.certificate.pdfUrl}
